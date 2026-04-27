@@ -1,0 +1,30 @@
+{
+  "hvac": {
+    "stat": "31% more booked service calls in month one.",
+    "story": "An HVAC contractor in a similar market automated their review responses, seasonal maintenance reminders, and post-job follow-up. First 30 days: 31% increase in booked calls. Owner reclaimed 6+ hours per week previously spent on manual follow-up."
+  },
+  "plumbing": {
+    "stat": "22% more booked jobs within 30 days.",
+    "story": "A plumbing shop added AI-powered 24/7 scheduling and automated quote follow-up. Within a month: 22% more booked jobs, zero missed after-hours leads, and quote response time dropped from 2 days to under 2 hours."
+  },
+  "electrical": {
+    "stat": "18% lift in repeat business from past customers.",
+    "story": "An electrical contractor implemented automated post-job follow-up and a customer reactivation sequence for their 3-year dormant customer list. Result: 18% of past customers rebooked within 60 days — with no ad spend."
+  },
+  "landscaping": {
+    "stat": "40% of seasonal customers rebooked automatically.",
+    "story": "A landscaping company built an AI reminder and rebooking system for seasonal transitions. 40% of prior-year customers re-signed before the season started — without a single manual outreach call."
+  },
+  "cleaning": {
+    "stat": "Same-day quotes, 3x faster than before.",
+    "story": "A commercial cleaning company automated their intake and quoting workflow. Quote turnaround went from 3 days to same-day. Win rate on competitive bids improved significantly — they were simply faster than every competitor."
+  },
+  "construction": {
+    "stat": "Subcontractor follow-up time cut by 80%.",
+    "story": "A general contractor automated subcontractor coordination, schedule check-ins, and permit tracking. Project manager follow-up overhead dropped by 80%. Two fewer admin hours per project per week, across an 8-project pipeline."
+  },
+  "other": {
+    "stat": "Measurable ROI in the first 30 days.",
+    "story": "Every Fieldwork AI engagement starts with identifying your highest-leverage automation opportunity — the one that pays for itself fastest. We've consistently found it in the first three days."
+  }
+}

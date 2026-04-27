@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "treasure-valley-hvac",
+    "name": "Treasure Valley HVAC",
+    "vertical": "hvac",
+    "city": "Boise, ID",
+    "logoUrl": "",
+    "heroPhotoUrl": "",
+    "brandColor": "#1A4A7A",
+    "googleRating": 4.6,
+    "reviewCount": 214,
+    "opportunities": [
+      {
+        "type": "review-response-automation",
+        "label": "Review Response Automation",
+        "signal": "214 Google reviews with no visible owner responses in the last 7 months.",
+        "observation": "Unanswered reviews signal to prospects that customer relationships end at the invoice.",
+        "fix": "An AI response workflow drafts and posts a personalized reply to every review — 5-star or 1-star — in minutes."
+      },
+      {
+        "type": "preventive-maintenance-reminders",
+        "label": "Maintenance Reminder Automation",
+        "signal": "No email or text marketing touchpoints visible on the website or in review patterns.",
+        "observation": "Every past customer is a recurring revenue opportunity you're currently leaving silent.",
+        "fix": "An AI reminder system re-engages past customers before each season with personalized maintenance offers."
+      },
+      {
+        "type": "after-service-follow-up",
+        "label": "Post-Job Follow-Up Sequences",
+        "signal": "Review velocity is low relative to job volume — suggesting no automated review request after service.",
+        "observation": "Businesses that don't ask don't get reviews. Your competitors who do are widening the gap.",
+        "fix": "An AI follow-up sequence texts every customer 24 hours after job close — asking for a review and offering a referral incentive."
+      }
+    ],
+    "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+    "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching"
+  },
+  {
+    "slug": "capital-city-plumbing",
+    "name": "Capital City Plumbing",
+    "vertical": "plumbing",
+    "city": "Boise, ID",
+    "logoUrl": "",
+    "heroPhotoUrl": "",
+    "brandColor": "#2E7D52",
+    "googleRating": 4.3,
+    "reviewCount": 91,
+    "opportunities": [
+      {
+        "type": "online-scheduling",
+        "label": "Lead Capture & Scheduling",
+        "signal": "No online booking on website — calls only, no after-hours capture.",
+        "observation": "When a pipe bursts at 9pm, the first plumber with instant booking gets the job.",
+        "fix": "An AI scheduling layer captures and books jobs 24/7 — no missed calls, no lost leads."
+      },
+      {
+        "type": "key-person-risk",
+        "label": "Key-Person Dependency",
+        "signal": "9 of your last 15 Google reviews mention the owner by first name.",
+        "observation": "When your reputation is personal, scaling or stepping back risks everything you've built.",
+        "fix": "AI-assisted CRM and handoff workflows distribute trust to your team — not just you."
+      },
+      {
+        "type": "quote-proposal-generation",
+        "label": "Quote Turnaround Automation",
+        "signal": "Three recent reviews mention waiting 2+ days for a quote or callback.",
+        "observation": "Slow quotes lose jobs — most homeowners book whoever responds first.",
+        "fix": "An AI quoting tool generates same-day estimates from job photos or a short phone intake."
+      }
+    ],
+    "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+    "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching"
+  }
+]
