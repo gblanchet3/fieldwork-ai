@@ -106,5 +106,41 @@
     ],
     "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
     "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching"
+  },
+  {
+    "slug": "american-air-heat-boise",
+    "name": "American Air & Heat",
+    "vertical": "hvac",
+    "city": "Boise, ID",
+    "logoUrl": "https://americanairandheat.com/wp-content/uploads/favicon.svg?dark",
+    "heroPhotoUrl": "",
+    "brandColor": "#D97B2A",
+    "googleRating": 4.3,
+    "reviewCount": 112,
+    "opportunities": [
+      {
+        "type": "review-response-automation",
+        "label": "Review Response Automation",
+        "signal": "4.3 rating across 112 reviews with no visible owner response pattern detected.",
+        "observation": "Unanswered reviews signal neglect to prospects and hurt local SEO rankings.",
+        "fix": "Deploy AI to auto-draft personalized responses to every new Google review within hours."
+      },
+      {
+        "type": "after-service-follow-up",
+        "label": "After-Service Follow-Up",
+        "signal": "No CRM or marketing tools detected despite ServiceTitan being present on the site.",
+        "observation": "Post-job silence means no review requests, upsells, or loyalty touchpoints are reaching customers.",
+        "fix": "Automate post-job SMS and email sequences via ServiceTitan to request reviews and offer maintenance plans."
+      },
+      {
+        "type": "preventive-maintenance-reminders",
+        "label": "Maintenance Reminder Automation",
+        "signal": "Seasonal HVAC business in Boise with no email marketing tools detected on the site.",
+        "observation": "Without automated reminders, recurring revenue from tune-ups and filter changes is left on the table.",
+        "fix": "Build AI-triggered seasonal reminder campaigns through ServiceTitan to convert past customers into plan members."
+      }
+    ],
+    "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+    "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching"
   }
 ]
