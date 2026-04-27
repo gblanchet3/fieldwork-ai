@@ -13,6 +13,7 @@ const BRANCH = CONFIG.githubBranch;
 async function ghGet(path: string, pat: string) {
   const res = await fetch(`${GH_API}/repos/${REPO}/contents/${path}?ref=${BRANCH}`, {
     headers: { Authorization: `token ${pat}`, Accept: "application/vnd.github+json" },
+    cache: "no-store",
   });
   if (!res.ok) throw new Error(`GitHub GET failed: ${res.status} ${res.statusText}`);
   return res.json();
