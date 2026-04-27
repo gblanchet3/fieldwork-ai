@@ -73,6 +73,8 @@ interface WebsiteSignals {
   ogTitle: string | null;
   themeColor: string | null;
   faviconUrl: string | null;
+  phone: string | null;
+  email: string | null;
   rawSnippet: string;
 }
 
@@ -123,6 +125,28 @@ function extractWebsiteSignals(html: string, baseUrl: string): WebsiteSignals {
     }
   }
 
+  // Phone: tel: links first, then common US formats
+  const telLink = html.match(/href=["']tel:([^"']+)["']/i);
+  let phone: string | null = null;
+  if (telLink) {
+    phone = telLink[1].replace(/[^\d+\-().\s]/g, "").trim();
+  } else {
+    const phoneMatch = html.match(/\(?\b(\d{3})\)?[\s.\-](\d{3})[\s.\-](\d{4})\b/);
+    if (phoneMatch) phone = `(${phoneMatch[1]}) ${phoneMatch[2]}-${phoneMatch[3]}`;
+  }
+
+  // Email: mailto: links first, then common patterns
+  const mailtoLink = html.match(/href=["']mailto:([^"'?]+)/i);
+  let email: string | null = null;
+  if (mailtoLink) {
+    email = mailtoLink[1].trim();
+  } else {
+    const emailMatch = html.match(/\b([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})\b/);
+    if (emailMatch && !emailMatch[1].includes("example") && !emailMatch[1].includes("sentry")) {
+      email = emailMatch[1];
+    }
+  }
+
   const rawSnippet = html
     .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
@@ -143,6 +167,8 @@ function extractWebsiteSignals(html: string, baseUrl: string): WebsiteSignals {
     ogTitle: ogTitle ? ogTitle[1] : null,
     themeColor: themeColor ? themeColor[1] : null,
     faviconUrl,
+    phone,
+    email,
     rawSnippet,
   };
 }
@@ -309,6 +335,10 @@ async function researchCompany(company: Company): Promise<void> {
     opportunities,
     calendlyUrl: CONFIG.calendlyUrl,
     coachingUrl: CONFIG.coachingUrl,
+    website: company.website || undefined,
+    phone: signals.phone || undefined,
+    email: signals.email || undefined,
+    ownerName: company.ownerName || undefined,
   };
 
   writeJson(pendingPath, business);

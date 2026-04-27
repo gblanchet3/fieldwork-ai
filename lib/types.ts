@@ -19,6 +19,11 @@ export interface Business {
   opportunities: Opportunity[];
   calendlyUrl: string;
   coachingUrl: string;
+  // Outreach fields (optional — filled by research script or manually)
+  website?: string;
+  phone?: string;
+  email?: string;
+  ownerName?: string;
 }
 
 export interface Company {

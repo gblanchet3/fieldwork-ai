@@ -128,56 +128,99 @@ function ApprovalCard({
   const b = file.business;
   const accent = b.brandColor || "#D97B2A";
 
-  const emailText = `Subject: Took a look at ${b.name}
-
-Hi${b.opportunities[0] ? "" : ""},
+  const greeting = b.ownerName ? `Hi ${b.ownerName},` : "Hi,";
+  const firstSignal = b.opportunities[0]?.signal ?? "";
+  const emailSubject = `Took a look at ${b.name}`;
+  const emailBody = `${greeting}
 
 Spent 20 minutes looking at ${b.name} before reaching out. Found a few specific places where AI could make a difference — put it on one page:
 
 getfieldworkai.com/for/${b.slug}
 
-${b.opportunities[0] ? b.opportunities[0].signal : ""}
+${firstSignal}
 
 Happy to talk through it in 30 minutes — free, no pitch.
 
 — Gabe`;
 
-  const copyEmail = async () => {
-    await navigator.clipboard.writeText(emailText);
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1${b.email ? `&to=${encodeURIComponent(b.email)}` : ""}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+  const openGmail = () => {
+    window.open(gmailUrl, "_blank");
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 3000);
   };
 
   return (
     <div className="border border-white/10 bg-white/[0.02]" style={{ borderTopColor: accent, borderTopWidth: "3px" }}>
       {/* Header */}
-      <div className="p-5 border-b border-white/8 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3 min-w-0">
-          {b.logoUrl ? (
-            <img src={b.logoUrl} alt="" className="w-9 h-9 rounded object-contain bg-white/10 p-0.5 shrink-0" />
-          ) : (
-            <div
-              className="w-9 h-9 rounded flex items-center justify-center text-white font-syne font-semibold text-sm shrink-0"
-              style={{ backgroundColor: accent }}
-            >
-              {b.name.charAt(0)}
+      <div className="p-5 border-b border-white/8">
+        <div className="flex items-start justify-between gap-4 mb-3">
+          <div className="flex items-center gap-3 min-w-0">
+            {b.logoUrl ? (
+              <img src={b.logoUrl} alt="" className="w-9 h-9 rounded object-contain bg-white/10 p-0.5 shrink-0" />
+            ) : (
+              <div
+                className="w-9 h-9 rounded flex items-center justify-center text-white font-syne font-semibold text-sm shrink-0"
+                style={{ backgroundColor: accent }}
+              >
+                {b.name.charAt(0)}
+              </div>
+            )}
+            <div className="min-w-0">
+              <p className="font-syne font-semibold text-white text-base leading-tight truncate">{b.name}</p>
+              <p className="font-inter text-xs text-bone/40 mt-0.5">
+                {b.city} · {b.vertical} · ★ {b.googleRating} ({b.reviewCount} reviews)
+              </p>
             </div>
-          )}
-          <div className="min-w-0">
-            <p className="font-syne font-semibold text-white text-base leading-tight truncate">{b.name}</p>
-            <p className="font-inter text-xs text-bone/40 mt-0.5">
-              {b.city} · {b.vertical} · ★ {b.googleRating} ({b.reviewCount} reviews)
-            </p>
           </div>
+          <a
+            href={`/for/${b.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-inter text-xs text-bone/30 hover:text-bone/60 transition-colors shrink-0 underline mt-0.5"
+          >
+            Preview ↗
+          </a>
         </div>
-        <a
-          href={`/for/${b.slug}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-inter text-xs text-bone/40 hover:text-bone/70 transition-colors shrink-0 underline"
-        >
-          Preview ↗
-        </a>
+
+        {/* Contact details */}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 pl-12">
+          {b.ownerName && (
+            <span className="font-inter text-xs text-bone/60">
+              👤 {b.ownerName}
+            </span>
+          )}
+          {b.website && (
+            <a
+              href={b.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-inter text-xs text-bone/40 hover:text-bone/70 transition-colors underline"
+            >
+              🌐 {b.website.replace(/^https?:\/\//, "")}
+            </a>
+          )}
+          {b.phone && (
+            <a
+              href={`tel:${b.phone}`}
+              className="font-inter text-xs text-bone/40 hover:text-bone/70 transition-colors"
+            >
+              📞 {b.phone}
+            </a>
+          )}
+          {b.email && (
+            <a
+              href={`mailto:${b.email}`}
+              className="font-inter text-xs text-bone/40 hover:text-bone/70 transition-colors"
+            >
+              ✉️ {b.email}
+            </a>
+          )}
+          {!b.ownerName && !b.phone && !b.email && (
+            <span className="font-inter text-xs text-bone/20 italic">No contact info found — add via Edit</span>
+          )}
+        </div>
       </div>
 
       {/* Opportunities preview */}
@@ -227,10 +270,10 @@ Happy to talk through it in 30 minutes — free, no pitch.
           Skip
         </button>
         <button
-          onClick={copyEmail}
+          onClick={openGmail}
           className="ml-auto font-inter text-xs px-3 py-2 border border-white/10 text-bone/35 hover:text-bone/60 hover:border-white/20 transition-colors"
         >
-          {copied ? "Copied ✓" : "Copy email"}
+          {copied ? "Opened ✓" : `Draft in Gmail${b.email ? "" : " (no email)"}`}
         </button>
       </div>
     </div>
