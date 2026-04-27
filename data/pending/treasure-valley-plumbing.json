@@ -1,0 +1,37 @@
+{
+  "slug": "treasure-valley-plumbing",
+  "name": "Treasure Valley Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.4,
+  "reviewCount": 163,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tool detected on site or GMB.",
+      "observation": "After-hours plumbing calls in Boise go unanswered, sending leads to competitors.",
+      "fix": "Deploy AI booking assistant to capture and schedule jobs 24/7 without staff."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; phone-only contact is the sole intake method.",
+      "observation": "Every unbooked or missed call leaves zero record, killing follow-up and revenue recovery.",
+      "fix": "Implement AI call logging and CRM capture to save every caller's info automatically."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "163 Google reviews at 4.4 stars with no detected owner response pattern.",
+      "observation": "Unanswered reviews signal poor engagement, hurting Boise-area search ranking and trust.",
+      "fix": "Automate personalized Google review responses triggered immediately after each new review posts."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://treasurevalleyplumbing.com"
+}

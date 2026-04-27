@@ -1,0 +1,38 @@
+{
+  "slug": "eagle-plumbing-services",
+  "name": "Eagle Plumbing Services",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=eagleplumbingservices.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.6,
+  "reviewCount": 118,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "No booking button, no booking tools detected, and phone-only contact confirmed on site.",
+      "observation": "After-hours plumbing leads in Boise cannot book online and likely call a competitor instead.",
+      "fix": "Deploy AI-powered 24/7 booking widget to capture emergency and scheduled plumbing appointments automatically."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and phone-only contact is the sole inbound channel.",
+      "observation": "Every missed or unlogged call represents a permanently lost lead with zero follow-up possible.",
+      "fix": "Implement AI call recording and CRM capture to log every caller, intent, and job opportunity."
+    },
+    {
+      "type": "after-service-follow-up",
+      "label": "Post-Job Follow-Up",
+      "signal": "Only 118 reviews despite operating in two metro areas with no review-request patterns detected.",
+      "observation": "Low review velocity signals no automated post-job touchpoints, leaving referrals and repeat business on the table.",
+      "fix": "Automate SMS follow-ups after each job to request reviews and prompt repeat bookings in Boise."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://eagleplumbingservices.com",
+  "phone": "2402668317"
+}

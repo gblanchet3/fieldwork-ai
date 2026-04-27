@@ -140,7 +140,7 @@
     "googleRating": 4.6,
     "reviewCount": 118,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "nampa-heating-air",
@@ -151,7 +151,7 @@
     "googleRating": 4.3,
     "reviewCount": 86,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "idaho-comfort-hvac",
@@ -162,7 +162,7 @@
     "googleRating": 4.5,
     "reviewCount": 201,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "treasure-valley-plumbing",
@@ -173,7 +173,7 @@
     "googleRating": 4.4,
     "reviewCount": 163,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "boise-air-masters",
@@ -184,7 +184,7 @@
     "googleRating": 4.2,
     "reviewCount": 58,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "clear-flow-plumbing",
@@ -195,7 +195,7 @@
     "googleRating": 4.7,
     "reviewCount": 94,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "high-desert-hvac",
@@ -206,7 +206,7 @@
     "googleRating": 4.4,
     "reviewCount": 139,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "foothills-plumbing-boise",
@@ -217,6 +217,6 @@
     "googleRating": 4.6,
     "reviewCount": 82,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   }
 ]
