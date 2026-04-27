@@ -129,7 +129,12 @@ function extractWebsiteSignals(html: string, baseUrl: string): WebsiteSignals {
   const telLink = html.match(/href=["']tel:([^"']+)["']/i);
   let phone: string | null = null;
   if (telLink) {
-    phone = telLink[1].replace(/[^\d+\-().\s]/g, "").trim();
+    const digits = telLink[1].replace(/\D/g, "").replace(/^1/, ""); // strip country code
+    if (digits.length === 10) {
+      phone = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    } else {
+      phone = telLink[1].trim();
+    }
   } else {
     const phoneMatch = html.match(/\(?\b(\d{3})\)?[\s.\-](\d{3})[\s.\-](\d{4})\b/);
     if (phoneMatch) phone = `(${phoneMatch[1]}) ${phoneMatch[2]}-${phoneMatch[3]}`;
