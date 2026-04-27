@@ -1,0 +1,37 @@
+{
+  "slug": "diamond-heating-cooling",
+  "name": "Diamond Heating & Cooling",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=diamondheatingandcooling.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#35A6F6",
+  "googleRating": 4.8,
+  "reviewCount": 312,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected on site or GMB.",
+      "observation": "Boise-area HVAC leads calling after hours go straight to competitors with online booking.",
+      "fix": "Deploy AI chat widget enabling 24/7 appointment booking without requiring a phone call."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and no recurring revenue signals on site.",
+      "observation": "With 312 reviews, Diamond has a large customer base generating zero automated seasonal revenue.",
+      "fix": "Build AI-driven seasonal reminder sequences targeting past customers before Boise heating and cooling seasons."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM Automation",
+      "signal": "No CRM or marketing tools detected; phone-only contact is the sole inbound channel.",
+      "observation": "Every unbooked or missed call from Treasure Valley prospects disappears with no follow-up possible.",
+      "fix": "Integrate AI call capture and CRM logging to record, transcribe, and auto-follow-up every inbound call."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://diamondheatingandcooling.com"
+}

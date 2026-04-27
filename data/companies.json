@@ -30,7 +30,7 @@
     "googleRating": 4.8,
     "reviewCount": 312,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "top-shelf-heating",
@@ -41,7 +41,7 @@
     "googleRating": 4.9,
     "reviewCount": 278,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "idaho-heating-cooling",
@@ -52,7 +52,7 @@
     "googleRating": 4.7,
     "reviewCount": 189,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "apex-air-boise",
@@ -63,7 +63,7 @@
     "googleRating": 4.6,
     "reviewCount": 143,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "boise-comfort-systems",
@@ -74,7 +74,7 @@
     "googleRating": 4.5,
     "reviewCount": 167,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "bng-heating-cooling",
@@ -85,7 +85,7 @@
     "googleRating": 4.8,
     "reviewCount": 421,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "elk-hvac-boise",
@@ -96,7 +96,7 @@
     "googleRating": 4.7,
     "reviewCount": 98,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "home-comfort-alliance-boise",
@@ -107,7 +107,7 @@
     "googleRating": 4.6,
     "reviewCount": 534,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "liberty-air-boise",
@@ -118,7 +118,7 @@
     "googleRating": 4.5,
     "reviewCount": 112,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "mountainview-hvac",
@@ -129,7 +129,7 @@
     "googleRating": 4.4,
     "reviewCount": 87,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "custom-comfort-boise",

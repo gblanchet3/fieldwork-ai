@@ -1,0 +1,37 @@
+{
+  "slug": "idaho-heating-cooling",
+  "name": "Idaho Heating & Cooling",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.7,
+  "reviewCount": 189,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Idaho Heating & Cooling has no online booking, contact form, or CRM tools — phone-only contact.",
+      "observation": "Boise-area HVAC customers searching after hours cannot book, sending leads to competitors.",
+      "fix": "Deploy an AI booking widget capturing after-hours appointments directly into a scheduling calendar."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing or CRM tools detected, and no recurring revenue signals on the site.",
+      "observation": "Idaho's harsh winters and hot summers make seasonal tune-ups a natural recurring revenue stream being missed.",
+      "fix": "Automate seasonal maintenance reminders via SMS and email before Boise's summer and winter demand spikes."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture Automation",
+      "signal": "Phone-only contact with zero CRM or tracking tools detected across the entire website.",
+      "observation": "Every missed or unbooked call in a phone-only business is permanently lost with no follow-up possible.",
+      "fix": "Implement AI call capture and CRM logging so every inbound lead is recorded and followed up automatically."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://idahoheatingandcooling.com"
+}

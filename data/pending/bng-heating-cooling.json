@@ -1,0 +1,37 @@
+{
+  "slug": "bng-heating-cooling",
+  "name": "BNG Heating & Cooling",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.8,
+  "reviewCount": 421,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "BNG has no booking button, no contact form, and is phone-only contact.",
+      "observation": "Boise HVAC customers calling after hours are booking competitors with online scheduling.",
+      "fix": "Deploy AI-powered 24/7 booking widget to capture after-hours HVAC service requests instantly."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and no recurring revenue signals on site.",
+      "observation": "BNG's 421-review customer base receives zero seasonal tune-up reminders, leaving revenue on the table.",
+      "fix": "Automate spring cooling and fall heating reminder campaigns to existing Boise-area customers."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; business relies entirely on phone-only contact.",
+      "observation": "Every unbooked or missed call from Boise homeowners is lost with no follow-up possible.",
+      "fix": "Implement AI call capture and CRM logging to auto-tag, store, and follow up every inbound lead."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://bngheating.com"
+}

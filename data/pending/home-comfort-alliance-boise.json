@@ -1,0 +1,37 @@
+{
+  "slug": "home-comfort-alliance-boise",
+  "name": "Home Comfort Alliance",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=homecomfortalliance.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#FF0000",
+  "googleRating": 4.6,
+  "reviewCount": 534,
+  "opportunities": [
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "534 Google reviews at 4.6 stars with no detected CRM or response tooling in place.",
+      "observation": "Manually managing reputation at 534 reviews likely means many go unanswered, eroding trust.",
+      "fix": "Deploy AI to auto-generate personalized responses to new reviews within minutes of posting."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and site serves Boise HVAC with clear seasonal demand cycles.",
+      "observation": "Without automated reminders, seasonal tune-up revenue is left uncaptured from existing customers.",
+      "fix": "Automate seasonal HVAC maintenance reminders via email and SMS tied to last service date."
+    },
+    {
+      "type": "customer-reactivation",
+      "label": "Dormant Customer Reactivation",
+      "signal": "534 reviews suggest a large customer base but no CRM or re-engagement automation is detected.",
+      "observation": "Past customers in Boise are going to competitors for repeat service with no win-back effort.",
+      "fix": "AI-triggered reactivation campaigns target customers silent 12+ months with personalized service offers."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://homecomfortalliance.com"
+}

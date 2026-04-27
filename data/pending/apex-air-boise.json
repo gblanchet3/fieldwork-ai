@@ -1,0 +1,37 @@
+{
+  "slug": "apex-air-boise",
+  "name": "Apex Air",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.6,
+  "reviewCount": 143,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Apex Air has no booking button, no contact form, and is phone-only.",
+      "observation": "After-hours HVAC calls in Boise go unanswered, sending leads to competitors.",
+      "fix": "Deploy AI-powered 24/7 scheduling so customers book service without calling."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "Apex Air has 143 Google reviews at 4.6 stars with zero owner responses visible.",
+      "observation": "Unanswered reviews signal neglect, risking reputation despite strong customer satisfaction.",
+      "fix": "Automate personalized AI responses to every new review within minutes of posting."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected on Apex Air's site or GMB profile.",
+      "observation": "Boise's seasonal HVAC demand means missed recurring revenue from past customers each cycle.",
+      "fix": "Automate pre-season maintenance reminders via SMS and email to reactivate past customers."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://apexairboise.com"
+}

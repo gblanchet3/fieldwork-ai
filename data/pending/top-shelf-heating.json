@@ -1,0 +1,39 @@
+{
+  "slug": "top-shelf-heating",
+  "name": "Top Shelf Heating & Air",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=topshelfheating.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.9,
+  "reviewCount": 278,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Top Shelf has no booking tool, contact form, or online scheduling — phone-only contact only.",
+      "observation": "After-hours HVAC calls in Boise go unanswered, sending emergency leads directly to competitors.",
+      "fix": "Deploy AI booking widget to capture and confirm appointments 24/7 without staff involvement."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected despite serving the Treasure Valley seasonal HVAC market.",
+      "observation": "278 reviews suggest a large customer base receiving zero seasonal tune-up outreach or reminders.",
+      "fix": "Automate pre-season email and SMS reminders to past customers for furnace and AC tune-ups."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; all inbound contact is phone-only with no tracking system.",
+      "observation": "Every unbooked or missed call is lost permanently with no follow-up or lead recovery possible.",
+      "fix": "Implement AI call tracking and CRM capture to log, transcribe, and auto-follow-up every inbound call."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://topshelfheating.com",
+  "phone": "(208) 572-9016",
+  "email": "contact@topshelfheating.com"
+}

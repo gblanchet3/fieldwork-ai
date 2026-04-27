@@ -1,0 +1,37 @@
+{
+  "slug": "mountainview-hvac",
+  "name": "MountainView HVAC",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.4,
+  "reviewCount": 87,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "MountainView HVAC is phone-only with no booking tool, form, or GMB booking button detected.",
+      "observation": "Boise customers searching after-hours for HVAC service are booking competitors with online scheduling instead.",
+      "fix": "Deploy an AI scheduling widget capturing after-hours bookings directly to a calendar without phone calls."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected, and no recurring revenue signals found on site.",
+      "observation": "Seasonal Boise HVAC demand spikes go untapped without automated spring cooling and fall heating reminders.",
+      "fix": "Automate seasonal SMS and email reminders to past customers booking tune-ups before peak demand hits."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture Automation",
+      "signal": "Phone-only contact with zero CRM or marketing tools detected across the entire MountainView HVAC site.",
+      "observation": "Every unanswered or unbooked call leaves no record, losing potential Boise HVAC jobs permanently.",
+      "fix": "Implement AI call capture logging caller details, job type, and follow-up tasks into an automated CRM."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://mountainviewhvac.com"
+}

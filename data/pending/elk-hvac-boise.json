@@ -1,0 +1,37 @@
+{
+  "slug": "elk-hvac-boise",
+  "name": "Elk HVAC",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.7,
+  "reviewCount": 98,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Elk HVAC has no booking tool, no contact form, and is phone-only contact.",
+      "observation": "Boise customers searching after hours cannot book, so leads go to competitors.",
+      "fix": "Deploy AI scheduling widget to capture and confirm HVAC appointments 24/7 automatically."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "98 Google reviews at 4.7 stars with zero detected owner responses on the profile.",
+      "observation": "Skipping responses signals neglect and leaves reputation-building value on the table.",
+      "fix": "Automate personalized review replies using AI trained on HVAC service language and tone."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and no recurring service signals on the website.",
+      "observation": "Boise's seasonal HVAC demand means past customers go dormant between heating and cooling seasons.",
+      "fix": "Automate seasonal tune-up reminders via SMS and email to convert past jobs into recurring revenue."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://elkhvac.com"
+}
