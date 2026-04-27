@@ -1,0 +1,38 @@
+{
+  "slug": "fred-pratt-heating",
+  "name": "Fred Pratt Heating & Air",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.9,
+  "reviewCount": 267,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Fred Pratt's site has no booking tool, contact form, or GMB booking button — phone-only contact.",
+      "observation": "Boise HVAC customers searching after hours are booking competitors who offer instant scheduling.",
+      "fix": "Deploy AI-powered 24/7 booking widget to capture leads when Fred's phones are closed."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected; 267 reviews suggest a large existing customer base.",
+      "observation": "Hundreds of past Boise customers receive zero seasonal tune-up reminders, leaving recurring revenue unclaimed.",
+      "fix": "Automate spring cooling and fall heating reminders via SMS and email to past customers."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture and CRM",
+      "signal": "Phone-only contact with zero CRM or marketing tools detected on Fred Pratt's website.",
+      "observation": "Every missed or unbooked call disappears permanently with no follow-up system in place.",
+      "fix": "Implement AI call capture that logs caller details and triggers automatic follow-up sequences."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://fredprattheating.com",
+  "ownerName": "Fred Pratt"
+}

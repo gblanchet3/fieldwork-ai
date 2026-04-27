@@ -1,0 +1,37 @@
+{
+  "slug": "custom-comfort-boise",
+  "name": "Custom Comfort Heating & Air",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "https://yourcustomcomfort.com/wp-content/uploads/2025/09/cc-favicon.png",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.7,
+  "reviewCount": 203,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected on site or GMB.",
+      "observation": "Boise customers searching after hours cannot book, sending leads to competitors.",
+      "fix": "Deploy AI chat widget with 24/7 self-scheduling tied to technician availability."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; phone-only contact is the sole inbound channel.",
+      "observation": "Every unbooked or missed call leaves zero record, losing revenue with no follow-up possible.",
+      "fix": "Implement AI call transcription and auto-CRM logging to capture every inbound lead."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "Seasonal HVAC business in Boise with no email marketing or automation tools detected.",
+      "observation": "Boise's cold winters and hot summers create prime seasonal tune-up demand going untapped.",
+      "fix": "Automate seasonal SMS and email reminders to past customers before peak heating and cooling seasons."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://customcomforthvac.com"
+}

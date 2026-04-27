@@ -1,0 +1,37 @@
+{
+  "slug": "air-masters-boise",
+  "name": "Air Masters",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.4,
+  "reviewCount": 118,
+  "opportunities": [
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "Air Masters has 118 Google reviews at 4.4 stars with zero detected owner responses.",
+      "observation": "Skipping responses signals indifference to customers and weakens Boise search ranking.",
+      "fix": "Deploy AI to auto-generate personalized HVAC-specific responses to every new review within hours."
+    },
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "No booking button, no contact form, and phone-only contact detected on Air Masters site.",
+      "observation": "Boise homeowners searching after hours for HVAC help are booking competitors with online options.",
+      "fix": "Add AI-powered 24/7 scheduling widget so leads book directly without waiting for a phone call."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected, and no loyalty signals found on Air Masters site.",
+      "observation": "Boise's cold winters and hot summers make seasonal tune-up reminders a high-conversion recurring revenue play.",
+      "fix": "Automate pre-season HVAC maintenance reminders via SMS and email to convert past customers into repeat revenue."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://airmastersboise.com"
+}

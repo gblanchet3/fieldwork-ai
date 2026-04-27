@@ -1,0 +1,38 @@
+{
+  "slug": "star-city-hvac",
+  "name": "Star City Heating & Air",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=starcityhvac.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#E31F26",
+  "googleRating": 4.3,
+  "reviewCount": 64,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Site is phone-only with no booking tool, form, or CRM detected.",
+      "observation": "Boise HVAC calls after hours go unanswered and directly to competitors.",
+      "fix": "Deploy AI chat scheduler on site to capture and book leads 24/7."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; phone-only contact with no digital intake.",
+      "observation": "Every unbooked or missed call is lost with zero data retained for follow-up.",
+      "fix": "Implement AI call recording and CRM capture to log every inbound lead automatically."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected on a seasonal HVAC business in Boise, Idaho.",
+      "observation": "Boise's harsh winters and hot summers create ideal recurring revenue potential going untapped.",
+      "fix": "Automate seasonal tune-up reminders via AI-driven email and SMS to past customers."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://starcityhvac.com",
+  "phone": "(000) 000-0000"
+}

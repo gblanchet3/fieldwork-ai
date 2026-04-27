@@ -140,7 +140,7 @@
     "googleRating": 4.7,
     "reviewCount": 203,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "idaho-air-pros",
@@ -151,7 +151,7 @@
     "googleRating": 4.8,
     "reviewCount": 156,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "efficient-systems-boise",
@@ -162,7 +162,7 @@
     "googleRating": 4.6,
     "reviewCount": 74,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "fred-pratt-heating",
@@ -173,7 +173,7 @@
     "googleRating": 4.9,
     "reviewCount": 267,
     "ownerName": "Fred Pratt",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "clearwater-mechanical",
@@ -184,7 +184,7 @@
     "googleRating": 4.5,
     "reviewCount": 93,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "treasure-valley-comfort",
@@ -195,7 +195,7 @@
     "googleRating": 4.7,
     "reviewCount": 145,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "air-masters-boise",
@@ -206,7 +206,7 @@
     "googleRating": 4.4,
     "reviewCount": 118,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "cascade-heating-cooling",
@@ -217,7 +217,7 @@
     "googleRating": 4.6,
     "reviewCount": 89,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "idaho-falls-hvac-boise",
@@ -228,7 +228,7 @@
     "googleRating": 4.5,
     "reviewCount": 76,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "star-city-hvac",
@@ -239,7 +239,7 @@
     "googleRating": 4.3,
     "reviewCount": 64,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "intermountain-mechanical",

@@ -1,0 +1,37 @@
+{
+  "slug": "treasure-valley-comfort",
+  "name": "Treasure Valley Comfort",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.7,
+  "reviewCount": 145,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Treasure Valley Comfort has no booking button, no contact form, and is phone-only.",
+      "observation": "Boise HVAC customers calling after hours are booking competitors with online scheduling instead.",
+      "fix": "Deploy an AI booking widget capturing appointment requests 24/7 without phone dependency."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected on site, with no recurring revenue signals evident.",
+      "observation": "Idaho's hot summers and cold winters create two annual tune-up opportunities being left uncaptured.",
+      "fix": "Automate seasonal reminder campaigns to past customers before Boise's summer and winter demand peaks."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture Automation",
+      "signal": "Phone-only contact with zero CRM or marketing tools detected across the entire website.",
+      "observation": "Every missed or unbooked call leaves no record, permanently losing that Treasure Valley lead.",
+      "fix": "Implement AI call capture logging caller details, intent, and follow-up tasks into an automated CRM."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://treasurevalleycomfort.com"
+}

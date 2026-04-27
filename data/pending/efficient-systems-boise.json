@@ -1,0 +1,37 @@
+{
+  "slug": "efficient-systems-boise",
+  "name": "Efficient Systems",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.6,
+  "reviewCount": 74,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected on site or GMB.",
+      "observation": "Boise HVAC customers searching after hours are booking competitors instead.",
+      "fix": "Deploy AI scheduling widget capturing leads 24/7 without requiring a phone call."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and no recurring revenue signals on site.",
+      "observation": "Existing customers in Boise are not being prompted for seasonal HVAC tune-ups.",
+      "fix": "Automate spring cooling and fall heating reminder campaigns to past customer list."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and phone-only contact model confirmed.",
+      "observation": "Every unbooked inbound call leaves no record, losing Boise leads permanently.",
+      "fix": "Implement AI call capture that logs caller info and intent directly into a CRM."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://efficientsystemsinc.com"
+}

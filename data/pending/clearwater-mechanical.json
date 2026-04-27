@@ -1,0 +1,37 @@
+{
+  "slug": "clearwater-mechanical",
+  "name": "Clearwater Mechanical",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "https://img1.wsimg.com/isteam/ip/static/pwa-app/logo-default.png/:/rs=w:57,h:57,m",
+  "heroPhotoUrl": "",
+  "brandColor": "#969696",
+  "googleRating": 4.5,
+  "reviewCount": 93,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact, no booking tools detected, and no online booking on site or GMB.",
+      "observation": "Boise HVAC customers searching after hours cannot book, sending leads to competitors.",
+      "fix": "Deploy an AI booking widget capturing after-hours HVAC service requests automatically."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and no recurring revenue signals on a 2017-era site.",
+      "observation": "Clearwater loses seasonal tune-up revenue with no automated spring or fall outreach.",
+      "fix": "Automate seasonal HVAC maintenance reminders via AI-triggered email and SMS campaigns."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM Automation",
+      "signal": "No CRM tools detected and phone-only contact means every unbooked call leaves no record.",
+      "observation": "Missed or unbooked calls from Boise homeowners are permanently lost with zero follow-up.",
+      "fix": "Implement AI call recording with automatic CRM capture and missed-call text-back responses."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://clearwatermechanical.com"
+}
