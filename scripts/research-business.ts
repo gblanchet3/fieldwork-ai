@@ -306,6 +306,8 @@ async function researchCompany(company: Company): Promise<void> {
       ogTitle: null,
       themeColor: null,
       faviconUrl: null,
+      phone: null,
+      email: null,
       rawSnippet: "",
     };
   }
