@@ -1,0 +1,222 @@
+[
+  {
+    "slug": "treasure-valley-hvac",
+    "name": "Treasure Valley HVAC",
+    "vertical": "hvac",
+    "website": "https://treasurevalleyhvac.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.6,
+    "reviewCount": 214,
+    "ownerName": "",
+    "status": "approved"
+  },
+  {
+    "slug": "capital-city-plumbing",
+    "name": "Capital City Plumbing",
+    "vertical": "plumbing",
+    "website": "https://capitalcityplumbing.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.3,
+    "reviewCount": 91,
+    "ownerName": "",
+    "status": "approved"
+  },
+  {
+    "slug": "prime-heating-air-boise",
+    "name": "Prime Heating & Air",
+    "vertical": "hvac",
+    "website": "https://primeheatingandair.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.8,
+    "reviewCount": 187,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "owyhee-heating-cooling",
+    "name": "Owyhee Heating & Cooling",
+    "vertical": "hvac",
+    "website": "https://owyheeheating.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.5,
+    "reviewCount": 143,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "horizon-air-boise",
+    "name": "Horizon Air",
+    "vertical": "hvac",
+    "website": "https://horizonairboise.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.4,
+    "reviewCount": 98,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "affordable-plumbing-boise",
+    "name": "Affordable Plumbing",
+    "vertical": "plumbing",
+    "website": "https://affordableplumbingboise.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.2,
+    "reviewCount": 76,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "premier-plumbing-boise",
+    "name": "Premier Plumbing",
+    "vertical": "plumbing",
+    "website": "https://premierplumbingboise.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.7,
+    "reviewCount": 231,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "american-air-heat-boise",
+    "name": "American Air & Heat",
+    "vertical": "hvac",
+    "website": "https://americanairandheat.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.3,
+    "reviewCount": 112,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "total-comfort-systems-boise",
+    "name": "Total Comfort Systems",
+    "vertical": "hvac",
+    "website": "https://totalcomfortsystems.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.6,
+    "reviewCount": 89,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "boise-rooter-plumbing",
+    "name": "Boise Rooter Plumbing",
+    "vertical": "plumbing",
+    "website": "https://boiseroote rplumbing.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.1,
+    "reviewCount": 67,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "lifetime-plumbing-boise",
+    "name": "Lifetime Plumbing",
+    "vertical": "plumbing",
+    "website": "https://lifetimeplumbingboise.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.5,
+    "reviewCount": 154,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "meridian-hvac-pros",
+    "name": "Meridian HVAC Pros",
+    "vertical": "hvac",
+    "website": "https://meridianhvacpros.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.4,
+    "reviewCount": 73,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "eagle-plumbing-services",
+    "name": "Eagle Plumbing Services",
+    "vertical": "plumbing",
+    "website": "https://eagleplumbingservices.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.6,
+    "reviewCount": 118,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "nampa-heating-air",
+    "name": "Nampa Heating & Air",
+    "vertical": "hvac",
+    "website": "https://nampaheatingandair.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.3,
+    "reviewCount": 86,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "idaho-comfort-hvac",
+    "name": "Idaho Comfort HVAC",
+    "vertical": "hvac",
+    "website": "https://idahocomforthvac.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.5,
+    "reviewCount": 201,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "treasure-valley-plumbing",
+    "name": "Treasure Valley Plumbing",
+    "vertical": "plumbing",
+    "website": "https://treasurevalleyplumbing.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.4,
+    "reviewCount": 163,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "boise-air-masters",
+    "name": "Boise Air Masters",
+    "vertical": "hvac",
+    "website": "https://boiseairmasters.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.2,
+    "reviewCount": 58,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "clear-flow-plumbing",
+    "name": "Clear Flow Plumbing",
+    "vertical": "plumbing",
+    "website": "https://clearflowplumbing.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.7,
+    "reviewCount": 94,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "high-desert-hvac",
+    "name": "High Desert HVAC",
+    "vertical": "hvac",
+    "website": "https://highdeserthvac.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.4,
+    "reviewCount": 139,
+    "ownerName": "",
+    "status": "pending"
+  },
+  {
+    "slug": "foothills-plumbing-boise",
+    "name": "Foothills Plumbing",
+    "vertical": "plumbing",
+    "website": "https://foothillsplumbing.com",
+    "googleMapsUrl": "",
+    "googleRating": 4.6,
+    "reviewCount": 82,
+    "ownerName": "",
+    "status": "pending"
+  }
+]
