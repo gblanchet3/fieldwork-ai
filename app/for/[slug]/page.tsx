@@ -36,7 +36,7 @@ function loadPendingSlugs(): string[] {
 export async function generateStaticParams() {
   const approvedSlugs = (businesses as Business[]).map((b) => b.slug);
   const pendingSlugs = loadPendingSlugs();
-  const allSlugs = [...new Set([...approvedSlugs, ...pendingSlugs])];
+  const allSlugs = Array.from(new Set([...approvedSlugs, ...pendingSlugs]));
   return allSlugs.map((slug) => ({ slug }));
 }
 
