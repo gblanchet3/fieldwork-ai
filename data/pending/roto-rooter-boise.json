@@ -1,0 +1,37 @@
+{
+  "slug": "roto-rooter-boise",
+  "name": "Roto-Rooter Boise",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://rotorooter.com/favicon.ico",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.3,
+  "reviewCount": 412,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected on site or GMB listing.",
+      "observation": "After-hours plumbing emergencies in Boise go to competitors who offer instant booking.",
+      "fix": "Deploy AI chat booking widget to capture drain and plumbing jobs 24/7 without staff."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and zero online contact options beyond phone.",
+      "observation": "Every unbooked or missed call leaves no record, losing Boise leads permanently.",
+      "fix": "Implement AI call logging and CRM capture to store every caller's job details automatically."
+    },
+    {
+      "type": "customer-reactivation",
+      "label": "Dormant Customer Reactivation",
+      "signal": "412 reviews indicate large historical customer base with no email marketing tools detected.",
+      "observation": "Roto-Rooter Boise has a dormant customer pool generating zero repeat or referral revenue.",
+      "fix": "Use AI to segment past customers and send automated drain maintenance reactivation campaigns."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://rotorooter.com/boise"
+}

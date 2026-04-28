@@ -1,0 +1,38 @@
+{
+  "slug": "viking-plumbing-boise",
+  "name": "Viking Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=vikingplumbingboise.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#5A5A5A",
+  "googleRating": 4.7,
+  "reviewCount": 189,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Viking Plumbing is phone-only with no booking tool detected on site or GMB.",
+      "observation": "After-hours plumbing emergencies go to competitors who offer instant online booking.",
+      "fix": "Deploy an AI booking widget capturing emergency and scheduled jobs 24/7 without calls."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; all contact is phone-only at (208) 369-9933.",
+      "observation": "Every unanswered or unbooked call from 35 years of Boise customers is lost forever.",
+      "fix": "Implement AI call capture and CRM logging to record, transcribe, and follow up every inquiry."
+    },
+    {
+      "type": "customer-reactivation",
+      "label": "Dormant Customer Reactivation",
+      "signal": "35-year-old business with only 189 reviews signals a large dormant customer base.",
+      "observation": "Thousands of past Boise customers receive zero outreach, leaving recurring revenue uncaptured.",
+      "fix": "Run AI-driven reactivation campaigns targeting past customers with seasonal plumbing service offers."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://vikingplumbingboise.com",
+  "phone": "(208) 369-9933"
+}

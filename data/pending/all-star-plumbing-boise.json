@@ -1,0 +1,38 @@
+{
+  "slug": "all-star-plumbing-boise",
+  "name": "All Star Plumbing & Restoration",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://allstarplumbingandrestoration.com/wp-content/uploads/2025/11/cropped-AllStarPlumbingRestoration-PlumberLogo-32x32.jpg",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.5,
+  "reviewCount": 143,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "No booking tool detected on site despite offering 24/7 emergency plumbing across 9 Treasure Valley cities.",
+      "observation": "After-hours emergency calls with no self-serve booking likely convert to competitors with instant confirmation.",
+      "fix": "Deploy AI-powered scheduling widget tied to service area and job type for 24/7 self-booking."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; phone-first contact with zero digital lead tracking infrastructure.",
+      "observation": "20 years of customer calls leave no retrievable data, making every missed call a permanently lost lead.",
+      "fix": "Implement AI call recording with auto-transcription and CRM capture to log every inbound Boise-area inquiry."
+    },
+    {
+      "type": "customer-reactivation",
+      "label": "Dormant Customer Reactivation",
+      "signal": "20-year-old business with only 143 reviews signals a large silent customer base never re-engaged.",
+      "observation": "Thousands of past Treasure Valley customers receive no outreach, leaving repeat and referral revenue untapped.",
+      "fix": "Use AI to segment past customers by job type and trigger personalized reactivation offers for seasonal plumbing needs."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://allstarplumbingandrestoration.com",
+  "phone": "(208) 377-0113"
+}

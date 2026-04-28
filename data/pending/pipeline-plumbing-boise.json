@@ -1,0 +1,37 @@
+{
+  "slug": "pipeline-plumbing-boise",
+  "name": "Pipeline Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.6,
+  "reviewCount": 156,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected on site or GMB profile.",
+      "observation": "After-hours plumbing calls in Boise go unanswered, sending urgent leads to competitors.",
+      "fix": "Deploy AI-powered 24/7 booking widget to capture and confirm appointments automatically."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and phone-only contact method confirmed.",
+      "observation": "Every unbooked or missed call from Boise customers is lost with zero follow-up possible.",
+      "fix": "Implement AI call capture that logs caller details and triggers automatic follow-up sequences."
+    },
+    {
+      "type": "customer-reactivation",
+      "label": "Customer Reactivation Campaign",
+      "signal": "156 reviews suggest an established customer base with no email marketing or re-engagement tools evident.",
+      "observation": "Pipeline Plumbing has a dormant Boise customer list generating zero repeat or referral revenue.",
+      "fix": "Use AI to identify lapsed customers and send automated seasonal reactivation outreach campaigns."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://pipelineplumbingidaho.com"
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "boise-plumbing-heating",
+  "name": "Boise Plumbing & Heating",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.4,
+  "reviewCount": 98,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected and no online booking capability on site.",
+      "observation": "After-hours plumbing calls in Boise go unanswered, sending emergency leads to competitors.",
+      "fix": "Deploy AI-powered 24/7 booking widget to capture and confirm plumbing appointments automatically."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "98 Google reviews at 4.4 stars with no CRM or reputation tools detected on site.",
+      "observation": "Unanswered reviews signal disengagement to Boise customers researching local plumbers.",
+      "fix": "Automate personalized review responses using AI trained on Boise Plumbing's service language and tone."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Recording CRM Capture",
+      "signal": "Phone-only contact with zero CRM or marketing tools detected across the entire website.",
+      "observation": "Every unbooked or missed call is lost with no record, follow-up, or recovery possible.",
+      "fix": "Implement AI call capture and CRM logging to track, transcribe, and follow up every inbound call."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://boiseplumbingandheating.com"
+}

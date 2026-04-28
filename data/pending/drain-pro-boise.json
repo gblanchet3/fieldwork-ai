@@ -1,0 +1,37 @@
+{
+  "slug": "drain-pro-boise",
+  "name": "Drain Pro Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.8,
+  "reviewCount": 234,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Drain Pro has no booking button, no contact form, and is phone-only contact.",
+      "observation": "After-hours plumbing emergencies in Boise go to competitors with online booking.",
+      "fix": "Deploy AI scheduling widget to capture emergency drain calls 24/7 without phone staff."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and zero digital intake beyond a phone number.",
+      "observation": "Every unbooked or missed call from Boise customers is lost with no follow-up possible.",
+      "fix": "Implement AI call capture and CRM logging to record, transcribe, and tag every inbound call."
+    },
+    {
+      "type": "after-service-follow-up",
+      "label": "Post-Job Follow Up",
+      "signal": "234 reviews at 4.8 stars but no review-request patterns or loyalty signals detected.",
+      "observation": "Drain Pro earns strong satisfaction but leaves repeat business and referrals on the table.",
+      "fix": "Automate post-job SMS sequences to request reviews and offer seasonal drain maintenance bookings."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://drainproboise.com"
+}

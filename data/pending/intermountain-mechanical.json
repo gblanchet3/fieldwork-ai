@@ -1,0 +1,37 @@
+{
+  "slug": "intermountain-mechanical",
+  "name": "Intermountain Mechanical",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.7,
+  "reviewCount": 132,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Intermountain Mechanical has no booking button, no contact form, and is phone-only.",
+      "observation": "Boise HVAC customers searching after hours book competitors with online scheduling instead.",
+      "fix": "Deploy AI-powered booking widget capturing leads 24/7 without requiring a phone call."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools or CRM detected, and no recurring revenue signals on site.",
+      "observation": "Intermountain leaves seasonal tune-up revenue on the table with no automated customer outreach.",
+      "fix": "Automate pre-season HVAC maintenance reminders via SMS and email to existing customer list."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM Automation",
+      "signal": "Phone-only contact with zero CRM or marketing tools detected on site or GMB.",
+      "observation": "Every missed or unbooked call from Boise homeowners is permanently lost with no follow-up possible.",
+      "fix": "Implement AI call capture and CRM logging to record, tag, and follow up every inbound call."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://intermountainmechanical.com"
+}

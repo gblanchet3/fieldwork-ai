@@ -1,0 +1,37 @@
+{
+  "slug": "noble-mechanical-boise",
+  "name": "Noble Mechanical",
+  "vertical": "hvac",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.8,
+  "reviewCount": 87,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Noble Mechanical has no booking tool, contact form, or online scheduling — phone-only contact.",
+      "observation": "After-hours HVAC calls in Boise go unanswered, sending leads directly to competitors.",
+      "fix": "Deploy AI-powered 24/7 booking widget to capture appointments without phone dependency."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "87 Google reviews at 4.8 stars with no detected owner response pattern on the profile.",
+      "observation": "Skipping responses on 87 reviews signals low engagement and risks reputation erosion.",
+      "fix": "Automate personalized review replies using AI trained on Noble Mechanical's tone and services."
+    },
+    {
+      "type": "preventive-maintenance-reminders",
+      "label": "Maintenance Reminder Automation",
+      "signal": "No email marketing tools detected and no recurring service signals on site or GMB.",
+      "observation": "Boise's seasonal HVAC demand means past customers are untapped recurring revenue each spring and fall.",
+      "fix": "Automate seasonal tune-up reminders via SMS and email triggered by last service date."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://noblemechanicalboise.com"
+}
