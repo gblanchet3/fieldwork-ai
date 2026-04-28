@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import fs from "fs";
+import path from "path";
 import businesses from "@/data/businesses.json";
 import { Business } from "@/lib/types";
 import ForHero from "@/components/for/ForHero";
@@ -10,8 +12,32 @@ import ForCTA from "@/components/for/ForCTA";
 
 export const dynamicParams = false;
 
+function loadPendingBusiness(slug: string): Business | null {
+  try {
+    const p = path.join(process.cwd(), "data", "pending", `${slug}.json`);
+    return JSON.parse(fs.readFileSync(p, "utf-8")) as Business;
+  } catch {
+    return null;
+  }
+}
+
+function loadPendingSlugs(): string[] {
+  try {
+    const dir = path.join(process.cwd(), "data", "pending");
+    return fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith(".json") && f !== ".gitkeep")
+      .map((f) => f.replace(".json", ""));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateStaticParams() {
-  return (businesses as Business[]).map((b) => ({ slug: b.slug }));
+  const approvedSlugs = (businesses as Business[]).map((b) => b.slug);
+  const pendingSlugs = loadPendingSlugs();
+  const allSlugs = [...new Set([...approvedSlugs, ...pendingSlugs])];
+  return allSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -19,7 +45,9 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const business = (businesses as Business[]).find((b) => b.slug === params.slug);
+  const business =
+    (businesses as Business[]).find((b) => b.slug === params.slug) ??
+    loadPendingBusiness(params.slug);
   if (!business) return {};
   return {
     title: `AI Analysis for ${business.name} — Fieldwork AI`,
@@ -29,7 +57,9 @@ export async function generateMetadata({
 }
 
 export default function BusinessPage({ params }: { params: { slug: string } }) {
-  const business = (businesses as Business[]).find((b) => b.slug === params.slug);
+  const business =
+    (businesses as Business[]).find((b) => b.slug === params.slug) ??
+    loadPendingBusiness(params.slug);
   if (!business) notFound();
 
   const accent = business.brandColor || "#D97B2A";
