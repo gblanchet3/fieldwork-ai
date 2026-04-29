@@ -1,0 +1,37 @@
+{
+  "slug": "first-choice-plumbing-boise",
+  "name": "First Choice Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.6,
+  "reviewCount": 134,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected and no online booking capability.",
+      "observation": "Boise customers searching after hours book competitors with instant online scheduling instead.",
+      "fix": "Deploy AI booking widget capturing job type, location, and urgency 24/7 without staff."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; phone-only contact means zero digital lead tracking.",
+      "observation": "Every missed or unbooked call from Boise prospects vanishes with no follow-up possible.",
+      "fix": "Implement AI call capture logging caller info, job details, and follow-up tasks automatically."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "134 Google reviews at 4.6 stars with no evidence of owner response activity.",
+      "observation": "Skipping responses signals disengagement, risking reputation erosion in a competitive Boise market.",
+      "fix": "Automate personalized review responses referencing job type and reviewer name within hours."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://firstchoiceplumbingboise.com"
+}

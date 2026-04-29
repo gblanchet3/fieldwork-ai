@@ -360,7 +360,7 @@
     "googleRating": 4.2,
     "reviewCount": 87,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "idaho-plumbing-pros",
@@ -371,7 +371,7 @@
     "googleRating": 4.8,
     "reviewCount": 112,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "tru-flow-plumbing",
@@ -382,7 +382,7 @@
     "googleRating": 4.5,
     "reviewCount": 76,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "first-choice-plumbing-boise",
@@ -393,7 +393,7 @@
     "googleRating": 4.6,
     "reviewCount": 134,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "bluefrog-plumbing-boise",
@@ -404,7 +404,7 @@
     "googleRating": 4.7,
     "reviewCount": 298,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "affordable-plumbing-boise",
@@ -426,7 +426,7 @@
     "googleRating": 4.9,
     "reviewCount": 167,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "mainstream-plumbing-boise",
@@ -437,7 +437,7 @@
     "googleRating": 4.6,
     "reviewCount": 89,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "just-plumbing-boise",
@@ -448,7 +448,7 @@
     "googleRating": 4.5,
     "reviewCount": 54,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "idaho-master-plumbing",
@@ -459,7 +459,7 @@
     "googleRating": 4.7,
     "reviewCount": 121,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   },
   {
     "slug": "meridian-plumbing-pros",
@@ -470,6 +470,6 @@
     "googleRating": 4.4,
     "reviewCount": 68,
     "ownerName": "",
-    "status": "pending"
+    "status": "researched"
   }
 ]

@@ -1,0 +1,37 @@
+{
+  "slug": "goode-plumbing-boise",
+  "name": "Goode Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=goodeplumbing.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.9,
+  "reviewCount": 167,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected and no online booking capability on site.",
+      "observation": "After-hours plumbing leads in Boise go to competitors who offer instant online booking.",
+      "fix": "Deploy AI-powered 24/7 booking widget so Boise customers self-schedule without calling."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and phone-only contact means zero digital lead tracking.",
+      "observation": "Every missed or unbooked call is permanently lost with no follow-up possible.",
+      "fix": "Implement AI call capture and CRM logging to record, transcribe, and follow up every inbound call."
+    },
+    {
+      "type": "after-service-follow-up",
+      "label": "Post-Job Follow-Up",
+      "signal": "167 reviews at 4.9 stars but no review-request automation or post-job marketing tools detected.",
+      "observation": "Strong reputation exists but is growing slowly without systematic review solicitation after each job.",
+      "fix": "Automate post-job SMS sequences to request Google reviews and prompt repeat bookings in Boise."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://goodeplumbing.com"
+}

@@ -1,0 +1,37 @@
+{
+  "slug": "just-plumbing-boise",
+  "name": "Just Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.5,
+  "reviewCount": 54,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "No booking button, no online booking tools, and phone-only contact detected on site.",
+      "observation": "After-hours plumbing calls in Boise go unanswered, sending urgent leads to competitors.",
+      "fix": "Deploy AI scheduling widget to capture and confirm appointments 24/7 without staff."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "Just Plumbing has 54 Google reviews with a 4.5 rating and zero owner responses detected.",
+      "observation": "Ignored reviews signal low engagement, risking reputation erosion in a trust-driven trade.",
+      "fix": "Automate personalized Google review replies using AI trained on plumbing service context."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected, and the business relies entirely on phone contact.",
+      "observation": "Every missed or unbooked call leaves zero record, losing potential Boise plumbing customers forever.",
+      "fix": "Implement AI call capture and CRM logging to record, transcribe, and follow up every call."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://justplumbingboise.com"
+}

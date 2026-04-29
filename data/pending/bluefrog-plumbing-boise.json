@@ -1,0 +1,37 @@
+{
+  "slug": "bluefrog-plumbing-boise",
+  "name": "bluefrog Plumbing + Drain of Boise",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.7,
+  "reviewCount": 298,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected on site or GMB profile.",
+      "observation": "Boise homeowners searching after hours are booking bluefrog competitors with online scheduling.",
+      "fix": "Deploy AI booking widget capturing drain and plumbing jobs 24/7 without phone dependency."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "298 Google reviews at 4.7 stars with no detected owner response pattern or CRM tools.",
+      "observation": "Hundreds of unanswered reviews signal missed trust-building with future Boise customers.",
+      "fix": "Automate personalized GMB review replies using AI trained on plumbing service context."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and phone-only contact is the sole inbound channel.",
+      "observation": "Every unbooked or missed call from Boise leads vanishes with no follow-up capability.",
+      "fix": "Implement AI call recording with auto-CRM capture to log, score, and follow up every lead."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://bluefrogplumbing.com/boise"
+}

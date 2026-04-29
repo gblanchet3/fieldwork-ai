@@ -1,0 +1,37 @@
+{
+  "slug": "idaho-plumbing-pros",
+  "name": "Idaho Plumbing Pros",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.8,
+  "reviewCount": 112,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Phone-only contact with no booking tools detected and no online booking capability.",
+      "observation": "Boise customers searching after hours book competitors with instant online scheduling instead.",
+      "fix": "Deploy AI-powered booking widget capturing job type, location, and urgency 24/7."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and phone-only contact confirms zero digital lead tracking.",
+      "observation": "Every missed or unbooked call from Boise leads vanishes with no follow-up possible.",
+      "fix": "Integrate AI call logging to auto-capture caller info, job details, and follow-up triggers."
+    },
+    {
+      "type": "after-service-follow-up",
+      "label": "Post-Job Follow-Up",
+      "signal": "112 reviews at 4.8 stars but no review-request patterns or marketing tools detected.",
+      "observation": "Strong reputation is growing only by chance, not through any systematic outreach process.",
+      "fix": "Automate post-job SMS sequence requesting Google reviews and scheduling next maintenance visit."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://idahoplumbingpros.com"
+}

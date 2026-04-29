@@ -1,0 +1,38 @@
+{
+  "slug": "rescue-rooter-boise",
+  "name": "Rescue Rooter Boise",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.ars.com/media/dxufib1w/nav-logo-tag.png?width=144&amp;height=144&amp;format=webp&amp;v=1dcab744b6a83a0&amp;hmac=5929fe69a50d4a752e8c4eaac34669c78e4c5a7e0a4a9f80aa5af2dc19fb52fa",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.2,
+  "reviewCount": 87,
+  "opportunities": [
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "87 Google reviews at 4.2 stars with no visible owner response pattern detected.",
+      "observation": "Unanswered reviews signal neglect to prospects and suppress local search ranking.",
+      "fix": "Deploy AI to auto-generate and post branded responses to all new Rescue Rooter Boise reviews."
+    },
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "Site is phone-only with no booking tool, contact form, or GMB booking button detected.",
+      "observation": "After-hours plumbing emergencies go to competitors who offer instant online booking.",
+      "fix": "Add AI-powered 24/7 chat or booking widget to capture leads when phones go unanswered."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and the entire contact method is a single phone number.",
+      "observation": "Every unbooked or missed call leaves zero customer data, killing follow-up and reactivation.",
+      "fix": "Implement AI call recording with auto-CRM logging to capture every caller's name and need."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://rescuerooter.com",
+  "phone": "(866) 399-2885"
+}

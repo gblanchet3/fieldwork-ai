@@ -1,0 +1,38 @@
+{
+  "slug": "mainstream-plumbing-boise",
+  "name": "Mainstream Plumbing",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "https://www.google.com/s2/favicons?domain=mainstreampro.com&sz=128",
+  "heroPhotoUrl": "",
+  "brandColor": "#4e73b7",
+  "googleRating": 4.6,
+  "reviewCount": 89,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "No booking tool detected and website domain is parked for sale on HugeDomains.",
+      "observation": "Mainstream Plumbing has no web presence to capture after-hours Boise plumbing leads.",
+      "fix": "Deploy AI booking widget on a new site to capture and confirm jobs 24/7."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected and the business website is completely non-functional.",
+      "observation": "Every inbound call from 89 Google reviews worth of traffic is untracked and potentially lost.",
+      "fix": "Implement AI call capture with automatic CRM logging to recover every missed Boise lead."
+    },
+    {
+      "type": "review-response-automation",
+      "label": "Review Response Automation",
+      "signal": "4.6 rating across 89 reviews with no detectable owner response activity or reputation tools.",
+      "observation": "Unresponded reviews signal disengagement to prospective Boise customers comparing local plumbers.",
+      "fix": "Automate personalized AI responses to new reviews within hours to protect the 4.6 rating."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://mainstreampro.com",
+  "phone": "(303) 893-0552"
+}

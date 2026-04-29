@@ -1,0 +1,37 @@
+{
+  "slug": "meridian-plumbing-pros",
+  "name": "Meridian Plumbing Pros",
+  "vertical": "plumbing",
+  "city": "Boise, ID",
+  "logoUrl": "",
+  "heroPhotoUrl": "",
+  "brandColor": "#D97B2A",
+  "googleRating": 4.4,
+  "reviewCount": 68,
+  "opportunities": [
+    {
+      "type": "online-scheduling",
+      "label": "Online Scheduling Automation",
+      "signal": "No booking button, no online booking tools detected, and phone-only contact confirmed.",
+      "observation": "Boise customers searching after hours cannot book, sending leads directly to competitors.",
+      "fix": "Deploy AI-powered 24/7 scheduling widget to capture and confirm plumbing appointments automatically."
+    },
+    {
+      "type": "call-recording-crm-capture",
+      "label": "Call Capture CRM",
+      "signal": "No CRM or marketing tools detected; phone-only contact means all leads exist only in memory.",
+      "observation": "Every unbooked or missed call from a Boise homeowner is permanently lost with no follow-up possible.",
+      "fix": "Implement AI call capture with automatic CRM logging to record every inbound lead and inquiry."
+    },
+    {
+      "type": "after-service-follow-up",
+      "label": "Post-Job Follow-Up",
+      "signal": "Only 68 reviews despite operating in Boise market with no automated review-request patterns evident.",
+      "observation": "Low review velocity suggests completed jobs generate no automated touchpoints, leaving reputation growth stalled.",
+      "fix": "Automate post-job SMS sequences requesting Google reviews and repeat service bookings from satisfied customers."
+    }
+  ],
+  "calendlyUrl": "https://cal.com/gabe-blanchet-p3vzks/30min",
+  "coachingUrl": "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
+  "website": "https://meridianplumbingpros.com"
+}
