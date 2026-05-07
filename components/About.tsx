@@ -1,12 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
-};
 
 const itemVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -24,50 +21,53 @@ export default function About() {
           ref={ref}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          variants={containerVariants}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
           className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start"
         >
-          {/* Text column */}
           <div>
-            <motion.p variants={itemVariants} className="section-label text-amber mb-4">
-              Who we are
-            </motion.p>
-
+            <motion.p variants={itemVariants} className="section-label text-amber mb-4">Who I am</motion.p>
             <motion.h2
               id="about-heading"
               variants={itemVariants}
-              className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-8"
+              className="font-syne font-semibold text-3xl md:text-5xl tracking-tighter text-slate mb-8 leading-tight"
             >
-              Operators who build.
+              I'm Gabe. I build with people, not for them.
             </motion.h2>
 
-            <motion.p variants={itemVariants} className="font-inter text-base leading-body text-steel mb-6">
-              Fieldwork AI was founded by operators with backgrounds in product development, venture-backed startups, and SMB consulting. We've built software products from zero to acquisition, led product teams at legal SaaS companies, and helped businesses across construction, home services, and professional services run better.
+            <motion.p variants={itemVariants} className="font-inter text-base leading-body text-steel mb-5">
+              I trained as a mechanical engineer at MIT, then spent the next decade building software companies — Grove Labs (acquired by LG), Imbellus, Revonate (CTO), Maxable (CEO), and most recently LeanLaw, where I led product through the company's pivot from SaaS billing into payments and financial services.
             </motion.p>
 
-            <motion.p variants={itemVariants} className="font-inter text-base leading-body text-steel">
-              We don't pitch decks — we build systems.
+            <motion.p variants={itemVariants} className="font-inter text-base leading-body text-steel mb-5">
+              Somewhere in there I walked the Appalachian Trail. 2,181 miles. Six months. The most useful thing it taught me: the right pack is the one you can actually carry.
             </motion.p>
+
+            <motion.p variants={itemVariants} className="font-inter text-base leading-body text-steel mb-8">
+              I think about software the same way. The right system is the one you can actually run.
+            </motion.p>
+
+            <motion.div variants={itemVariants}>
+              <Link
+                href="/about"
+                className="font-inter text-sm font-medium border border-slate/30 text-slate px-6 py-3 hover:bg-slate hover:text-white transition-colors inline-block"
+              >
+                More about me →
+              </Link>
+            </motion.div>
           </div>
 
-          {/* Photo placeholder */}
           <motion.div variants={itemVariants} className="flex flex-col gap-4">
-            <div
-              className="aspect-[4/3] border border-dust bg-white flex items-center justify-center"
-              role="img"
-              aria-label="Founder photo placeholder"
-            >
-              {/* TODO: Replace with <Image src="/founder.jpg" alt="Founder photo" fill className="object-cover" /> when photo is ready */}
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-dust mx-auto mb-3 flex items-center justify-center">
-                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                    <circle cx="14" cy="10" r="5" stroke="#4A5568" strokeWidth="1.5" />
-                    <path d="M4 27c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="#4A5568" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <p className="font-inter text-xs text-steel/50">Founder photo</p>
-              </div>
+            <div className="aspect-[4/5] border border-dust bg-white relative overflow-hidden">
+              <Image
+                src="/founder.jpeg"
+                alt="Gabe Blanchet, founder of Fieldwork AI"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={false}
+              />
             </div>
+            <p className="font-inter text-xs text-steel/60 italic">Boise, Idaho. Husband, father of two, builder by training.</p>
           </motion.div>
         </motion.div>
       </div>

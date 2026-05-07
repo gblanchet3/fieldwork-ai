@@ -17,13 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fieldwork AI — AI consulting & development for service businesses",
+  title: "Fieldwork AI — Personalized AI coaching & implementation",
   description:
-    "We build the AI systems that maximize EBITDA, eliminate key-person risk, and position your business to command a premium at exit.",
+    "I help founders, operators, and investment teams use AI as a portable advantage they own. Sovereignty over subscriptions. Hand-holding over hype. Build with you, not for you.",
   openGraph: {
     title: "Fieldwork AI",
     description:
-      "AI systems for service businesses. Maximize EBITDA, eliminate key-person risk, command a premium at exit.",
+      "Personalized AI coaching & implementation. Sovereignty over subscriptions. Hand-holding over hype.",
     type: "website",
   },
 };

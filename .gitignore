@@ -25,3 +25,6 @@ yarn-error.log*
 
 # Vercel
 .vercel
+
+# Claude worktrees (temporary parallel work)
+.claude/worktrees/

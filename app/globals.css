@@ -33,6 +33,41 @@
     @apply font-inter text-[11px] font-medium uppercase tracking-[0.08em];
   }
 
+  /* Larger, easier-to-grab range slider thumbs */
+  .level-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  .level-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--amber);
+    cursor: grab;
+    border: 3px solid var(--bone);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    transition: transform 0.15s ease;
+  }
+  .level-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
+  .level-slider::-webkit-slider-thumb:active { cursor: grabbing; transform: scale(1.15); }
+  .level-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--amber);
+    cursor: grab;
+    border: 3px solid var(--bone);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .level-slider.on-light::-webkit-slider-thumb { border-color: #FFFFFF; }
+  .level-slider.on-light::-moz-range-thumb { border-color: #FFFFFF; }
+
   .hero-grid {
     background-image:
       linear-gradient(to right, #1A3A2A 1px, transparent 1px),
