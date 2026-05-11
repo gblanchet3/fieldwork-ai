@@ -81,7 +81,7 @@ function LevelTrack({
               <button
                 key={l.level}
                 onClick={() => setValue(l.level)}
-                className={`py-2.5 px-1 text-center transition-all ${
+                className={`py-2.5 px-1 text-center transition-all flex flex-col items-center justify-start gap-1 min-h-[60px] ${
                   active
                     ? "bg-amber text-white"
                     : "bg-transparent text-bone/50 hover:text-white hover:bg-white/5"
@@ -89,8 +89,8 @@ function LevelTrack({
                 aria-label={`Level ${l.level} — ${l.name}`}
                 aria-pressed={active}
               >
-                <span className="font-syne font-semibold text-base md:text-base block leading-none">{l.level}</span>
-                <span className="font-inter text-[9px] uppercase tracking-wider mt-1 leading-none truncate hidden sm:block">
+                <span className="font-syne font-semibold text-base block leading-none">{l.level}</span>
+                <span className="font-inter text-[9px] uppercase tracking-wider leading-[1.2] hidden sm:block break-words hyphens-auto px-0.5">
                   {l.name.split(" / ")[0]}
                 </span>
               </button>
