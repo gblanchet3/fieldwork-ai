@@ -89,8 +89,8 @@ function LevelTrack({
                 aria-label={`Level ${l.level} — ${l.name}`}
                 aria-pressed={active}
               >
-                <span className="font-syne font-semibold text-sm md:text-base block leading-none">{l.level}</span>
-                <span className="font-inter text-[9px] uppercase tracking-wider mt-1 block leading-none truncate">
+                <span className="font-syne font-semibold text-base md:text-base block leading-none">{l.level}</span>
+                <span className="font-inter text-[9px] uppercase tracking-wider mt-1 leading-none truncate hidden sm:block">
                   {l.name.split(" / ")[0]}
                 </span>
               </button>

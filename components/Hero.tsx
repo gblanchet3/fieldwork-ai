@@ -28,7 +28,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-20 md:pt-32 md:pb-24 w-full">
         <motion.div initial="hidden" animate="visible" className="max-w-4xl">
           <motion.p custom={0} variants={fadeUp} className="section-label text-amber mb-6">
-            Personalized AI coaching &amp; implementation
+            Operator-led AI. In the field.
           </motion.p>
 
           <motion.h1
@@ -37,9 +37,9 @@ export default function Hero() {
             variants={fadeUp}
             className="font-syne font-semibold text-5xl md:text-6xl lg:text-7xl tracking-tightest text-white leading-[1.05] mb-6"
           >
-            AI is everywhere on your feed.
+            You're using AI.
             <br />
-            <span className="amber-underline text-white">Almost nowhere in your week.</span>
+            <span className="amber-underline text-white">It's a tab, not a teammate.</span>
           </motion.h1>
 
           <motion.p
@@ -48,7 +48,7 @@ export default function Hero() {
             className="font-inter text-lg md:text-xl leading-body max-w-2xl mb-10"
             style={{ color: "rgba(240,235,225,0.7)" }}
           >
-            You see what's possible — every LinkedIn post, every demo, every breathless thread. You don't have the time, the permission, or the right guide to actually use it on your work. I do that part with you. You keep everything we make.
+            Whatever the gap is — fluency, strategy, or shipping — we close it on your actual work.
           </motion.p>
 
           <motion.div custom={3} variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
@@ -65,6 +65,15 @@ export default function Hero() {
               Talk to me
             </Link>
           </motion.div>
+
+          <motion.p
+            custom={4}
+            variants={fadeUp}
+            className="font-inter text-sm mt-8"
+            style={{ color: "rgba(240,235,225,0.5)" }}
+          >
+            MIT engineer. Built and sold companies. Now in the field with operators.
+          </motion.p>
         </motion.div>
       </div>
 
