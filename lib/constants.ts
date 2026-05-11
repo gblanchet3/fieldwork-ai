@@ -39,16 +39,16 @@ export const CUSTOMERS_DROPDOWN = [
 // --- Home: Principles ---
 export const PRINCIPLES = [
   {
-    title: "Sovereignty over subscriptions",
-    body: "SaaS is the old contract — you rent capability, they keep your data. AI is the new contract — you own the context, the prompts, the harness. Models will get smarter and cheaper every quarter. The companies that own their own scaffolding will compound. The ones who don't will be paying $60K/year forever.",
+    title: "Sovereignty.",
+    body: "We teach the fundamentals — prompts, context, agents, harnesses — not which SaaS vendor has \"AI\" stickered on the box. Models get smarter and cheaper every quarter. Teams that own their fluency compound. Teams renting it forever don't.",
   },
   {
-    title: "Hand-holding over hype",
-    body: "A course can't watch you struggle and adjust. A YouTube video doesn't know your business. I sit with you, in real time, on the actual work. You get my Signal. Weekly standups. A decision log you keep when we're done. The opposite of a $299 cohort.",
+    title: "Coaching, not building.",
+    body: "We try not to build for you — we coach you and co-build with you. The point is your team leaves with the skills, not a dependency on us. Otherwise we're just another vendor.",
   },
   {
-    title: "Build with you, not for you",
-    body: "The point isn't to make you dependent on me. It's to make your team capable. Every engagement is designed to leave you running — not waiting for the next invoice. If I do my job right, you'll need me less over time, not more.",
+    title: "Operator-rooted.",
+    body: "We've been in the seat — built products, shipped to production, raised capital, sold companies. The coaching comes from scars, not slides.",
   },
 ] as const;
 

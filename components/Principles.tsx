@@ -23,7 +23,7 @@ export default function Principles() {
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <motion.div ref={ref} initial="hidden" animate={inView ? "visible" : "hidden"} variants={containerVariants}>
           <motion.p variants={itemVariants} className="section-label text-amber mb-4">
-            What I believe
+            What makes Fieldwork different
           </motion.p>
           <motion.h2
             id="principles-heading"
