@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { PERSONAL_LEVELS, COMPANY_LEVELS, type LevelData } from "@/lib/constants";
+
+const LEVEL_EVENT = "fieldwork:level-change";
 
 type Track = "personal" | "company";
 
@@ -140,6 +142,17 @@ export default function Calculator() {
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const [pLevel, setPLevel] = useState(2);
   const [cLevel, setCLevel] = useState(2);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem("fw:personalLevel", String(pLevel));
+      window.localStorage.setItem("fw:companyLevel", String(cLevel));
+      window.dispatchEvent(new CustomEvent(LEVEL_EVENT, { detail: { personal: pLevel, company: cLevel } }));
+    } catch {
+      // private mode / storage disabled — fail silently
+    }
+  }, [pLevel, cLevel]);
 
   return (
     <section id="calculator" className="bg-slate py-20 md:py-28" aria-labelledby="calculator-heading">

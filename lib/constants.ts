@@ -56,27 +56,27 @@ export const PRINCIPLES = [
 export const METHODOLOGY_PHASES = [
   {
     number: "01",
-    title: "Thesis",
+    title: "Frame & Coach",
     description:
-      "What problem are we actually solving? Internal ops or product? Where does AI move the needle and where is it noise? We map your business, your stack, your data. By Friday, an opinionated written thesis with two or three candidate bets.",
+      "Week 1. We map your business, your stack, your data — and write an opinionated thesis with two or three candidate bets. You learn the frameworks while we write it. Coaching starts here, not later.",
   },
   {
     number: "02",
-    title: "Prototype",
+    title: "Build & Teach",
     description:
-      "The thesis is real because we can show it working. We build a real prototype — not slideware. Real code, real prompts, real configs. Cost of building has collapsed. We use that.",
+      "Weeks 2–3. Real code, real prompts, real configs — not slideware. You learn the tools while we ship: prompts, context, agents, harnesses. Cost of building has collapsed; we use that, and you learn how.",
   },
   {
     number: "03",
-    title: "Validate",
+    title: "Read the Signal",
     description:
-      "Real users, real data, real signal. Sometimes 1 hour of testing is enough. Sometimes a 2-week pilot. We size validation to risk — not to bill more hours.",
+      "Week 4. Real users, real data. You learn to tell AI signal from noise. We size validation to risk — not to bill more hours.",
   },
   {
     number: "04",
-    title: "Scale",
+    title: "Scale or Kill",
     description:
-      "Three paths from here: we build it with you, we hand you a plan and your team builds, or you don't build it (and saved yourself $200K). Your call. We celebrate all three.",
+      "Week 5+. Three paths: build it together, hand off a plan your team owns, or kill it and bank the savings. By now you can make the next call without me in the room. That's the point.",
   },
 ] as const;
 

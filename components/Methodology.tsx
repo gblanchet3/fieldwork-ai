@@ -31,11 +31,11 @@ export default function Methodology() {
             variants={itemVariants}
             className="font-syne font-semibold text-3xl md:text-5xl tracking-tighter text-slate mb-6 max-w-3xl leading-tight"
           >
-            Thesis → Prototype → Validate → Scale.
+            Frame &amp; Coach → Build &amp; Teach → Read the Signal → Scale or Kill.
           </motion.h2>
 
           <motion.p variants={itemVariants} className="font-inter text-base md:text-lg leading-body text-steel mb-16 max-w-2xl">
-            Most AI consulting jumps straight to "let's build a chatbot." I don't. The biggest leverage usually shows up two questions earlier.
+            Every step is half work, half coaching. You don't hire me to do AI for you — you hire me to become someone who can. Most consulting jumps to "let's build a chatbot." I don't. The biggest leverage usually shows up two questions earlier.
           </motion.p>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">

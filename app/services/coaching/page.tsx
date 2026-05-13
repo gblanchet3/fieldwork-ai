@@ -27,23 +27,26 @@ export default function CoachingPage() {
             </p>
           </div>
           <div className="md:col-span-2">
-            <p className="section-label text-amber mb-3">What we do, week by week</p>
+            <p className="section-label text-amber mb-3">The Method, applied 1:1</p>
+            <p className="font-inter text-sm leading-body text-steel mb-5 italic">
+              One method across every engagement. In 1:1 coaching, you sit in the driver's seat the whole way.
+            </p>
             <div className="space-y-5">
               <div>
-                <p className="font-syne font-semibold text-lg text-slate mb-1">Week 1 — Diagnostic + first wins</p>
-                <p className="font-inter text-sm leading-body text-steel">I learn your business, your style, your goals. We pick 2–3 recurring workflows and rebuild them with AI in front of you. By the end of week 1 you're saving real hours.</p>
+                <p className="font-syne font-semibold text-lg text-slate mb-1">Week 1 — Frame &amp; Coach</p>
+                <p className="font-inter text-sm leading-body text-steel">I learn your business, your style, your goals. We write an opinionated thesis on where AI moves the needle in your work — and rebuild 2–3 recurring workflows in front of you. You learn the frameworks while we write them.</p>
               </div>
               <div>
-                <p className="font-syne font-semibold text-lg text-slate mb-1">Weeks 2–4 — Build your OS</p>
-                <p className="font-inter text-sm leading-body text-steel">Identity doc, decision frameworks, project structures, key-people CRM. The same architecture I run my own life on, customized to yours.</p>
+                <p className="font-syne font-semibold text-lg text-slate mb-1">Weeks 2–3 — Build &amp; Teach</p>
+                <p className="font-inter text-sm leading-body text-steel">Real code, real prompts, real configs. Identity doc, decision frameworks, project structures, key-people CRM — the same architecture I run my own life on, customized to yours. You learn the tools while we ship.</p>
               </div>
               <div>
-                <p className="font-syne font-semibold text-lg text-slate mb-1">Weeks 5–8 — Compound</p>
-                <p className="font-inter text-sm leading-body text-steel">We work on whatever's live in your week. Memos, decisions, hiring, board prep, strategy. AI becomes a co-worker, not a tool.</p>
+                <p className="font-syne font-semibold text-lg text-slate mb-1">Week 4 — Read the Signal</p>
+                <p className="font-inter text-sm leading-body text-steel">We test what we built on your live work — memos, decisions, hiring, board prep. You learn to tell AI signal from noise on your own work, not someone else's case study.</p>
               </div>
               <div>
-                <p className="font-syne font-semibold text-lg text-slate mb-1">Ongoing — Monthly cadence</p>
-                <p className="font-inter text-sm leading-body text-steel">New problems, new prompts, new artifacts. Dial up or down as you need.</p>
+                <p className="font-syne font-semibold text-lg text-slate mb-1">Week 5+ — Scale or Kill</p>
+                <p className="font-inter text-sm leading-body text-steel">What's working scales — into more of your week, into your team. What isn't, we kill. By now you can make the next AI call without me in the room. That's the point.</p>
               </div>
             </div>
           </div>

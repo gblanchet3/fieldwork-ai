@@ -28,3 +28,4 @@ yarn-error.log*
 
 # Claude worktrees (temporary parallel work)
 .claude/worktrees/
+tsconfig.tsbuildinfo

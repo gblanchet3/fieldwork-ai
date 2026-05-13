@@ -4,6 +4,7 @@ import Calculator from "@/components/Calculator";
 import Problem from "@/components/Problem";
 import Principles from "@/components/Principles";
 import Methodology from "@/components/Methodology";
+import Guarantee from "@/components/Guarantee";
 import Services from "@/components/Services";
 import Work from "@/components/Work";
 import About from "@/components/About";
@@ -20,6 +21,7 @@ export default function Home() {
       <Problem />
       <Principles />
       <Methodology />
+      <Guarantee />
       <Services />
       <Work />
       <About />

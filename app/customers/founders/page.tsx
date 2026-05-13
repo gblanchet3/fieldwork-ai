@@ -21,7 +21,10 @@ export default function FoundersPage() {
       <section className="bg-bone py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-16">
           <div>
-            <p className="section-label text-amber mb-4">What I see again and again</p>
+            <p className="section-label text-amber mb-4">Who I work with</p>
+            <p className="font-inter text-base leading-body text-steel mb-4">
+              Leaders of <strong>$5M–$50M revenue companies</strong> — founders, CEOs, or empowered execs — who want AI in their own thinking, not delegated to a junior. Bought in, or curious enough to fund a real bet. Not "we banned ChatGPT" shops.
+            </p>
             <p className="font-inter text-base leading-body text-steel mb-4">
               You've tried ChatGPT. Maybe you have a paid Claude subscription. You know smart people who post about it constantly. But your <em>own</em> day still looks the same as it did 18 months ago. Same email, same memos, same hiring loops, same decisions.
             </p>

@@ -40,13 +40,19 @@ export default function EnablementPage() {
 
       <section className="bg-slate py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="section-label text-amber mb-4">What happens</p>
+          <p className="section-label text-amber mb-4">The Method, applied to a team</p>
+          <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-4 max-w-3xl leading-tight">
+            Frame &amp; Coach → Build &amp; Teach → Read the Signal → Scale or Kill.
+          </h2>
+          <p className="font-inter text-base leading-body text-bone/60 mb-12 max-w-2xl">
+            Same four steps as every Fieldwork engagement. In a cohort, every participant runs the method on their own real workflow — so the team leaves with both shared fluency and their own artifacts.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
-              { num: "01", title: "Foundations", body: "What AI actually is in 2026. How to talk to models. Personal context. Everyone leaves with their first custom prompt system." },
-              { num: "02", title: "Workflow rebuild", body: "Each participant picks a real recurring task from their own job. We rebuild it together, live." },
-              { num: "03", title: "Build & ship", body: "Each participant ships an artifact — a memo generator, sourcing helper, diligence summarizer. Working code, deployed." },
-              { num: "04", title: "Compound & own", body: "How to keep going. Share artifacts across the team. Evaluate vendors. Your team's own AI playbook, written together, yours forever." },
+              { num: "01", title: "Frame & Coach (Wk 1)", body: "Foundations: what AI actually is in 2026, how to talk to models, personal context. Each participant frames their own thesis — which workflow in their job is worth the bet." },
+              { num: "02", title: "Build & Teach (Wk 2)", body: "Each participant rebuilds their workflow live, with coaching. Real code, real prompts. They learn the tools by shipping, not by watching." },
+              { num: "03", title: "Read the Signal (Wk 3)", body: "Each artifact gets tested on real work. Participants learn to tell AI signal from noise on their own outputs — not someone else's case study." },
+              { num: "04", title: "Scale or Kill (Wk 4)", body: "What works gets shared across the team and codified into the playbook. What doesn't, we kill. The team leaves with shared standards, prompts, and tooling — yours forever." },
             ].map((w) => (
               <div key={w.num}>
                 <p className="font-syne font-semibold text-4xl text-amber mb-3 leading-none">{w.num}</p>
