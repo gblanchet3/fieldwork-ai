@@ -143,9 +143,37 @@ export default function Calculator() {
   const [pLevel, setPLevel] = useState(2);
   const [cLevel, setCLevel] = useState(2);
 
+  // Sync initial state from localStorage on mount + listen for external level changes (e.g. from Hero slider)
   useEffect(() => {
     if (typeof window === "undefined") return;
     try {
+      const p = window.localStorage.getItem("fw:personalLevel");
+      const c = window.localStorage.getItem("fw:companyLevel");
+      const pN = p !== null ? parseInt(p, 10) : NaN;
+      const cN = c !== null ? parseInt(c, 10) : NaN;
+      if (Number.isFinite(pN) && pN >= 0 && pN <= 5) setPLevel(pN);
+      if (Number.isFinite(cN) && cN >= 0 && cN <= 5) setCLevel(cN);
+    } catch {
+      // ignore
+    }
+
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ personal: number; company: number }>).detail;
+      if (!detail) return;
+      if (typeof detail.personal === "number") setPLevel(detail.personal);
+      if (typeof detail.company === "number") setCLevel(detail.company);
+    };
+    window.addEventListener(LEVEL_EVENT, handler as EventListener);
+    return () => window.removeEventListener(LEVEL_EVENT, handler as EventListener);
+  }, []);
+
+  // Persist changes — guards against echoing events that originated elsewhere
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const prevP = window.localStorage.getItem("fw:personalLevel");
+      const prevC = window.localStorage.getItem("fw:companyLevel");
+      if (prevP === String(pLevel) && prevC === String(cLevel)) return; // already in sync, skip
       window.localStorage.setItem("fw:personalLevel", String(pLevel));
       window.localStorage.setItem("fw:companyLevel", String(cLevel));
       window.dispatchEvent(new CustomEvent(LEVEL_EVENT, { detail: { personal: pLevel, company: cLevel } }));
