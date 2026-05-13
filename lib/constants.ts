@@ -321,9 +321,9 @@ export const SELECTED_WORK = [
 // Operator background — for /work and /about sidebar
 export const OPERATOR_HISTORY = [
   { co: "LeanLaw", role: "Head of Product", note: "Led evolution from SaaS into payments / fintech" },
-  { co: "Maxable", role: "CEO", note: "Marketplace platform" },
-  { co: "Revonate", role: "Co-founder, CTO", note: "" },
-  { co: "Imbellus", role: "Product", note: "Cognitive assessment startup" },
-  { co: "Grove Labs", role: "Co-founder", note: "$6M raised. Acquired by LG" },
-  { co: "GrabCAD", role: "Engineering", note: "Early team" },
+  { co: "Maxable", role: "CEO", note: "Real estate marketplace platform" },
+  { co: "Revonate", role: "Co-founder, CTO", note: "Construction design platform & services" },
+  { co: "Imbellus", role: "Business Development", note: "Cognitive assessment startup. Acquired by Roblox & McKinsey" },
+  { co: "Grove Labs", role: "Co-founder & CEO", note: "$6M raised. Acquired by LG" },
+  { co: "GrabCAD", role: "Engineering", note: "Early team. Acquired by Stratasys for $100M" },
 ] as const;
