@@ -29,3 +29,6 @@ yarn-error.log*
 # Claude worktrees (temporary parallel work)
 .claude/worktrees/
 tsconfig.tsbuildinfo
+
+# Client engagement work — kept here for organization but NEVER committed to the public website repo
+clients/

@@ -1,77 +1,72 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Training-portal data layer
 //
-// TODAY (mock mode): portal content is imported from data/training-portal.json,
-// baked into the static build. Everything works offline, no backend.
+// TODAY (mock mode): course content is imported from data/training-portal.json,
+// baked into the static build. Works offline, no backend.
 //
-// TO GO LIVE (Google Sheet mode): create a Google Sheet with one tab per
-// top-level array below (sessions, tracks, roster, agendaItems, prompts,
-// exercises), deploy a free Google Apps Script Web App that returns the same
-// JSON shape, then set NEXT_PUBLIC_TRAINING_API to its URL. getPortalData()
-// will fetch live instead of using the mock — nothing else changes.
-// See data/training-portal.json `_README` for the row mapping.
+// TO GO LIVE (Google Sheet mode): store sessions / tracks / roster / modules as
+// tabs and lesson content as a markdown column, deploy a free Google Apps Script
+// Web App that returns this JSON shape, then set NEXT_PUBLIC_TRAINING_API to its
+// URL. getPortalData() will fetch live instead of the mock — nothing else changes.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import mock from "@/data/training-portal.json";
 
-export type Track = {
-  id: string;
-  label: string;
-  audience: string;
-  description: string;
-};
+export type Track = { id: string; label: string; audience: string };
 
 export type Session = {
   id: string;
   code: string;
   title: string;
-  date: string;
-  location: string;
+  subtitle: string;
   durationLabel: string;
-  overview: string;
+  location: string;
+  date: string;
 };
 
 export type RosterEntry = { name: string; trackId: string };
 
-export type AgendaItem = {
-  sessionId: string;
-  trackId: string; // "all" = shown to every track
-  time: string;
-  title: string;
-  detail: string;
-};
+export type Module = { id: string; sessionId: string; title: string };
 
-export type Prompt = {
-  trackId: string; // "all" = shown to every track
-  category: string;
-  title: string;
-  useCase: string;
-  prompt: string;
-};
+export type Block =
+  | { type: "heading"; text: string }
+  | { type: "text"; text: string }
+  | { type: "list"; ordered?: boolean; items: string[] }
+  | {
+      type: "callout";
+      variant: "note" | "tip" | "warning" | "exercise";
+      title?: string;
+      text?: string;
+      items?: string[];
+    }
+  | { type: "prompt"; title: string; text: string }
+  | { type: "video"; url: string; label: string };
 
-export type Exercise = {
-  sessionId: string;
-  trackId: string; // "all" = shown to every track
+export type Lesson = {
+  id: string;
+  moduleId: string;
+  trackId: string; // "all" = every track, else track-specific
   title: string;
-  goal: string;
-  steps: string[];
+  blocks: Block[];
 };
 
 export type PortalData = {
-  company: {
-    slug: string;
-    name: string;
-    logo: string;
-    tagline: string;
-    contact: string;
-  };
+  company: { slug: string; name: string; tagline: string; contact: string };
   sessions: Session[];
   tracks: Track[];
   roster: RosterEntry[];
-  agendaItems: AgendaItem[];
-  prompts: Prompt[];
-  exercises: Exercise[];
+  modules: Module[];
+  lessons: Lesson[];
 };
+
+/** A lesson flattened with its module + a stable index across the whole session. */
+export type FlatLesson = Lesson & {
+  moduleTitle: string;
+  index: number;
+};
+
+/** A module with its track-filtered lessons, for sidebar rendering. */
+export type ModuleWithLessons = { module: Module; lessons: FlatLesson[] };
 
 const API_URL = process.env.NEXT_PUBLIC_TRAINING_API;
 
@@ -87,34 +82,41 @@ export async function getPortalData(): Promise<PortalData> {
 
 // ── Selectors ────────────────────────────────────────────────────────────────
 
-/** Find a session by its access code (case-insensitive, trims whitespace). */
 export function findSessionByCode(data: PortalData, code: string): Session | null {
   const c = code.trim().toUpperCase();
   return data.sessions.find((s) => s.code.toUpperCase() === c) ?? null;
 }
 
-const forTrack = <T extends { trackId: string }>(items: T[], trackId: string) =>
-  items.filter((i) => i.trackId === "all" || i.trackId === trackId);
+const visibleToTrack = (trackId: string) => (l: Lesson) =>
+  l.trackId === "all" || l.trackId === trackId;
 
-export function agendaFor(data: PortalData, sessionId: string, trackId: string) {
-  return forTrack(
-    data.agendaItems.filter((a) => a.sessionId === sessionId),
-    trackId
-  ).sort((a, b) => timeToMin(a.time) - timeToMin(b.time));
-}
+/**
+ * Build the ordered curriculum for a session + track: modules in declaration
+ * order, each holding only the lessons visible to this track, with a single
+ * running index across the whole session (drives Previous/Next + progress).
+ */
+export function buildCurriculum(
+  data: PortalData,
+  sessionId: string,
+  trackId: string
+): { modules: ModuleWithLessons[]; lessons: FlatLesson[] } {
+  const modules = data.modules.filter((m) => m.sessionId === sessionId);
+  const flat: FlatLesson[] = [];
+  const grouped: ModuleWithLessons[] = [];
 
-export function promptsFor(data: PortalData, trackId: string) {
-  return forTrack(data.prompts, trackId);
-}
+  for (const m of modules) {
+    const lessons = data.lessons
+      .filter((l) => l.moduleId === m.id)
+      .filter(visibleToTrack(trackId));
+    const withMeta: FlatLesson[] = lessons.map((l) => ({
+      ...l,
+      moduleTitle: m.title,
+      index: 0, // assigned below
+    }));
+    grouped.push({ module: m, lessons: withMeta });
+    flat.push(...withMeta);
+  }
 
-export function exercisesFor(data: PortalData, sessionId: string, trackId: string) {
-  return forTrack(
-    data.exercises.filter((e) => e.sessionId === sessionId),
-    trackId
-  );
-}
-
-function timeToMin(t: string): number {
-  const [h, m] = t.split(":").map(Number);
-  return (h || 0) * 60 + (m || 0);
+  flat.forEach((l, i) => (l.index = i));
+  return { modules: grouped, lessons: flat };
 }

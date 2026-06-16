@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import TrainingPortal from "@/components/training/TrainingPortal";
 
 export const metadata: Metadata = {
@@ -10,11 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function TrainingPage() {
-  return (
-    <main>
-      <Nav />
-      <TrainingPortal />
-      <Footer />
-    </main>
-  );
+  return <TrainingPortal />;
 }
