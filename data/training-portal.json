@@ -1,0 +1,111 @@
+{
+  "_README": "MOCK DATA for the /training portal. Flat arrays here map 1:1 to rows in the future Google Sheet (one tab per top-level key). 'all' as a trackId means the item is shown to every track. To go live, the Apps Script Web App returns this exact shape from the sheet — see lib/training.ts.",
+
+  "company": {
+    "slug": "rafanelli-nahas",
+    "name": "Rafanelli & Nahas",
+    "logo": "/clients/rafanelli-nahas/logo.png",
+    "tagline": "AI Fluency Program",
+    "contact": "Gabe Blanchet · gabe@getfieldworkai.com"
+  },
+
+  "sessions": [
+    {
+      "id": "s1",
+      "code": "RN-FOUNDATIONS",
+      "title": "Session 1 — AI Foundations",
+      "date": "TBD",
+      "location": "R&N Office, Boise",
+      "durationLabel": "Half day (~4 hrs)",
+      "overview": "Get the whole team fluent and confident. We set the ground rules for handling R&N's documents safely, learn how to talk to AI so it gives you usable answers, and get a first real win in your own work before you leave the room."
+    },
+    {
+      "id": "s2",
+      "code": "RN-WORKFLOWS",
+      "title": "Session 2 — Applied Workflows",
+      "date": "TBD",
+      "location": "R&N Office, Boise",
+      "durationLabel": "Half day (~4 hrs)",
+      "overview": "Take the fundamentals and build the real R&N workflows for your role — the ones you'll use every week. You leave with a saved prompt set and a workflow you've run end-to-end on a live R&N task."
+    }
+  ],
+
+  "tracks": [
+    {
+      "id": "leadership",
+      "label": "Leadership",
+      "audience": "Scott, partners, decision-makers",
+      "description": "Where AI creates leverage for the firm, the ROI math, and the governance rules so the team can move fast without creating risk."
+    },
+    {
+      "id": "ops",
+      "label": "Ops & Portfolio",
+      "audience": "Justin + portfolio / operations staff",
+      "description": "Lease intelligence, controlled document drafting, abstraction, critical-date tracking, and tenant correspondence — the document engine of the firm."
+    },
+    {
+      "id": "maintenance",
+      "label": "Building Maintenance & Engineering",
+      "audience": "Facilities, maintenance & engineering team",
+      "description": "Turn field notes into clean records, draft vendor and tenant communications fast, troubleshoot equipment, and standardize preventive-maintenance and work-order documentation."
+    }
+  ],
+
+  "roster": [
+    { "name": "Scott Schoenherr", "trackId": "leadership" },
+    { "name": "Justin Vogel", "trackId": "ops" }
+  ],
+
+  "agendaItems": [
+    { "sessionId": "s1", "trackId": "all", "time": "0:00", "title": "Welcome & what AI is (and isn't) for R&N", "detail": "Plain-English framing: leverage, not headcount. What's realistic this year vs. hype." },
+    { "sessionId": "s1", "trackId": "all", "time": "0:30", "title": "Ground rules — handling R&N documents safely", "detail": "The data-handling one-pager: what's fine to paste, what never leaves the building, and why. Everyone signs off." },
+    { "sessionId": "s1", "trackId": "all", "time": "1:00", "title": "How to talk to AI so it's actually useful", "detail": "The anatomy of a good prompt: role, context, task, format. Live demos, then you try it." },
+    { "sessionId": "s1", "trackId": "leadership", "time": "2:00", "title": "Reading AI output like a partner", "detail": "How to evaluate, pressure-test, and trust-but-verify AI output before it informs a decision." },
+    { "sessionId": "s1", "trackId": "leadership", "time": "2:45", "title": "Where the ROI is — picking the first workflows", "detail": "Mapping R&N's biggest time/$ sinks (counsel spend, analyst half-days, missed renewals) to AI wins." },
+    { "sessionId": "s1", "trackId": "ops", "time": "2:00", "title": "Lease intelligence — live on R&N's own docs", "detail": "Classify a document, extract operative terms, surface NEEDS REVIEW flags. Run on a real lease." },
+    { "sessionId": "s1", "trackId": "ops", "time": "2:45", "title": "Your first controlled draft", "detail": "Use an approved exemplar to generate a draft that reads like R&N's own documents." },
+    { "sessionId": "s1", "trackId": "maintenance", "time": "2:00", "title": "Field notes → clean records in seconds", "detail": "Turn a messy voice memo or shorthand note into a structured work-order entry." },
+    { "sessionId": "s1", "trackId": "maintenance", "time": "2:45", "title": "Fast, professional vendor & tenant messages", "detail": "Draft clear vendor requests and tenant notices from a few bullet points." },
+    { "sessionId": "s1", "trackId": "all", "time": "3:30", "title": "Wins, questions, and what's next", "detail": "Share what worked, capture blockers, preview Session 2." },
+
+    { "sessionId": "s2", "trackId": "all", "time": "0:00", "title": "Recap & wins since Session 1", "detail": "What you tried, what stuck, what got in the way." },
+    { "sessionId": "s2", "trackId": "all", "time": "0:20", "title": "Saving & reusing your prompts", "detail": "Build a personal/team prompt library so good prompts don't get lost." },
+    { "sessionId": "s2", "trackId": "leadership", "time": "1:00", "title": "The 6-month leverage roadmap", "detail": "Workflow-per-month cadence, what 'the team owns it' looks like, measuring fluency." },
+    { "sessionId": "s2", "trackId": "leadership", "time": "2:15", "title": "Governance at scale", "detail": "Approving new use cases, the redaction rule, and keeping the firm out of trouble as adoption grows." },
+    { "sessionId": "s2", "trackId": "ops", "time": "1:00", "title": "Build the lease-abstraction workflow", "detail": "End-to-end: document in → structured abstract out → into a comps/critical-date view." },
+    { "sessionId": "s2", "trackId": "ops", "time": "2:15", "title": "Critical-date tracking & tenant comms", "detail": "Extract renewal/notice windows; draft the matching tenant correspondence in R&N's voice." },
+    { "sessionId": "s2", "trackId": "maintenance", "time": "1:00", "title": "Standardize the work-order workflow", "detail": "From request → triage → vendor dispatch → closeout note, with consistent records every time." },
+    { "sessionId": "s2", "trackId": "maintenance", "time": "2:15", "title": "Vendor bid comparison & equipment troubleshooting", "detail": "Normalize bids side-by-side; use AI as a first-pass diagnostic for common building systems." },
+    { "sessionId": "s2", "trackId": "all", "time": "3:15", "title": "Lock in your workflow + office hours", "detail": "Each person commits to one workflow they'll keep using. How to reach Gabe between sessions." }
+  ],
+
+  "prompts": [
+    { "trackId": "all", "category": "Foundations", "title": "Make any answer more useful", "useCase": "When AI gives a vague or generic answer, paste this to sharpen it.", "prompt": "That's a start, but it's too generic. Here's my actual situation: [describe context]. Rewrite your answer specifically for that. Ask me up to 3 questions first if anything is unclear." },
+    { "trackId": "all", "category": "Foundations", "title": "Summarize a long document", "useCase": "A long email, report, or PDF you don't have time to read fully.", "prompt": "Summarize the following for a busy commercial real estate professional. Give me: (1) a 2-sentence bottom line, (2) the 5 most important points as bullets, (3) anything that needs a decision or a deadline. Flag anything unclear as NEEDS REVIEW.\n\n[paste text]" },
+
+    { "trackId": "leadership", "category": "Decision support", "title": "Pressure-test a decision", "useCase": "Before committing to a deal, hire, or initiative.", "prompt": "I'm considering [decision]. Act as a skeptical partner. Give me: the strongest case for, the strongest case against, the 3 assumptions this depends on, and what would have to be true for this to be a mistake. Be direct." },
+    { "trackId": "leadership", "category": "ROI", "title": "Estimate the ROI of a workflow", "useCase": "Deciding whether an AI workflow is worth building.", "prompt": "Help me estimate ROI. The task is [describe task]. It currently takes [time] and is done [frequency] by [who]. Outside cost when we outsource it is [$]. Lay out the time and dollars saved per month and per year, and the risk reduced. Show the math; don't inflate it." },
+    { "trackId": "leadership", "category": "Communication", "title": "Partner / IC update draft", "useCase": "Recurring partner or investment-committee updates.", "prompt": "Draft a concise update for [audience] about [topic]. Lead with the bottom line, then 3-4 supporting points, then any asks or decisions needed. Confident but not hype. Keep it under [length]." },
+
+    { "trackId": "ops", "category": "Lease intelligence", "title": "Extract operative lease terms", "useCase": "Quickly abstract a lease, amendment, or termination.", "prompt": "You are a CRE lease analyst. From the document below, extract: parties (with full legal names + entity types), building/premises/suite, rentable area, term, base year, rent schedule, parking, security deposit, key dates, and exhibits. Output as a clean labeled list. Mark anything not clearly stated as NEEDS REVIEW. Do not guess.\n\n[paste lease text]" },
+    { "trackId": "ops", "category": "Drafting", "title": "Controlled draft from an exemplar", "useCase": "Draft an amendment/notice that reads like R&N's own documents.", "prompt": "Using the approved exemplar below as the template for structure and voice, draft a [document type] for these facts: [facts]. Match the exemplar's section structure and tone. Leave any field I haven't given you as [NEEDS REVIEW] — never invent terms. Add a reviewer note listing what's missing.\n\nEXEMPLAR:\n[paste exemplar]" },
+    { "trackId": "ops", "category": "Critical dates", "title": "Pull critical dates from a lease", "useCase": "Never miss a renewal, option, or notice window again.", "prompt": "From the lease below, list every date-driven obligation: commencement, expiration, renewal/option windows, notice deadlines (with how many days' notice and to whom), and rent-step dates. Output as a table: Obligation | Date/Window | Notice required | Action owner. Flag anything ambiguous as NEEDS REVIEW.\n\n[paste lease text]" },
+    { "trackId": "ops", "category": "Tenant comms", "title": "Tenant correspondence in R&N voice", "useCase": "Routine tenant notices and replies.", "prompt": "Draft a professional, courteous message to a tenant about [situation]. Tone: clear, firm where needed, never adversarial. Include any required notice language. Keep it short. Here are the facts: [facts]." },
+
+    { "trackId": "maintenance", "category": "Records", "title": "Field note → work-order entry", "useCase": "Turn shorthand or a voice memo into a clean record.", "prompt": "Turn the rough note below into a structured work-order entry with: Building/Unit, Issue, Priority (Low/Med/High/Emergency), What I observed, Action taken / needed, Parts or vendor required, and Follow-up. Keep my facts; don't invent details. If priority isn't clear, ask.\n\nNOTE:\n[paste or dictate note]" },
+    { "trackId": "maintenance", "category": "Vendor comms", "title": "Vendor request / scope of work", "useCase": "Get a fast, clear quote from a vendor.", "prompt": "Write a clear request to a vendor for [job]. Include: location, the problem, what we need quoted, access/scheduling constraints, and ask for a timeline and itemized cost. Professional and to the point. Facts: [facts]." },
+    { "trackId": "maintenance", "category": "Procurement", "title": "Compare vendor bids", "useCase": "Two or more bids for the same job.", "prompt": "Compare these vendor bids for the same scope. Build a side-by-side table: Vendor | Total | What's included | What's excluded | Timeline | Warranty | Red flags. Then give a one-line recommendation and what to clarify before deciding.\n\n[paste bids]" },
+    { "trackId": "maintenance", "category": "Troubleshooting", "title": "First-pass equipment diagnostic", "useCase": "A building system acting up — get a starting point before calling a tech.", "prompt": "Act as a building-systems technician. A [equipment type, make/model if known] is showing [symptoms]. Give me the 5 most likely causes ranked by probability, the safe checks I can do myself, and the point at which I should stop and call a licensed pro. Safety first — flag anything I should not touch." }
+  ],
+
+  "exercises": [
+    { "sessionId": "s1", "trackId": "all", "title": "Your first useful answer", "goal": "Get one genuinely helpful AI answer on a real piece of your own work today.", "steps": ["Pick a small real task from your inbox or desk right now.", "Write a prompt with: who AI should act as, your context, the task, and the format you want back.", "Run it. If the answer is generic, use the 'Make any answer more useful' prompt to sharpen it.", "Save the version that worked."] },
+    { "sessionId": "s1", "trackId": "leadership", "title": "Name your top 3 leverage points", "goal": "Leave with a shortlist of where AI should help R&N first.", "steps": ["List the 3 tasks that cost the firm the most time or money each month.", "For each, use the 'Estimate the ROI of a workflow' prompt.", "Rank them. Pick the one to build first in Session 2."] },
+    { "sessionId": "s1", "trackId": "ops", "title": "Abstract a real R&N lease", "goal": "Run the lease-intelligence prompt on an actual document and sanity-check it.", "steps": ["Pick a lease or amendment you know well.", "Run the 'Extract operative lease terms' prompt on it.", "Check every NEEDS REVIEW flag — did it correctly avoid guessing?", "Note one thing it caught that saves you time."] },
+    { "sessionId": "s1", "trackId": "maintenance", "title": "Clean up one field note", "goal": "Turn a real note into a record you'd be happy to file.", "steps": ["Take a note or photo description from a recent work order.", "Run the 'Field note → work-order entry' prompt.", "Fix anything it got wrong, confirm the priority.", "Compare it to how long this normally takes you."] },
+
+    { "sessionId": "s2", "trackId": "leadership", "title": "Draft the 6-month plan", "goal": "A one-page leverage roadmap for the firm.", "steps": ["List one workflow to build each month for the next six.", "For each, note the owner and the success measure.", "Identify what 'the team owns it' looks like by month 6."] },
+    { "sessionId": "s2", "trackId": "ops", "title": "Run lease abstraction end-to-end", "goal": "One lease all the way from document to a usable abstract + critical dates.", "steps": ["Abstract the lease with the operative-terms prompt.", "Run the 'Pull critical dates' prompt on the same document.", "Draft the matching tenant notice for the next deadline.", "Save all three prompts to your library."] },
+    { "sessionId": "s2", "trackId": "maintenance", "title": "Standardize one work order, start to finish", "goal": "A repeatable workflow you'll reuse weekly.", "steps": ["Take a live request and create the work-order entry.", "Draft the vendor request from it.", "If you have two bids, run the comparison prompt.", "Write the closeout note. Save the prompt set."] }
+  ]
+}
