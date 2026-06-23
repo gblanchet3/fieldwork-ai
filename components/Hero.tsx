@@ -28,7 +28,7 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-28 pb-20 md:pt-32 md:pb-24 w-full">
         <motion.div initial="hidden" animate="visible" className="max-w-4xl">
           <motion.p custom={0} variants={fadeUp} className="section-label text-amber mb-6">
-            Operator-led AI. In the field.
+            AI coaching &amp; implementation for business owners.
           </motion.p>
 
           <motion.h1
@@ -72,7 +72,7 @@ export default function Hero() {
             className="font-inter text-sm mt-8"
             style={{ color: "rgba(240,235,225,0.5)" }}
           >
-            MIT engineer. Built and sold companies. Now in the field with operators.
+            MIT engineer. Built and sold companies. Now helping business owners use AI.
           </motion.p>
         </motion.div>
       </div>
