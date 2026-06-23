@@ -1,19 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ContourMotif from "./ContourMotif";
 
 export default function PageHero({
   eyebrow,
   title,
   subhead,
+  motif = false,
 }: {
   eyebrow: string;
   title: React.ReactNode;
   subhead?: string;
+  motif?: boolean;
 }) {
   return (
     <section className="relative bg-slate pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
       <div className="absolute inset-0 hero-grid pointer-events-none" aria-hidden="true" />
+      {motif && (
+        <ContourMotif className="absolute right-[-12%] top-1/2 -translate-y-1/2 w-[640px] max-w-[60%] hidden md:block" />
+      )}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: "radial-gradient(ellipse 80% 70% at 50% 30%, transparent 40%, #0F1923 100%)" }}

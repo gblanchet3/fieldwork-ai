@@ -100,6 +100,7 @@ export default function IntensivePage() {
     <main>
       <Nav />
       <PageHero
+        motif
         eyebrow="One day · In person · Hands on keyboard"
         title={
           <>
@@ -197,6 +198,79 @@ export default function IntensivePage() {
           </div>
           <p className="font-inter text-sm italic text-steel mt-10 border-l-2 border-amber/40 pl-4 max-w-2xl">
             If you walk out without something you'll actually use, I'll refund the day. No forms. I'm not here to burn your money.
+          </p>
+        </div>
+      </section>
+
+      {/* Artifact preview — show the work, don't just list it */}
+      <section className="bg-slate py-20 md:py-24 border-t border-white/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <p className="section-label text-amber mb-3">A look at what you leave with</p>
+          <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-12 leading-tight max-w-3xl">
+            Not notes. Working things.
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Custom AI assistant */}
+            <div className="bg-bone rounded-lg p-5 shadow-xl">
+              <div className="rounded-md border border-slate/10 overflow-hidden bg-white">
+                <div className="flex items-center gap-1.5 px-3 py-2 bg-slate/[0.04] border-b border-slate/10">
+                  <span className="w-2 h-2 rounded-full bg-amber/70" />
+                  <span className="w-2 h-2 rounded-full bg-slate/20" />
+                  <span className="w-2 h-2 rounded-full bg-slate/20" />
+                  <span className="ml-2 font-inter text-[11px] text-steel">Acme Co. Assistant</span>
+                </div>
+                <div className="p-3 space-y-2">
+                  <div className="ml-auto max-w-[82%] bg-amber/15 text-slate font-inter text-[11px] leading-snug rounded-lg rounded-br-sm px-3 py-2">
+                    Draft a warm follow-up on the Henderson proposal.
+                  </div>
+                  <div className="max-w-[90%] bg-bone text-slate font-inter text-[11px] leading-snug rounded-lg rounded-bl-sm px-3 py-2 border border-slate/10">
+                    Here's a draft — friendly, references your call on the 12th, and nudges next steps without being pushy…
+                  </div>
+                </div>
+              </div>
+              <p className="font-syne font-semibold text-sm text-slate mt-4">Your custom AI assistant</p>
+            </div>
+
+            {/* AI opportunity map */}
+            <div className="bg-bone rounded-lg p-5 shadow-xl">
+              <div className="rounded-md border border-slate/10 bg-white divide-y divide-slate/10">
+                {[
+                  ["Client intake & triage", "High impact"],
+                  ["Proposal drafting", "Quick win"],
+                  ["Status reporting", "Automate"],
+                  ["Meeting notes → CRM", "Quick win"],
+                ].map(([label, tag]) => (
+                  <div key={label} className="flex items-center justify-between px-3 py-2.5">
+                    <span className="font-inter text-[11px] text-slate">{label}</span>
+                    <span className="font-inter text-[10px] font-medium text-[#B86A22] bg-amber/15 rounded-full px-2 py-0.5 whitespace-nowrap">
+                      {tag}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="font-syne font-semibold text-sm text-slate mt-4">Your AI opportunity map</p>
+            </div>
+
+            {/* AI security checklist */}
+            <div className="bg-bone rounded-lg p-5 shadow-xl">
+              <div className="rounded-md border border-slate/10 bg-white p-3 space-y-2.5">
+                {[
+                  "Approved AI tools only",
+                  "No client data in public models",
+                  "Access & permissions set",
+                  "Team usage policy in place",
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2.5">
+                    <span className="shrink-0 w-4 h-4 rounded-full bg-amber/15 text-[#B86A22] text-[10px] flex items-center justify-center">✓</span>
+                    <span className="font-inter text-[11px] text-slate">{item}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="font-syne font-semibold text-sm text-slate mt-4">Your AI security checklist</p>
+            </div>
+          </div>
+          <p className="font-inter text-sm text-bone/50 mt-8">
+            Plus a team-adoption plan and the full toolkit of prompts and templates you practiced with. Illustrative — yours will be built around your business.
           </p>
         </div>
       </section>
