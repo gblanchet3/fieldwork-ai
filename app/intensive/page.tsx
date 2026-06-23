@@ -53,29 +53,6 @@ const AGENDA = [
   },
 ];
 
-const DELIVERABLES = [
-  {
-    title: "A custom AI thought partner",
-    body: "An assistant set up around your business — your context, your role — ready to use the next morning.",
-  },
-  {
-    title: "Your AI opportunity map",
-    body: "Where AI moves the needle in your company, ranked — what to do first and what to skip.",
-  },
-  {
-    title: "An AI security checklist",
-    body: "How to roll AI out without exposing your business — the risks to manage and the lines not to cross.",
-  },
-  {
-    title: "A team adoption plan",
-    body: "A practical change-management plan for getting your people to actually use what you bring back.",
-  },
-  {
-    title: "The exercise toolkit",
-    body: "The prompts, templates, and flows you practiced with in the sandbox — yours to reuse.",
-  },
-];
-
 const FAQ = [
   {
     q: "Do I need any technical background?",
@@ -178,40 +155,19 @@ export default function IntensivePage() {
         </div>
       </section>
 
-      {/* Deliverables */}
+      {/* What you leave with — artifacts shown, not listed */}
       <section className="bg-bone py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="section-label text-amber mb-3">What you walk out with</p>
-          <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-12 leading-tight max-w-3xl">
-            Fluency — and a folder of things you'll actually use.
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-            {DELIVERABLES.map((d) => (
-              <div key={d.title} className="flex gap-4 border-t border-slate/10 pt-5">
-                <span className="text-amber font-syne font-semibold shrink-0">→</span>
-                <div>
-                  <p className="font-syne font-semibold text-lg text-slate mb-1">{d.title}</p>
-                  <p className="font-inter text-sm leading-body text-steel">{d.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="font-inter text-sm italic text-steel mt-10 border-l-2 border-amber/40 pl-4 max-w-2xl">
-            If you walk out without something you'll actually use, I'll refund the day. No forms. I'm not here to burn your money.
-          </p>
-        </div>
-      </section>
-
-      {/* Artifact preview — show the work, don't just list it */}
-      <section className="bg-slate py-20 md:py-24 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="section-label text-amber mb-3">A look at what you leave with</p>
-          <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-12 leading-tight max-w-3xl">
+          <p className="section-label text-amber mb-3">What you leave with</p>
+          <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-3 leading-tight max-w-3xl">
             Not notes. Working things.
           </h2>
+          <p className="font-inter text-base leading-body text-steel mb-12 max-w-2xl">
+            You leave fluent — and with a folder of things built around your business, not a stack of slides.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Custom AI assistant */}
-            <div className="bg-bone rounded-lg p-5 shadow-xl">
+            <div className="bg-white rounded-lg p-5 shadow-xl border border-slate/10">
               <div className="rounded-md border border-slate/10 overflow-hidden bg-white">
                 <div className="flex items-center gap-1.5 px-3 py-2 bg-slate/[0.04] border-b border-slate/10">
                   <span className="w-2 h-2 rounded-full bg-amber/70" />
@@ -228,11 +184,12 @@ export default function IntensivePage() {
                   </div>
                 </div>
               </div>
-              <p className="font-syne font-semibold text-sm text-slate mt-4">Your custom AI assistant</p>
+              <p className="font-syne font-semibold text-base text-slate mt-4">Your custom AI assistant</p>
+              <p className="font-inter text-xs leading-body text-steel mt-1">Set up around your business. Ready to use the next morning.</p>
             </div>
 
             {/* AI opportunity map */}
-            <div className="bg-bone rounded-lg p-5 shadow-xl">
+            <div className="bg-white rounded-lg p-5 shadow-xl border border-slate/10">
               <div className="rounded-md border border-slate/10 bg-white divide-y divide-slate/10">
                 {[
                   ["Client intake & triage", "High impact"],
@@ -248,11 +205,12 @@ export default function IntensivePage() {
                   </div>
                 ))}
               </div>
-              <p className="font-syne font-semibold text-sm text-slate mt-4">Your AI opportunity map</p>
+              <p className="font-syne font-semibold text-base text-slate mt-4">Your AI opportunity map</p>
+              <p className="font-inter text-xs leading-body text-steel mt-1">Where AI moves the needle, ranked — what to do first, what to skip.</p>
             </div>
 
             {/* AI security checklist */}
-            <div className="bg-bone rounded-lg p-5 shadow-xl">
+            <div className="bg-white rounded-lg p-5 shadow-xl border border-slate/10">
               <div className="rounded-md border border-slate/10 bg-white p-3 space-y-2.5">
                 {[
                   "Approved AI tools only",
@@ -266,11 +224,15 @@ export default function IntensivePage() {
                   </div>
                 ))}
               </div>
-              <p className="font-syne font-semibold text-sm text-slate mt-4">Your AI security checklist</p>
+              <p className="font-syne font-semibold text-base text-slate mt-4">Your AI security checklist</p>
+              <p className="font-inter text-xs leading-body text-steel mt-1">Roll it out without exposing your business — the lines not to cross.</p>
             </div>
           </div>
-          <p className="font-inter text-sm text-bone/50 mt-8">
-            Plus a team-adoption plan and the full toolkit of prompts and templates you practiced with. Illustrative — yours will be built around your business.
+          <p className="font-inter text-sm text-steel mt-8 max-w-3xl">
+            Plus a <span className="text-slate font-medium">team-adoption plan</span> to get your people actually using it, and the full <span className="text-slate font-medium">toolkit</span> of prompts and templates you practiced with — yours to reuse. <span className="italic text-steel/70">Mockups are illustrative; yours are built around your business.</span>
+          </p>
+          <p className="font-inter text-sm italic text-steel mt-6 border-l-2 border-amber/40 pl-4 max-w-2xl">
+            If you walk out without something you'll actually use, I'll refund the day. No forms. I'm not here to burn your money.
           </p>
         </div>
       </section>
