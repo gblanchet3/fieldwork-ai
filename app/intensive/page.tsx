@@ -72,6 +72,27 @@ const FAQ = [
   },
 ];
 
+// July schedule — keep this honest and current. Update statuses as bookings change.
+const SESSIONS = [
+  { date: "July 10", label: "Private session", status: "Closed", state: "closed" },
+  { date: "July 22", label: "Private team training", status: "Closed", state: "closed" },
+  { date: "July 28", label: "Private team training", status: "Closed", state: "closed" },
+  { date: "July 30", label: "First open cohort", status: "8 seats", state: "open" },
+  { date: "August", label: "New dates monthly", status: "Get notified", state: "soon" },
+];
+
+const DOT: Record<string, string> = {
+  closed: "bg-bone/25",
+  open: "bg-amber",
+  soon: "border border-bone/30",
+};
+
+const SESSION_STATUS: Record<string, string> = {
+  closed: "text-bone/40",
+  open: "text-amber font-medium",
+  soon: "text-bone/40",
+};
+
 export default function IntensivePage() {
   return (
     <main>
@@ -94,7 +115,7 @@ export default function IntensivePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-2 text-center">
           <p className="font-inter text-sm text-bone/80"><span className="text-amber font-medium">Thursday, July 30</span> · 9:00am–3:30pm</p>
           <p className="font-inter text-sm text-bone/80">Boise, ID</p>
-          <p className="font-inter text-sm text-bone/80">8 seats</p>
+          <p className="font-inter text-sm text-bone/80">First open cohort · 8 seats</p>
           <p className="font-inter text-sm text-bone/80"><span className="text-amber font-medium">$1,000</span> · lunch &amp; follow-up included</p>
         </div>
       </section>
@@ -309,7 +330,7 @@ export default function IntensivePage() {
             <p className="section-label text-amber mb-4">Investment</p>
             <p className="font-syne font-semibold text-5xl text-slate mb-3">$1,000</p>
             <p className="font-inter text-base leading-body text-steel mb-6">
-              for the day. Seats capped at 8. Includes the full day, lunch, every asset you build, and a 1:1 follow-up call afterward.
+              for the day. Limited to 8 seats — small by design, so the day stays hands-on. Includes the full day, lunch, every asset you build, and a 1:1 follow-up call afterward.
             </p>
             <div className="space-y-4 font-inter text-base text-steel">
               <div className="border-t border-slate/10 pt-4">
@@ -323,15 +344,28 @@ export default function IntensivePage() {
             </p>
           </div>
           <div className="bg-slate p-8 md:p-10 flex flex-col justify-center">
-            <p className="section-label text-amber mb-3">Next session</p>
-            <p className="font-syne font-semibold text-2xl text-white mb-2">Thursday, July 30, 2026</p>
-            <p className="font-inter text-base text-bone/70 mb-1">9:00am–3:30pm · Boise, ID</p>
-            <p className="font-inter text-sm text-bone/50 mb-8">8 seats · runs monthly</p>
+            <p className="section-label text-amber mb-2">The July schedule</p>
+            <p className="font-inter text-sm leading-body text-bone/60 mb-6">
+              Companies already bring this in-house. July 30 is the first session open to the public.
+            </p>
+            <div className="border-t border-white/10 mb-7">
+              {SESSIONS.map((s) => (
+                <div key={s.date} className="flex items-center gap-3 py-3 border-b border-white/10">
+                  <span className={`w-2 h-2 rounded-full shrink-0 ${DOT[s.state]}`} />
+                  <span className="font-inter text-sm text-white w-20 shrink-0">{s.date}</span>
+                  <span className="font-inter text-sm text-bone/55 flex-1">{s.label}</span>
+                  <span className={`font-inter text-xs whitespace-nowrap ${SESSION_STATUS[s.state]}`}>{s.status}</span>
+                </div>
+              ))}
+            </div>
+            <p className="font-inter text-sm text-bone/70 mb-5">
+              <span className="text-white font-medium">Thursday, July 30</span> · 9:00am–3:30pm · Boise, ID
+            </p>
             <a
               href="/contact"
               className="font-inter text-sm font-medium bg-amber text-white px-8 py-4 hover:bg-[#C06A1F] transition-colors inline-block text-center"
             >
-              Reserve your seat →
+              Reserve one of 8 seats →
             </a>
           </div>
         </div>
@@ -354,7 +388,7 @@ export default function IntensivePage() {
 
       <CTABand
         heading="One day. Get fluent. Leave with AI working for your business."
-        body="The next session is Thursday, July 30 in Boise. 8 seats."
+        body="July 30 in Boise is the first cohort open to the public. 8 seats."
         ctaLabel="Reserve your seat"
       />
       <Footer />
