@@ -34,7 +34,7 @@ const AGENDA = [
   {
     title: "Map AI in your business",
     time: "60 min",
-    body: "Where does AI actually move the needle for you? Build your personal opportunity map — what to do first, and what to leave alone.",
+    body: "A simple framework and guided prompts walk you through it — you map where AI actually moves the needle for you, what to do first, and what to leave alone.",
   },
   {
     title: "Risk & security",
@@ -103,12 +103,12 @@ export default function IntensivePage() {
         eyebrow="One day · In person · Hands on keyboard"
         title={
           <>
-            Stop reading about AI.
+            Walk in curious.
             <br />
-            Spend one day getting fluent.
+            Walk out fluent.
           </>
         }
-        subhead="A small-group, in-person day for Boise business owners and leaders. You'll get hands on real AI tools in a safe sandbox, map where it actually moves the needle in your business, and work through what matters most — security, risk, and bringing your team along. You leave fluent and confident, with a custom AI assistant already working for you."
+        subhead="Get genuinely good at AI in one focused day. A small-group, in-person day for Boise business owners and leaders — hands-on in a safe sandbox, then you map AI onto your own business, live. We work through what matters most: security, risk, and getting your team on board. You leave able to hold your own in any AI conversation, with a custom AI assistant already working for you."
       />
 
       {/* Event facts band */}
@@ -162,9 +162,9 @@ export default function IntensivePage() {
               </p>
             </div>
             <div>
-              <p className="font-syne font-semibold text-lg text-white mb-2">Mapped to your actual business.</p>
+              <p className="font-syne font-semibold text-lg text-white mb-2">You map it to your own business.</p>
               <p className="font-inter text-sm leading-body text-bone/60">
-                Beyond the exercises, we map exactly where AI moves the needle in your company — and how to manage the risk and the rollout. You leave knowing what to do Monday.
+                Guided exercises walk you through mapping where AI moves the needle in your company — you do the mapping, live, so you can keep doing it after. Plus how to manage the risk and the rollout. You leave knowing what to do Monday.
               </p>
             </div>
             <div>
