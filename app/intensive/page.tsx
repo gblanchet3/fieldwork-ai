@@ -6,58 +6,73 @@ import CTABand from "@/components/CTABand";
 export const metadata = {
   title: "AI for Business Leaders — 1-day intensive | Fieldwork AI",
   description:
-    "A small-group, in-person day in Boise for business owners and leaders. Hands on keyboard. Build real AI tools on your own business — and keep everything you make.",
+    "A hands-on, in-person day in Boise for business owners and leaders. Get fluent in AI in a safe sandbox, map where it moves the needle in your business, and leave with a custom assistant and a plan.",
 };
 
+// NOTE: Gabe to fine-tune block titles, timings, and copy here.
 const AGENDA = [
   {
     title: "The honest landscape",
     time: "30 min",
-    body: "The 10-minute version of what actually matters in AI right now — hype killed, fear killed. Then straight to the keyboards.",
+    body: "The 10-minute version of what actually matters in AI right now — hype killed, fear killed. Then we get to work.",
   },
   {
-    title: "Build 1 — Your AI thought partner",
-    time: "75 min",
-    body: "Build a custom assistant grounded in your own business — your context, your voice, your role — and put it to work on a real problem you walked in with.",
-  },
-  {
-    title: "Build 2 — Automate a real workflow",
+    title: "Hands-on in a safe sandbox",
     time: "90 min",
-    body: "Pick a recurring task that eats your week. Build the automation live, end-to-end, until it runs. This is the core of the day.",
+    body: "Learn the core moves by doing them — in a walled-off environment with example data, so you can experiment freely without any risk to your business.",
   },
   {
-    title: "Working lunch + demos",
+    title: "Roundtable: how your peers think about AI",
     time: "45 min",
-    body: "Eat, and show the room what you built. Peer ideas, real use cases, momentum. Lunch included.",
+    body: "Hear what other leaders in the room are trying, worried about, and betting on. Some of the best ideas come from the person next to you.",
   },
   {
-    title: "Build 3 — A tool for your team",
-    time: "75 min",
-    body: "Build something you can hand to staff Monday — a custom assistant, a proposal or report generator, an intake helper.",
+    title: "Working lunch",
+    time: "45 min",
+    body: "Eat, talk, keep the momentum going. Lunch included.",
   },
   {
-    title: "Your 90-day stack + close",
+    title: "Map AI in your business",
+    time: "60 min",
+    body: "Where does AI actually move the needle for you? Build your personal opportunity map — what to do first, and what to leave alone.",
+  },
+  {
+    title: "Risk & security",
+    time: "45 min",
+    body: "What to watch for, what to never do, and how to roll AI out without exposing your business. You leave with a security checklist.",
+  },
+  {
+    title: "Change management",
     time: "30 min",
-    body: "Lock your tool stack and your first three moves. Where this goes next, and how to take it deeper.",
+    body: "The hard part isn't the tool — it's getting your team to use it. A practical plan for adoption that actually sticks.",
+  },
+  {
+    title: "Your custom AI assistant + close",
+    time: "30 min",
+    body: "Stand up a custom AI assistant for your business, lock your first three moves, and book your 1:1 follow-up.",
   },
 ];
 
 const DELIVERABLES = [
   {
     title: "A custom AI thought partner",
-    body: "Trained on your business — your context, your voice, your role — that you'll use the next morning.",
+    body: "An assistant set up around your business — your context, your role — ready to use the next morning.",
   },
   {
-    title: "One real workflow, automated",
-    body: "Pick a recurring time-sink from your week — proposals, intake, meeting notes, reporting — and leave with it running.",
+    title: "Your AI opportunity map",
+    body: "Where AI moves the needle in your company, ranked — what to do first and what to skip.",
   },
   {
-    title: "A team-ready tool",
-    body: "Something you can hand to your staff Monday: a custom assistant, a document generator, an intake helper.",
+    title: "An AI security checklist",
+    body: "How to roll AI out without exposing your business — the risks to manage and the lines not to cross.",
   },
   {
-    title: "Your 90-day AI stack & plan",
-    body: "Exactly what to do next, in what order, and what to stop doing.",
+    title: "A team adoption plan",
+    body: "A practical change-management plan for getting your people to actually use what you bring back.",
+  },
+  {
+    title: "The exercise toolkit",
+    body: "The prompts, templates, and flows you practiced with in the sandbox — yours to reuse.",
   },
 ];
 
@@ -90,10 +105,10 @@ export default function IntensivePage() {
           <>
             Stop reading about AI.
             <br />
-            Spend one day building with it.
+            Spend one day getting fluent.
           </>
         }
-        subhead="A small-group, in-person intensive for business owners and leaders in Boise. No slides you'll forget. No tools you'll never open again. You walk in with the real problems of your business — and walk out having built things that work, on your own data, that you own and keep."
+        subhead="A small-group, in-person day for Boise business owners and leaders. You'll get hands on real AI tools in a safe sandbox, map where it actually moves the needle in your business, and work through what matters most — security, risk, and bringing your team along. You leave fluent and confident, with a custom AI assistant already working for you."
       />
 
       {/* Event facts band */}
@@ -137,25 +152,25 @@ export default function IntensivePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <p className="section-label text-amber mb-3">The promise</p>
           <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-12 leading-tight max-w-3xl">
-            You build. All day. On your own business.
+            Hands-on all day. Fluent by the end.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             <div>
-              <p className="font-syne font-semibold text-lg text-white mb-2">Hands on keyboard — not a lecture.</p>
+              <p className="font-syne font-semibold text-lg text-white mb-2">You learn by doing — not by watching.</p>
               <p className="font-inter text-sm leading-body text-bone/60">
-                You'll spend the day building, not watching. Every block ends with something running. By 3:30 you've built three things you'll actually use.
+                Hands-on exercises in a safe, walled-off sandbox with example data. You experiment freely, make mistakes safely, and build real fluency — not a stack of lecture notes.
               </p>
             </div>
             <div>
-              <p className="font-syne font-semibold text-lg text-white mb-2">Your business, your data.</p>
+              <p className="font-syne font-semibold text-lg text-white mb-2">Mapped to your actual business.</p>
               <p className="font-inter text-sm leading-body text-bone/60">
-                No toy examples. You bring a real workflow, real documents, a real bottleneck. We build against that. You leave with assets tuned to your company — not a generic template.
+                Beyond the exercises, we map exactly where AI moves the needle in your company — and how to manage the risk and the rollout. You leave knowing what to do Monday.
               </p>
             </div>
             <div>
-              <p className="font-syne font-semibold text-lg text-white mb-2">You own everything you make.</p>
+              <p className="font-syne font-semibold text-lg text-white mb-2">You leave with assets, not just notes.</p>
               <p className="font-inter text-sm leading-body text-bone/60">
-                The assistants, the automations, the prompts, the playbook — they're yours. No subscription that holds your work hostage. Portable. Forkable. Yours.
+                A custom AI assistant, your opportunity map, a security checklist, a team-adoption plan, and the toolkit you practiced with. All yours to keep. Portable. Forkable.
               </p>
             </div>
           </div>
@@ -167,7 +182,7 @@ export default function IntensivePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <p className="section-label text-amber mb-3">What you walk out with</p>
           <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-12 leading-tight max-w-3xl">
-            Three working builds and a plan. Same day.
+            Fluency — and a folder of things you'll actually use.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
             {DELIVERABLES.map((d) => (
@@ -191,7 +206,7 @@ export default function IntensivePage() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <p className="section-label text-amber mb-3">The day · ~6 hours</p>
           <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-12 leading-tight max-w-3xl">
-            Build-focused, start to finish.
+            Hands-on and strategic, start to finish.
           </h2>
           <div className="space-y-px">
             {AGENDA.map((block) => (
@@ -302,7 +317,7 @@ export default function IntensivePage() {
       </section>
 
       <CTABand
-        heading="One day. Hands on keyboard. Everything you build is yours."
+        heading="One day. Get fluent. Leave with AI working for your business."
         body="The next session is Thursday, July 30 in Boise. 8 seats."
         ctaLabel="Reserve your seat"
       />
