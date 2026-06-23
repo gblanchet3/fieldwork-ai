@@ -17,13 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fieldwork AI — Personalized AI coaching & implementation",
+  title: "Fieldwork AI — AI fluency your team actually owns",
   description:
-    "I help founders, operators, and investment teams use AI as a portable advantage they own. Sovereignty over subscriptions. Hand-holding over hype. Build with you, not for you.",
+    "I train your team to be AI-native — and build the automations worth building, then hand them over running. Your fluency, not a subscription. Capability, not dependency.",
   openGraph: {
     title: "Fieldwork AI",
     description:
-      "Personalized AI coaching & implementation. Sovereignty over subscriptions. Hand-holding over hype.",
+      "AI fluency your team actually owns. I train your people and build what's worth building — then hand it over. Capability, not dependency.",
     type: "website",
   },
 };

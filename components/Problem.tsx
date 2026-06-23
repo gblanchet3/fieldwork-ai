@@ -47,7 +47,7 @@ export default function Problem() {
                 You don't need any of that.
               </p>
               <p className="font-inter text-base md:text-lg leading-body text-steel mb-5">
-                You need someone who sits beside you, builds <em>with</em> you, and leaves you with artifacts you own — your data, your prompts, your context, your code. Portable. Forkable. Yours.
+                You need someone who trains your team and builds what's actually worth building — then hands it over running, so your people own it and operate it. Your data, your prompts, your tools. Portable. Yours.
               </p>
               <p className="font-syne font-semibold text-xl text-slate">
                 That's what I do.

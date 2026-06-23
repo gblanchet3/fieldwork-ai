@@ -86,7 +86,7 @@ export default function FoundersPage() {
             </div>
             <div className="border border-dust bg-white p-6">
               <p className="font-syne font-semibold text-slate text-lg mb-1">Ongoing</p>
-              <p className="text-amber font-syne font-semibold text-2xl">$1,500–$2,500/mo</p>
+              <p className="text-amber font-syne font-semibold text-2xl">$2,500–$3,500/mo</p>
             </div>
             <div className="border border-dust bg-white p-6">
               <p className="font-syne font-semibold text-slate text-lg mb-1">Standalone setup</p>

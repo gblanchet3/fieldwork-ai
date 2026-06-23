@@ -43,8 +43,8 @@ export const PRINCIPLES = [
     body: "We teach the fundamentals — prompts, context, agents, harnesses — not which SaaS vendor has \"AI\" stickered on the box. Models get smarter and cheaper every quarter. Teams that own their fluency compound. Teams renting it forever don't.",
   },
   {
-    title: "Coaching, not building.",
-    body: "We try not to build for you — we coach you and co-build with you. The point is your team leaves with the skills, not a dependency on us. Otherwise we're just another vendor.",
+    title: "Capability, not dependency.",
+    body: "When something's worth automating, I build it and hand it over running — but the goal is never to make you need me forever. I train your team to own the fluency: to operate what I build, push it, and spot the next bet themselves. Most vendors leave you renting a tool nobody can run. I'd rather leave your team more capable than I found it.",
   },
   {
     title: "Operator-rooted.",
@@ -80,6 +80,25 @@ export const METHODOLOGY_PHASES = [
   },
 ] as const;
 
+// --- Home: The Method (three pillars — run together or apart) ---
+export const METHODOLOGY_PILLARS = [
+  {
+    title: "Train your team, in person",
+    description:
+      "I'm in the room — with your exec and the people who actually do the work. Hands on keyboards, your real tools, your real workflows. The whole team levels up together, not just the person who signed the contract.",
+  },
+  {
+    title: "Map where AI pays off",
+    description:
+      "As we train, we map your workflows and flag the highest-leverage places to apply AI and automation. You leave knowing exactly where the money and the hours are hiding — ranked, not hand-waved.",
+  },
+  {
+    title: "Build what's worth building",
+    description:
+      "When a workflow is worth automating, I build it — and hand it over running. The training makes your team fluent enough to operate it, push it, and know when it's working. The heavy engineering stays with me, so you get something production-grade, not a half-built prototype.",
+  },
+] as const;
+
 // --- Home: Services overview cards ---
 export const SERVICES_OVERVIEW = [
   {
@@ -87,7 +106,7 @@ export const SERVICES_OVERVIEW = [
     kicker: "1:1 coaching",
     description:
       "Personal AI fluency. Custom OS. A weekly thinking partner. Best for founders, executives, and individual operators.",
-    pricing: "$1.5–3.5K / month",
+    pricing: "$2.5–5K / month",
     href: "/services/coaching",
   },
   {

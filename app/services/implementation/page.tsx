@@ -21,12 +21,12 @@ export default function ImplementationPage() {
 
       <section className="bg-bone py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="section-label text-amber mb-4">The method</p>
+          <p className="section-label text-amber mb-4">The engagement, step by step</p>
           <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-4 max-w-3xl leading-tight">
             Frame &amp; Coach → Build &amp; Teach → Read the Signal → Scale or Kill.
           </h2>
           <p className="font-inter text-base leading-body text-steel mb-12 max-w-2xl">
-            Every step is half work, half coaching. The leader and their team learn the frameworks and tools as we build — so when the engagement ends, the muscle stays.
+            How a build runs end to end. I do the heavy engineering; your team learns the frameworks and tools as I build — so when the engagement ends, they own it and operate it, and the muscle stays.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

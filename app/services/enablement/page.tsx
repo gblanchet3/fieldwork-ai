@@ -40,12 +40,12 @@ export default function EnablementPage() {
 
       <section className="bg-slate py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="section-label text-amber mb-4">The Method, applied to a team</p>
+          <p className="section-label text-amber mb-4">How a team cohort runs</p>
           <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-4 max-w-3xl leading-tight">
             Frame &amp; Coach → Build &amp; Teach → Read the Signal → Scale or Kill.
           </h2>
           <p className="font-inter text-base leading-body text-bone/60 mb-12 max-w-2xl">
-            Same four steps as every Fieldwork engagement. In a cohort, every participant runs the method on their own real workflow — so the team leaves with both shared fluency and their own artifacts.
+            The same four-week arc as a Fieldwork build — here the whole team runs it together. Every participant works it on their own real workflow, so the team leaves with shared fluency and artifacts they own.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[

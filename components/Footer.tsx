@@ -19,7 +19,7 @@ export default function Footer() {
               Fieldwork<span className="text-amber">.</span>AI
             </p>
             <p className="font-inter text-sm text-bone/40 mb-3 max-w-md">
-              Personalized AI coaching &amp; implementation. Sovereignty over subscriptions. Hand-holding over hype.
+              AI fluency your team actually owns. Sovereignty over subscriptions. Capability over dependency.
             </p>
             <p className="font-inter text-sm text-bone/40">
               <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-amber transition-colors">{CONTACT_EMAIL}</a>

@@ -18,16 +18,16 @@ const itemVariants = {
 
 const PROOFS = [
   {
-    title: "Move up the scale.",
-    body: "Day 1, you rate yourself on the 0–5 AI-Native scale. Day 30, you rate yourself again. You'll have moved up at least one level — or you don't pay the final invoice.",
+    title: "The whole team, not a hero.",
+    body: "I measure the team — from the exec who signed to the people doing the work. Everyone we train moves up, or the guarantee isn't met. No leaning on one power user to carry the score.",
   },
   {
-    title: "A six-figure bet.",
-    body: "By Day 30 you'll have a quantified AI bet — modeled, validated, signed off by you — worth six figures in revenue or efficiency on your business. Something you can defend to your board.",
+    title: "Measured, not vibes.",
+    body: "Day 1, your team rates itself on the 0–5 AI-Native scale — the same one in the calculator at the top of this page. Day 30, same rubric, same questions. No moving goalposts.",
   },
   {
-    title: "An artifact you built.",
-    body: "Not a deliverable I handed you — an artifact you built with your own hands during the engagement. Portable, forkable, yours. The proof you can do it again without me.",
+    title: "Or I keep working, on me.",
+    body: "Haven't moved up at least one level by Day 30? The final invoice is voided and I keep coaching — free — until you do. The risk is mine, not yours.",
   },
 ];
 
@@ -74,11 +74,11 @@ export default function Guarantee() {
             variants={itemVariants}
             className="font-syne font-semibold text-3xl md:text-5xl tracking-tighter text-white mb-6 max-w-4xl leading-tight"
           >
-            30 days to become measurably more AI-native — or you don't pay the final invoice.
+            Your team moves up the AI-Native scale in 30 days — or you don't pay the final invoice.
           </motion.h2>
 
           <motion.p variants={itemVariants} className="font-inter text-base md:text-lg leading-body text-bone/70 mb-10 max-w-3xl">
-            Three proof points. Not my opinion — yours, your board's, and your own hands. If you haven't moved up the scale by Day 30, the final invoice is voided and I keep working until you do, on me.
+            One promise, and it's measurable. Train with me and your team moves up at least one level on the 0–5 AI-Native scale — measured the same way on Day 1 and Day 30. Here's how I hold myself to it.
           </motion.p>
 
           {level !== null && currentName && (
@@ -116,8 +116,12 @@ export default function Guarantee() {
             ))}
           </div>
 
+          <motion.p variants={itemVariants} className="font-inter text-sm leading-body text-bone/50 mt-12 max-w-3xl">
+            The fine print: this covers training engagements. If you bring me in purely to build an automation — no training, no upleveling your team — the guarantee doesn't apply, and we'll both know that going in.
+          </motion.p>
+
           {level === null && (
-            <motion.p variants={itemVariants} className="font-inter text-sm italic text-bone/50 mt-12 border-l-2 border-amber/40 pl-4 max-w-2xl">
+            <motion.p variants={itemVariants} className="font-inter text-sm italic text-bone/50 mt-6 border-l-2 border-amber/40 pl-4 max-w-2xl">
               Haven't rated yourself yet? Scroll up — the calculator at the top of this page is the same one the guarantee runs on.
             </motion.p>
           )}

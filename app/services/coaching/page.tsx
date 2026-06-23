@@ -74,7 +74,7 @@ export default function CoachingPage() {
               </div>
               <div className="border-b border-white/10 pb-4">
                 <p className="font-syne font-semibold text-white text-lg mb-1">Ongoing (monthly)</p>
-                <p className="text-amber font-syne font-semibold text-2xl">$1,500–$2,500/month</p>
+                <p className="text-amber font-syne font-semibold text-2xl">$2,500–$3,500/month</p>
                 <p className="text-sm text-bone/50 mt-1">Cadence-dependent</p>
               </div>
               <div>

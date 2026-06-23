@@ -70,7 +70,7 @@ export default function ServicesBizPage() {
             </div>
             <div className="border border-dust bg-white p-6">
               <h3 className="font-syne font-semibold text-slate mb-1">Owner coaching</h3>
-              <p className="font-inter text-xs text-amber mb-3">$1.5–3.5K/mo</p>
+              <p className="font-inter text-xs text-amber mb-3">$2.5–5K/mo</p>
               <p className="font-inter text-sm leading-body text-steel">For owners who want personal AI fluency to keep building after I'm done.</p>
             </div>
           </div>
