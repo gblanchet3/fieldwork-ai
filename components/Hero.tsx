@@ -48,15 +48,15 @@ export default function Hero() {
             className="font-inter text-lg md:text-xl leading-body max-w-2xl mb-10"
             style={{ color: "rgba(240,235,225,0.7)" }}
           >
-            Find your level — and your org&apos;s. Most leaders are stuck at Level 2.
+            A 2-minute diagnostic for you and your org. Most leaders are stuck at Level 2.
           </motion.p>
 
           <motion.div custom={3} variants={fadeUp} className="flex flex-col sm:flex-row gap-4">
             <a
-              href="#calculator"
+              href="#diagnostic"
               className="font-inter text-sm font-medium bg-amber text-white px-8 py-4 hover:bg-[#C06A1F] transition-colors duration-200"
             >
-              Find your level →
+              Take the diagnostic →
             </a>
             <Link
               href="/contact"

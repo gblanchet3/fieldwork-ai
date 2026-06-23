@@ -183,7 +183,7 @@ export default function Calculator() {
   }, [pLevel, cLevel]);
 
   return (
-    <section id="calculator" className="bg-slate py-20 md:py-28" aria-labelledby="calculator-heading">
+    <section id="diagnostic" className="bg-slate py-20 md:py-28" aria-labelledby="diagnostic-heading">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <motion.div
           ref={ref}
@@ -191,9 +191,9 @@ export default function Calculator() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="section-label text-amber mb-4">Find your level</p>
+          <p className="section-label text-amber mb-4">The AI Diagnostic</p>
           <h2
-            id="calculator-heading"
+            id="diagnostic-heading"
             className="font-syne font-semibold text-3xl md:text-5xl tracking-tighter text-white mb-6 max-w-3xl leading-tight"
           >
             Where do you actually stand?
@@ -215,7 +215,7 @@ export default function Calculator() {
               href={`/contact?p=${pLevel}&c=${cLevel}`}
               className="font-inter text-sm font-medium bg-amber text-white px-6 py-3 hover:bg-[#C06A1F] transition-colors duration-200 shrink-0"
             >
-              Send me your levels →
+              Send me your results →
             </Link>
           </div>
         </motion.div>

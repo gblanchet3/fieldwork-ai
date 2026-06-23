@@ -4,7 +4,7 @@ import Contact from "@/components/Contact";
 
 export const metadata = {
   title: "Talk to me | Fieldwork AI",
-  description: "Two ways in. Run the calculator and send me your levels, or book a 30-minute call. No pitch deck.",
+  description: "Two ways in. Take the AI diagnostic and send me your results, or book a 30-minute call. No pitch deck.",
 };
 
 export default function ContactPage() {

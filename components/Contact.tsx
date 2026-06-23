@@ -84,9 +84,9 @@ function ContactInner({ standalone = false }: { standalone?: boolean }) {
 
             <motion.div variants={itemVariants} className="space-y-6 mb-10">
               <div>
-                <p className="font-syne font-semibold text-lg text-white mb-2">1. Run the calculator.</p>
+                <p className="font-syne font-semibold text-lg text-white mb-2">1. Take the AI diagnostic.</p>
                 <p className="font-inter text-base leading-body text-bone/60">
-                  Find your level, send me your bullets. I'll come back with a written assessment and a proposal scoped to where you actually are. No template, no slides.
+                  Two minutes, then send me your results. I'll come back with a written assessment and a proposal scoped to where you actually are. No template, no slides.
                 </p>
               </div>
               <div>
