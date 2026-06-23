@@ -35,3 +35,6 @@ clients/
 
 # Internal offering strategy / outreach drafts — working docs, never published
 offerings/
+
+# Local archive of deprecated SMB research pipeline (not deployed)
+_archive/

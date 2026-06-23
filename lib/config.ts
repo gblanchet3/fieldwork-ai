@@ -3,6 +3,4 @@ export const CONFIG = {
   coachingUrl: "https://cal.com/gabe-blanchet-p3vzks/ai-coaching",
   email: "gabe@getfieldworkai.com",
   phone: "413-374-0739",
-  githubRepo: "gblanchet3/fieldwork-ai",
-  githubBranch: "main",
 } as const;
