@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
+
+// Google Analytics 4 measurement ID (Fieldwork AI property → Fieldwork Site stream).
+const GA_MEASUREMENT_ID = "G-GNCJRTKED3";
 
 const syne = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -36,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable}`}>
       <body className="font-inter antialiased">{children}</body>
+      <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
     </html>
   );
 }
