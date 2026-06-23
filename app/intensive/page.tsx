@@ -323,6 +323,20 @@ export default function IntensivePage() {
         </div>
       </section>
 
+      {/* Testimonial */}
+      <section className="bg-olive py-20 md:py-28 border-y border-white/10">
+        <div className="max-w-4xl mx-auto px-6 md:px-10">
+          <p className="section-label text-amber mb-8">What people say</p>
+          <blockquote className="font-inter text-xl md:text-2xl leading-relaxed text-bone/90">
+            &ldquo;I&rsquo;ve worked alongside a lot of capable people. Gabe is the rare one who can do all three things that usually don&rsquo;t live in the same person: read a team accurately enough to coach them through real change, actually build the systems and automations himself, and roll them out so they stick. Most people do one of those and outsource the rest. <span className="text-white">He closes the whole loop from strategy to working system to adoption.</span> The teams he touches come out faster and clearer than they went in. If you&rsquo;re scaling and you need someone who can both see what&rsquo;s broken and build the fix, that&rsquo;s Gabe.&rdquo;
+          </blockquote>
+          <footer className="mt-8">
+            <p className="font-syne font-semibold text-white text-lg">Luke Larkin</p>
+            <p className="font-inter text-sm text-bone/60">Owner, Larkin Systems</p>
+          </footer>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section className="bg-bone py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-16">
