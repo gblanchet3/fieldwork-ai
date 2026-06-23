@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import CTABand from "@/components/CTABand";
+import Testimonials from "@/components/Testimonials";
 
 export const metadata = {
   title: "AI for Business Leaders — 1-day intensive | Fieldwork AI",
@@ -324,31 +325,7 @@ export default function IntensivePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-olive py-20 md:py-28 border-y border-white/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="section-label text-amber mb-12">What people say</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-            <figure>
-              <blockquote className="font-inter text-lg md:text-xl leading-relaxed text-bone/90">
-                &ldquo;I&rsquo;ve worked alongside a lot of capable people. Gabe is the rare one who can do all three things that usually don&rsquo;t live in the same person: read a team accurately enough to coach them through real change, actually build the systems and automations himself, and roll them out so they stick. Most people do one of those and outsource the rest. <span className="text-white">He closes the whole loop from strategy to working system to adoption.</span> The teams he touches come out faster and clearer than they went in. If you&rsquo;re scaling and you need someone who can both see what&rsquo;s broken and build the fix, that&rsquo;s Gabe.&rdquo;
-              </blockquote>
-              <figcaption className="mt-6">
-                <p className="font-syne font-semibold text-white text-lg">Luke Larkin</p>
-                <p className="font-inter text-sm text-bone/60">Owner, Larkin Systems</p>
-              </figcaption>
-            </figure>
-            <figure>
-              <blockquote className="font-inter text-lg md:text-xl leading-relaxed text-bone/90">
-                &ldquo;I&rsquo;m just laughing at the drafts that are created. <span className="text-white">They&rsquo;re 1,000 times better than anything I could come up with</span> &mdash; and in no time.&rdquo;
-              </blockquote>
-              <figcaption className="mt-6">
-                <p className="font-syne font-semibold text-white text-lg">Matt Arriaga</p>
-                <p className="font-inter text-sm text-bone/60">Owner, Arriaga Mediation</p>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
+      <Testimonials />
 
       {/* Pricing */}
       <section className="bg-bone py-20 md:py-24">

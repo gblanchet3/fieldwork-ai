@@ -7,6 +7,7 @@ import Methodology from "@/components/Methodology";
 import Guarantee from "@/components/Guarantee";
 import Services from "@/components/Services";
 import Work from "@/components/Work";
+import Testimonials from "@/components/Testimonials";
 import About from "@/components/About";
 import FieldNotes from "@/components/FieldNotes";
 import Contact from "@/components/Contact";
@@ -24,6 +25,7 @@ export default function Home() {
       <Guarantee />
       <Services />
       <Work />
+      <Testimonials />
       <About />
       <FieldNotes />
       <Contact />
