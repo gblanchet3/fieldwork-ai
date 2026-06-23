@@ -32,3 +32,6 @@ tsconfig.tsbuildinfo
 
 # Client engagement work — kept here for organization but NEVER committed to the public website repo
 clients/
+
+# Internal offering strategy / outreach drafts — working docs, never published
+offerings/

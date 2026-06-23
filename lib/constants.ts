@@ -24,6 +24,7 @@ export const NAV_LINKS = [
 ] as const;
 
 export const SERVICES_DROPDOWN = [
+  { label: "AI for Business Leaders", sub: "1-day intensive · Boise", href: "/intensive" },
   { label: "AI Operator", sub: "1:1 coaching", href: "/services/coaching" },
   { label: "Thesis Sprint + Build", sub: "Implementation", href: "/services/implementation" },
   { label: "Team Cohort", sub: "Enablement", href: "/services/enablement" },
