@@ -10,7 +10,7 @@ export const BRAND = {
   },
 } as const;
 
-export const CONTACT_EMAIL = "gblanchet3@gmail.com";
+export const CONTACT_EMAIL = "gabe@getfieldworkai.com";
 export const SUBSTACK_URL = "https://gabeblanchet.substack.com/";
 
 // --- Navigation ---

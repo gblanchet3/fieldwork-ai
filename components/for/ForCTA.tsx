@@ -51,8 +51,8 @@ export default function ForCTA({ business }: ForCTAProps) {
 
       <p className="font-inter text-xs mt-5" style={{ color: "rgba(240,235,225,0.3)" }}>
         Or reach out directly:{" "}
-        <a href="mailto:gblanchet3@gmail.com" className="underline hover:text-bone/60 transition-colors">
-          gblanchet3@gmail.com
+        <a href="mailto:gabe@getfieldworkai.com" className="underline hover:text-bone/60 transition-colors">
+          gabe@getfieldworkai.com
         </a>
       </p>
     </motion.section>

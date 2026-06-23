@@ -54,7 +54,10 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="font-inter text-xs text-bone/30">
-            &copy; 2026 Fieldwork AI · Boise, Idaho
+            &copy; 2026 Fieldwork AI · Boise, Idaho ·{" "}
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy Policy
+            </Link>
           </p>
           <p className="font-inter text-xs text-bone/30 italic">
             All artifacts owned by their respective clients.
