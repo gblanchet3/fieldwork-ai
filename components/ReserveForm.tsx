@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { CONTACT_EMAIL } from "@/lib/constants";
 
-// Reservation submissions are delivered by FormSubmit (https://formsubmit.co) —
-// a no-account form-to-email relay that works on a static GitHub Pages site.
-// NOTE: the FIRST submission triggers a one-time activation email to the address
-// below — open it once and click "Activate Form" to turn delivery on.
-// PRIVACY: to stop exposing this Gmail in page source, after activation grab the
-// hashed alias FormSubmit gives you (formsubmit.co/ajax/<random-string>) and
-// replace the value below with that string.
-const FORMSUBMIT_TO = "gblanchet3@gmail.com";
+// Reservation submissions are relayed by FormSubmit (https://formsubmit.co) to
+// Gabe's inbox via this hashed alias — a no-account form-to-email relay that
+// works on a static GitHub Pages site. Using the alias (not the naked email)
+// keeps the destination address out of the page source.
+const FORMSUBMIT_ENDPOINT = "388796ba2c451c3cb3ae55e861b5e7fd";
 
 const inputClass =
   "w-full bg-white/5 border border-white/15 text-white font-inter text-sm px-4 py-3 placeholder:text-white/30 focus:outline-none focus:border-amber transition-colors duration-200";
@@ -50,7 +48,7 @@ export default function ReserveForm() {
     e.preventDefault();
     setStatus("submitting");
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_TO}`, {
+      const res = await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_ENDPOINT}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
@@ -159,8 +157,8 @@ export default function ReserveForm() {
       {status === "error" && (
         <p className="mt-4 font-inter text-sm text-amber">
           Something hiccuped on our end. Email me directly at{" "}
-          <a href={`mailto:${FORMSUBMIT_TO}?subject=Seat%20reservation%20—%20AI%20for%20Business%20Leaders`} className="underline underline-offset-4 hover:text-white">
-            {FORMSUBMIT_TO}
+          <a href={`mailto:${CONTACT_EMAIL}?subject=Seat%20reservation%20—%20AI%20for%20Business%20Leaders`} className="underline underline-offset-4 hover:text-white">
+            {CONTACT_EMAIL}
           </a>{" "}
           and I&rsquo;ll lock it in.
         </p>
