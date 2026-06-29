@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import CTABand from "@/components/CTABand";
 import Testimonials from "@/components/Testimonials";
+import ReserveForm from "@/components/ReserveForm";
 
 export const metadata = {
   title: "AI for Business Leaders — 1-day intensive | Fieldwork AI",
@@ -64,8 +65,8 @@ const FAQ = [
     a: "A laptop, and a few real problems from your business — a workflow that eats your time, documents you work with, a decision you're chewing on. The more real, the more you get out of the day.",
   },
   {
-    q: "Is this just ChatGPT?",
-    a: "No. ChatGPT is one tool. You'll leave knowing how to pick and combine the right tools for real work — and how to own what you build instead of renting it.",
+    q: "Do you only teach Claude?",
+    a: "We go deepest on Claude because it's the strongest tool for real business work today — but you learn the moves underneath, so they carry straight over to ChatGPT, Copilot, or whatever your team already runs. You leave owning the skill, not renting one vendor.",
   },
   {
     q: "What happens after?",
@@ -103,12 +104,12 @@ export default function IntensivePage() {
         eyebrow="One day · In person · Hands on keyboard"
         title={
           <>
-            Walk in curious.
+            Walk in AI curious.
             <br />
-            Walk out fluent.
+            Walk out Claude fluent.
           </>
         }
-        subhead="Get genuinely good at AI in one focused day. A small-group, in-person day for Boise business owners and leaders — hands-on in a safe sandbox, then you map AI onto your own business, live. We work through what matters most: security, risk, and getting your team on board. You leave able to hold your own in any AI conversation, with a custom AI assistant already working for you."
+        subhead="Get genuinely good at AI in one focused day. We go deep on Claude — the strongest tool for real business work right now — and you learn the principles underneath, so they carry to whatever your team already runs. A small-group, in-person day for Boise business owners and leaders: hands-on in a safe sandbox, then you map AI onto your own business, live, and work through what matters most — security, risk, and getting your team on board. You won't be an expert by 3:30. You will walk out able to hold your own in any AI conversation, with a custom assistant already working for you."
       />
 
       {/* Event facts band */}
@@ -118,6 +119,7 @@ export default function IntensivePage() {
           <p className="font-inter text-sm text-bone/80">Boise, ID</p>
           <p className="font-inter text-sm text-bone/80">First open cohort · 8 seats</p>
           <p className="font-inter text-sm text-bone/80"><span className="text-amber font-medium">$1,000</span> · lunch &amp; follow-up included</p>
+          <p className="font-inter text-sm text-bone/80">Refundable · no payment to reserve</p>
         </div>
       </section>
 
@@ -294,7 +296,7 @@ export default function IntensivePage() {
             </p>
           </div>
           <div className="md:col-span-2 space-y-4 font-inter text-base leading-body text-steel">
-            <p><span className="text-slate font-medium">Business owners &amp; CEOs</span> (roughly 10–200 people) who make the call and want leverage now.</p>
+            <p><span className="text-slate font-medium">Business owners &amp; CEOs</span> — from solo professionals to ~200-person companies — who make the call and want leverage now.</p>
             <p><span className="text-slate font-medium">Professional-services leaders</span> — law, accounting, agencies, consulting — where AI ROI is most obvious and immediate.</p>
             <p>Comfortable with a laptop. No technical background required. If you can use email and a browser, you can do everything in this room.</p>
             <p className="text-steel/80 italic pt-2 border-t border-slate/10">
@@ -325,7 +327,7 @@ export default function IntensivePage() {
       </section>
 
       {/* Testimonials */}
-      <Testimonials />
+      <Testimonials heading="What people say about working with me" />
 
       {/* Pricing */}
       <section className="bg-bone py-20 md:py-24">
@@ -350,7 +352,7 @@ export default function IntensivePage() {
           <div className="bg-slate p-8 md:p-10 flex flex-col justify-center">
             <p className="section-label text-amber mb-2">The July schedule</p>
             <p className="font-inter text-sm leading-body text-bone/60 mb-6">
-              Companies already bring this in-house. July 30 is the first session open to the public.
+              Three companies booked private sessions before we opened a public seat. July 30 is the first one anyone can join.
             </p>
             <div className="border-t border-white/10 mb-7">
               {SESSIONS.map((s) => (
@@ -364,14 +366,39 @@ export default function IntensivePage() {
             </div>
             <p className="font-inter text-sm text-bone/70 mb-5">
               <span className="text-white font-medium">Thursday, July 30</span> · 9:00am–3:30pm · Boise, ID
+              <br /><span className="text-bone/45">Exact location sent when you reserve.</span>
             </p>
             <a
-              href="/contact"
+              href="#reserve"
               className="font-inter text-sm font-medium bg-amber text-white px-8 py-4 hover:bg-[#C06A1F] transition-colors inline-block text-center"
             >
               Reserve one of 8 seats →
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* Reserve */}
+      <section id="reserve" className="bg-olive py-20 md:py-24 scroll-mt-24 border-y border-white/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+          <div>
+            <p className="section-label text-amber mb-3">Reserve your seat</p>
+            <h2 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-white mb-5 leading-tight">
+              Hold one of the 8 seats for July 30.
+            </h2>
+            <p className="font-inter text-base leading-body text-bone/70 mb-8 max-w-md">
+              No payment to reserve — bring a check to the event or I&rsquo;ll invoice you, and
+              it&rsquo;s refundable if you don&rsquo;t walk out with something you&rsquo;ll use. Tell me
+              a little about you and I&rsquo;ll confirm your seat within a day.
+            </p>
+            <ul className="space-y-3 font-inter text-sm text-bone/70">
+              <li className="flex gap-3"><span className="text-amber">→</span> One focused day, hands on keyboard</li>
+              <li className="flex gap-3"><span className="text-amber">→</span> Small group — 8 seats, by design</li>
+              <li className="flex gap-3"><span className="text-amber">→</span> $1,000 · lunch &amp; 1:1 follow-up included</li>
+              <li className="flex gap-3"><span className="text-amber">→</span> 50% off the second seat when you bring your right hand</li>
+            </ul>
+          </div>
+          <ReserveForm />
         </div>
       </section>
 
@@ -394,6 +421,7 @@ export default function IntensivePage() {
         heading="One day. Get fluent. Leave with AI working for your business."
         body="July 30 in Boise is the first cohort open to the public. 8 seats."
         ctaLabel="Reserve your seat"
+        ctaHref="#reserve"
       />
       <Footer />
     </main>
