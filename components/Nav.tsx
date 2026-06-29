@@ -144,10 +144,10 @@ export default function Nav() {
           {/* Desktop CTA */}
           <div className="hidden md:block">
             <Link
-              href="/contact"
+              href="/intensive"
               className="font-inter text-sm font-medium bg-amber text-white px-5 py-2.5 hover:bg-[#C06A1F] transition-colors duration-200"
             >
-              Talk to me
+              Reserve your seat
             </Link>
           </div>
 
@@ -192,8 +192,8 @@ export default function Nav() {
                 <Link href="/work" className="font-inter text-base text-bone/80" onClick={closeAll}>Work</Link>
                 <Link href="/about" className="font-inter text-base text-bone/80" onClick={closeAll}>About</Link>
                 <a href="https://gabeblanchet.substack.com/" target="_blank" rel="noopener noreferrer" className="font-inter text-base text-bone/80">Field Notes ↗</a>
-                <Link href="/contact" className="font-inter text-sm font-medium bg-amber text-white px-5 py-3 text-center mt-2" onClick={closeAll}>
-                  Talk to me
+                <Link href="/intensive" className="font-inter text-sm font-medium bg-amber text-white px-5 py-3 text-center mt-2" onClick={closeAll}>
+                  Reserve your seat
                 </Link>
               </div>
             </nav>

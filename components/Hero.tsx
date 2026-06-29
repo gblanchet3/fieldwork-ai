@@ -59,10 +59,10 @@ export default function Hero() {
               Take the diagnostic →
             </a>
             <Link
-              href="/contact"
+              href="/intensive"
               className="font-inter text-sm font-medium border border-bone/30 text-bone px-8 py-4 hover:border-bone/60 hover:text-white transition-colors duration-200 text-center"
             >
-              Talk to me
+              Reserve your seat
             </Link>
           </motion.div>
 

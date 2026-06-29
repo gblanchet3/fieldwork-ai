@@ -92,7 +92,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CTABand heading="Talk to me." body="A 30-minute call. No slides, no pitch deck. We'll find your highest-leverage move." />
+      <CTABand
+        heading="Come spend a day with me."
+        body="The AI for Business Leaders intensive — one day in Boise, hands-on. You'll leave fluent, with AI working in your business and your first three moves locked."
+        ctaLabel="Reserve your seat"
+        ctaHref="/intensive"
+      />
       <Footer />
     </main>
   );
