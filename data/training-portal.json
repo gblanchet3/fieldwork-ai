@@ -1,10 +1,10 @@
 {
-  "_README": "MOCK DATA for the /training course player. Structure: company/sessions/tracks/roster + modules + lessons. Each lesson has a `blocks` array (heading | text | list | callout | prompt | video). trackId 'all' = shown to everyone; otherwise the lesson only shows for that track (used for the hands-on 'apply it' lessons). To go live on a Google Sheet: store sessions/tracks/roster/modules as tabs, and lesson blocks as a markdown column converted on read. See lib/training.ts.",
+  "_README": "MOCK DATA for the /training course player. Structure: company/sessions/tracks/roster + modules + lessons. Each lesson has a `blocks` array (heading | text | list | callout | prompt | video | context-compare | context-file | context-file-test | prompt-builder). trackId 'all' = shown to everyone; otherwise the lesson only shows for that track (used for role-tailored exercises). Interactive blocks call the Fieldwork Worker (lib/fw-live.ts); they fall back to canned output when NEXT_PUBLIC_FW_WORKER is unset. Facilitator-led exercises (icebreaker, word cloud, policy co-creation) live in /training/facilitator, not here. To go live on a Google Sheet: store sessions/tracks/roster/modules as tabs, and lesson blocks as a markdown column converted on read. See lib/training.ts.",
 
   "company": {
     "slug": "rafanelli-nahas",
     "name": "Rafanelli & Nahas",
-    "tagline": "AI Fluency Program · built with Fieldwork AI",
+    "tagline": "AI Literacy Training · built with Fieldwork AI",
     "contact": "Gabe Blanchet · gabe@getfieldworkai.com"
   },
 
@@ -12,8 +12,8 @@
     {
       "id": "s1",
       "code": "RN-FOUNDATIONS",
-      "title": "Session 1 — Foundations & Fluency",
-      "subtitle": "Get fluent, set the ground rules, and get your first real win.",
+      "title": "Day 1 — Foundations",
+      "subtitle": "Context, prompting, and responsible use — hands-on, in real time.",
       "durationLabel": "Half day (~4 hrs)",
       "location": "R&N Office, Boise",
       "date": "TBD"
@@ -31,7 +31,7 @@
 
   "tracks": [
     { "id": "leadership", "label": "Leadership", "audience": "Scott, partners, decision-makers" },
-    { "id": "ops", "label": "Ops & Portfolio", "audience": "Justin + portfolio / operations" },
+    { "id": "ops", "label": "Ops & Portfolio", "audience": "Justin + portfolio / property management" },
     { "id": "maintenance", "label": "Building Maintenance & Engineering", "audience": "Facilities, maintenance & engineering" }
   ],
 
@@ -41,10 +41,10 @@
   ],
 
   "modules": [
-    { "id": "m1", "sessionId": "s1", "title": "Orientation" },
-    { "id": "m2", "sessionId": "s1", "title": "How AI actually works" },
-    { "id": "m3", "sessionId": "s1", "title": "The 4D Framework" },
-    { "id": "m4", "sessionId": "s1", "title": "Put it to work" },
+    { "id": "m1", "sessionId": "s1", "title": "Welcome" },
+    { "id": "m2", "sessionId": "s1", "title": "Context" },
+    { "id": "m3", "sessionId": "s1", "title": "Prompting — More is More" },
+    { "id": "m4", "sessionId": "s1", "title": "Responsible use & your new assistant" },
 
     { "id": "m5", "sessionId": "s2", "title": "Warm-up" },
     { "id": "m6", "sessionId": "s2", "title": "Find the work" },
@@ -55,226 +55,245 @@
 
   "lessons": [
     {
-      "id": "l-welcome",
+      "id": "l-d1-welcome",
       "moduleId": "m1",
       "trackId": "all",
-      "title": "How this works",
+      "title": "How today works",
       "blocks": [
-        { "type": "text", "text": "Welcome. Over two half-days you'll go from \"I've heard of AI\" to confidently using it on real Rafanelli & Nahas work — leases, briefs, tenant notices, work orders, the things actually on your desk." },
-        { "type": "text", "text": "The goal isn't to turn you into a programmer. It's leverage: each person here doing more of their best work, with AI handling the repetitive parts. You stay in charge. AI does the first draft, the grunt work, the second pair of eyes." },
-        { "type": "heading", "text": "Two simple rules for the whole program" },
-        { "type": "list", "ordered": true, "items": [
-          "Bring real work. Every exercise uses an actual R&N task, not a made-up one. You'll leave each session with something done.",
-          "You own the result. AI drafts; you decide. Nothing goes to a tenant, partner, or vendor without a human signing off."
+        { "type": "text", "text": "Today is hands-on. You'll build the skills by doing them, right here in this portal, on real Rafanelli & Nahas work — not slides about AI, but AI itself." },
+        { "type": "text", "text": "Think of AI as a brand-new assistant you're onboarding. A great assistant needs three things from you: background so they understand your world, clear direction when you hand off a task, and guardrails for what they should never do. That's exactly what today covers — context, prompting, and responsible use." },
+        { "type": "callout", "variant": "note", "title": "Two rules for the day", "items": [
+          "Bring real work. Every exercise uses an actual R&N task. You'll leave with things you built.",
+          "You own the result. AI drafts; you decide. Nothing leaves the building without a human signing off."
         ]},
-        { "type": "callout", "variant": "tip", "title": "Move at your own pace", "text": "Use the sidebar to jump between lessons. Your progress is saved on this device, so you can stop and pick up where you left off." }
-      ]
-    },
-    {
-      "id": "l-cheatsheet",
-      "moduleId": "m1",
-      "trackId": "all",
-      "title": "Build your company cheat sheet",
-      "blocks": [
-        { "type": "text", "text": "Before AI can help you, it needs context about R&N. The single highest-leverage thing you can do is build a short \"company cheat sheet\" — a document you paste in (or keep handy) so every AI conversation starts already knowing who you are." },
-        { "type": "text", "text": "Think of it like onboarding a sharp new hire who's never heard of R&N. What would they need to know to be useful on day one?" },
-        { "type": "heading", "text": "What goes in it" },
-        { "type": "list", "items": [
-          "Who R&N is: privately held Boise CRE developer and long-hold owner/operator, ~15 people, 1M+ sq ft in the Treasure Valley.",
-          "Your buildings and entities: e.g. Capitol & Idaho (702 W. Idaho St) under 702 W. Idaho, LLC — Scott Schoenherr signs as Managing Member; River Quarry at Parkcenter (412 E. Parkcenter Blvd) under River Quarry at Parkcenter, LLC — Ron Nahas signs as Manager.",
-          "How R&N writes: clear, firm, never adversarial; documents follow a consistent structure and voice.",
-          "Your role and what you do day to day.",
-          "What's off-limits: tenant financials marked confidential, anything under an NDA. (More on this in the diligence lessons.)"
-        ]},
-        { "type": "callout", "variant": "exercise", "title": "Exercise — draft your cheat sheet (15 min)", "items": [
-          "Open a chat with Claude.",
-          "Ask: \"Help me build a one-page company context document. Interview me with 5–7 questions about my business, then write it up.\" Answer its questions.",
-          "Read what it produces, fix anything wrong, and save it. This is your context for everything else in the program."
-        ]},
-        { "type": "prompt", "title": "Starter prompt", "text": "I want to build a one-page company context document I can reuse with AI. Interview me with 5–7 short questions about my company, my role, our voice, our customers, and what's sensitive. Then write the document in plain, organized sections." }
+        { "type": "callout", "variant": "tip", "title": "What you'll walk out with", "items": [
+          "A company context file every future prompt can use.",
+          "A prompt-building habit that gets far better output.",
+          "A team AI usage policy you helped write."
+        ]}
       ]
     },
 
     {
-      "id": "l-genai",
+      "id": "l-d1-context-why",
       "moduleId": "m2",
       "trackId": "all",
-      "title": "What generative AI actually is",
+      "title": "Context is everything",
       "blocks": [
-        { "type": "text", "text": "You don't need the math, but a working mental model helps you trust it in the right places and double-check it in the others." },
-        { "type": "text", "text": "Generative AI like Claude was trained on an enormous amount of text. From all that reading, it learned the patterns of language well enough to predict what should come next — which lets it write, summarize, explain, and reason through problems. It's not looking anything up in a database; it's generating a response from patterns." },
-        { "type": "video", "url": "https://www.youtube.com/watch?v=BbcjcnQwseo&t=707s", "label": "Watch: How generative AI works (~12 min)" },
-        { "type": "heading", "text": "What that means in practice" },
-        { "type": "list", "items": [
-          "It's genuinely strong at: drafting, rewriting, summarizing long documents, explaining things at different levels, organizing messy information, and being a thinking partner.",
-          "It's weaker at: knowing recent or local facts, exact figures, and anything it wasn't clearly told — where it may fill gaps with confident-sounding guesses.",
-          "It has no memory of your business unless you give it context (that's why the cheat sheet matters)."
-        ]},
-        { "type": "callout", "variant": "note", "text": "Rule of thumb: AI is brilliant at handling language and structure, and unreliable at facts you haven't given it. Lean on the first; verify the second." }
+        { "type": "text", "text": "The single biggest lever on the quality of what you get out of AI is the context you put in. Same question, wildly different answers — depending on what the AI knows about you." },
+        { "type": "text", "text": "Think about seeing a new doctor. You don't just walk in and get a prescription — you fill out the paperwork, they take your history, they read your chart. All of that is context, and it's what lets them help you specifically instead of generically. Every AI conversation starts with no chart. You provide it." },
+        { "type": "callout", "variant": "note", "text": "Context lives in a few places: right inside a prompt, and — more powerfully — in a saved file or project instructions the AI reuses every time. Build it once; stop re-explaining yourself." }
       ]
     },
     {
-      "id": "l-trustcheck",
+      "id": "l-d1-context-compare-leadership",
       "moduleId": "m2",
-      "trackId": "all",
-      "title": "The trust check: where AI gets things wrong",
-      "blocks": [
-        { "type": "text", "text": "The fastest way to learn where to trust AI is to test it on something you already know cold — so you'll instantly spot a mistake." },
-        { "type": "heading", "text": "The three failure modes to watch for" },
-        { "type": "list", "items": [
-          "Hallucination — it invents a plausible-sounding fact, source, or citation that isn't real. Common with specific names, numbers, and references.",
-          "Knowledge cutoff — its training has a cutoff date, so recent rule changes, current pricing, or local specifics may be stale. Good models will caveat this; press them to.",
-          "Confident vagueness — it restates the obvious instead of addressing the actual hard part of your question."
-        ]},
-        { "type": "callout", "variant": "exercise", "title": "Exercise — test it on your turf (15 min)", "items": [
-          "Pick a topic you know deeply (a lease clause, a building system, a local regulation, your own numbers).",
-          "Versatility test: ask AI to explain it three ways in one response — for a tenant, for a partner, for a new hire. Did the audience shifts actually land?",
-          "Hallucination test: ask it to name 2–3 real resources (a trade body, a publication, a supplier). Spot-check one. Does it actually exist?",
-          "Cutoff test: ask something time-sensitive or local. Does it caveat that its info may be outdated, or does it present a stale guess as fact?"
-        ]},
-        { "type": "callout", "variant": "tip", "text": "When you want AI to avoid guessing, say so: \"If you're not certain, say so and flag it — never invent a fact, name, or number.\" You'll use this discipline (we call it NEEDS REVIEW) all through the program." }
-      ]
-    },
-
-    {
-      "id": "l-loops",
-      "moduleId": "m3",
-      "trackId": "all",
-      "title": "Two loops, four moves",
-      "blocks": [
-        { "type": "text", "text": "Everything in this program runs on one simple framework: the 4D Framework. Four competencies — Delegation, Description, Discernment, Diligence — organized into two loops." },
-        { "type": "heading", "text": "The inner loop — your day-to-day" },
-        { "type": "text", "text": "Description and Discernment are the back-and-forth of a single AI conversation: you describe what you need, you evaluate what comes back, you refine. This is the loop you'll run dozens of times a day." },
-        { "type": "heading", "text": "The outer loop — your bigger decisions" },
-        { "type": "text", "text": "Delegation and Diligence are the wider judgment calls: deciding what AI should handle in the first place, and taking responsibility for how it's used. This loop runs less often but matters more." },
-        { "type": "callout", "variant": "note", "title": "The four moves", "items": [
-          "Delegation — decide what AI handles and what stays with you.",
-          "Description — communicate clearly what you need and how you want it approached.",
-          "Discernment — evaluate what AI gives back before acting on it.",
-          "Diligence — take full responsibility for how you use AI and own the final result."
-        ]},
-        { "type": "text", "text": "It's a loop, not a checklist — you'll flow back and forth between these. That fluid movement is what AI fluency actually feels like." }
-      ]
-    },
-    {
-      "id": "l-delegation",
-      "moduleId": "m3",
-      "trackId": "all",
-      "title": "Delegation — what to hand off",
-      "blocks": [
-        { "type": "text", "text": "Delegation is deciding, up front, what's a good fit for AI and what isn't. Get this right and everything downstream is easier." },
-        { "type": "heading", "text": "Three buckets" },
-        { "type": "list", "items": [
-          "AI can handle: standardized, documented, repeatable work — pulling terms out of a lease, formatting a notice, summarizing a report.",
-          "AI assists, human decides: AI drafts or organizes, a person reviews before anything leaves the building — a tenant email, an amendment draft, a vendor comparison.",
-          "Human should handle: high-stakes, relationship-sensitive, or complex judgment — negotiating a deal, resolving a real complaint, a hard conversation."
-        ]},
-        { "type": "callout", "variant": "tip", "text": "A good test: \"If this were done imperfectly, what's the cost?\" Low cost + repetitive = great for AI. High cost or high-trust = keep it close, or keep AI strictly in an assist role." }
-      ]
-    },
-    {
-      "id": "l-description",
-      "moduleId": "m3",
-      "trackId": "all",
-      "title": "Description — say it clearly",
-      "blocks": [
-        { "type": "text", "text": "Most disappointing AI output is really a description problem. The fix is to be specific, like you're instructing a very capable but very literal new employee. Three things to describe:" },
-        { "type": "list", "ordered": true, "items": [
-          "Product — what you want back. The end result, the inputs you're giving, and the format (a table, a one-page brief, a draft email).",
-          "Process — how to approach it. The steps, the decision points (\"if it's about pricing, use the price list; if it's custom, flag it\"), and when to stop and ask you.",
-          "Performance — how it should behave. The tone, how to handle uncertainty (\"if unsure, say so — never guess\"), and the hard \"never\"s (\"never promise a date,\" \"never share another tenant's info\")."
-        ]},
-        { "type": "callout", "variant": "tip", "title": "Give it your context", "text": "Paste your company cheat sheet at the start. A described task plus real context is the difference between generic output and something that sounds like R&N." },
-        { "type": "prompt", "title": "Shape of a good description", "text": "Context: [paste your cheat sheet]\nProduct: I need [end result] from [these inputs], formatted as [format].\nProcess: First do [X]. If [condition], then [Y]; otherwise flag it for me. Stop and ask if [Z].\nPerformance: Tone should be [tone]. If you're unsure, say so and flag it — never guess. Never [the hard nevers]." }
-      ]
-    },
-    {
-      "id": "l-discernment",
-      "moduleId": "m3",
-      "trackId": "all",
-      "title": "Discernment — check before you trust",
-      "blocks": [
-        { "type": "text", "text": "Discernment is evaluating what comes back before you act on it. This is where your expertise is irreplaceable — you can spot a wrong number or an off tone instantly." },
-        { "type": "heading", "text": "Three things to check, every time" },
-        { "type": "list", "items": [
-          "Accuracy — are the facts, figures, names, and dates right? Check them against your own records, not the AI's confidence.",
-          "Fit — does it sound like R&N? Right tone, right structure, nothing that contradicts how you do things?",
-          "Gaps & fabrications — did it quietly invent anything, or skip something it didn't actually have? Anything it guessed should be flagged, not buried."
-        ]},
-        { "type": "callout", "variant": "note", "text": "Discernment turns AI from \"impressive demo\" into \"reliable tool.\" If something's off, you don't start over — you describe the fix and loop again. Two or three rounds of refinement is normal and expected." }
-      ]
-    },
-    {
-      "id": "l-diligence",
-      "moduleId": "m3",
-      "trackId": "all",
-      "title": "Diligence — own the result",
-      "blocks": [
-        { "type": "text", "text": "Diligence is taking full responsibility for how AI is used and what goes out the door under R&N's name. AI is a tool; accountability is always yours." },
-        { "type": "heading", "text": "Three kinds of diligence" },
-        { "type": "list", "items": [
-          "Creation — is this task appropriate for AI, and what could go wrong? Name the failure modes and a safeguard for each.",
-          "Deployment — how will you review outputs, when can you reduce oversight, and what would make you pause the whole thing?",
-          "Transparency — who needs to know AI was involved (tenants, partners, team), and how will you say so?"
-        ]},
-        { "type": "callout", "variant": "warning", "title": "R&N's data ground rules", "items": [
-          "R&N's data is not used to train the AI, and files stay in OneDrive where they live.",
-          "Safe-to-use check: would you email this to a trusted professional, does the tenant know, is it normal business? Yes to all three → fine to run through AI.",
-          "Worth a pause: tenant financials marked confidential, anything under an NDA, or data you've promised a third party you'd handle a certain way."
-        ]},
-        { "type": "text", "text": "We'll turn this into a written team policy in Session 2. For now: when in doubt, slow down and ask." }
-      ]
-    },
-
-    {
-      "id": "l-apply-leadership",
-      "moduleId": "m4",
       "trackId": "leadership",
-      "title": "Your first win — a leadership task",
+      "title": "See it for yourself",
       "blocks": [
-        { "type": "text", "text": "Let's run the inner loop on something real to you: a decision, an update, or a piece of analysis you're sitting on right now." },
-        { "type": "callout", "variant": "exercise", "title": "Exercise — apply the 4D loop (20 min)", "items": [
-          "Delegation: pick a task where AI assists and you decide — e.g. pressure-testing a decision, drafting a partner/IC update, or sizing the ROI of a workflow.",
-          "Description: paste your cheat sheet, then describe the product, process, and performance you want.",
-          "Discernment: check every figure and claim against what you actually know. Flag anything it guessed.",
-          "Diligence: decide what (if anything) you'd be comfortable acting on, and what still needs your own work."
-        ]},
-        { "type": "prompt", "title": "Pressure-test a decision", "text": "[paste cheat sheet]\nI'm weighing this decision: [decision]. Act as a skeptical partner. Give me the strongest case for, the strongest case against, the 3 assumptions it depends on, and what would have to be true for this to be a mistake. Be direct; flag anything you're unsure about." },
-        { "type": "prompt", "title": "Size the ROI of a workflow", "text": "Help me estimate ROI for automating this task: [task]. It takes about [time], happens [frequency], done by [who]; outsourced it costs [$]. Show time and dollars saved per month and per year, and the risk reduced. Show the math — don't inflate it." }
+        { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
+        {
+          "type": "context-compare",
+          "scenario": "You're weighing whether to renew a major office tenant at slightly below market to protect occupancy in a soft leasing year.",
+          "barePrompt": "Should I renew this tenant below market or hold out for market rate?",
+          "contextBlock": "Context: I'm a partner at Rafanelli & Nahas, a privately held Boise CRE owner/operator (~1M sq ft, long-hold strategy, tenant-service is our north star). The tenant occupies 22,000 sq ft in a Class-A downtown building, has been with us 9 years, always pays on time, and is asking for a 10-year renewal at ~8% under current market. Downtown office is soft; re-tenanting this space would likely take 12–18 months. Act as a skeptical co-owner. I want the case for, the case against, the assumptions it hinges on, and what would make this a mistake.",
+          "system": "You are assisting a commercial real estate owner/operator. Be concise, direct, and practical."
+        },
+        { "type": "text", "text": "Same model, same question. The only thing that changed is what it knew about your situation." }
       ]
     },
     {
-      "id": "l-apply-ops",
-      "moduleId": "m4",
+      "id": "l-d1-context-compare-ops",
+      "moduleId": "m2",
       "trackId": "ops",
-      "title": "Your first win — a lease task",
+      "title": "See it for yourself",
       "blocks": [
-        { "type": "text", "text": "Let's run the inner loop on a real lease document — the kind of work that normally eats a half-day." },
-        { "type": "callout", "variant": "exercise", "title": "Exercise — abstract a real lease (20 min)", "items": [
-          "Delegation: this is a great AI-handles / you-verify task — extracting documented terms.",
-          "Description: paste your cheat sheet, then use the prompt below on a lease or amendment you know well.",
-          "Discernment: check every NEEDS REVIEW flag — did it correctly refuse to guess? Verify the figures.",
-          "Diligence: note one thing it caught that saves you time, and anything you'd never let it finalize without review."
-        ]},
-        { "type": "prompt", "title": "Extract operative lease terms", "text": "You are a CRE lease analyst for R&N. [paste cheat sheet]\nFrom the document below, extract: parties (full legal names + entity types), building/premises/suite, rentable area, term, base year, rent schedule, parking, security deposit, key dates, and exhibits. Output as a clean labeled list. Mark anything not clearly stated as NEEDS REVIEW. Do not guess.\n\n[paste lease text]" },
-        { "type": "prompt", "title": "Pull critical dates", "text": "From the lease below, list every date-driven obligation: commencement, expiration, renewal/option windows, notice deadlines (days required + to whom), and rent-step dates. Table: Obligation | Date/Window | Notice required | Owner. Flag anything ambiguous as NEEDS REVIEW.\n\n[paste lease text]" }
+        { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
+        {
+          "type": "context-compare",
+          "scenario": "A long-time tenant is 15 days past due on their CAM reconciliation balance and you need to nudge them without straining the relationship.",
+          "barePrompt": "Write an email to a tenant about a late payment.",
+          "contextBlock": "Context: I'm a property manager at Rafanelli & Nahas, a Boise CRE owner/operator whose north star is tenant service. Our voice is warm but firm — never adversarial. The tenant is James at Suite 400, Boise Plaza, with us 6 years, generally reliable. The March CAM reconciliation balance of $2,140 is 15 days past due. I want a short email that preserves the relationship, states the specifics, and asks for a payment date this week.",
+          "system": "You are assisting a commercial real estate property manager. Be concise and match a warm-but-firm professional tone."
+        },
+        { "type": "text", "text": "Same model, same ask. The only thing that changed is what it knew about you and the tenant." }
       ]
     },
     {
-      "id": "l-apply-maintenance",
-      "moduleId": "m4",
+      "id": "l-d1-context-compare-maintenance",
+      "moduleId": "m2",
       "trackId": "maintenance",
-      "title": "Your first win — a field task",
+      "title": "See it for yourself",
       "blocks": [
-        { "type": "text", "text": "Let's run the inner loop on real field work — turning rough notes into clean records, fast." },
-        { "type": "callout", "variant": "exercise", "title": "Exercise — clean up a work order (20 min)", "items": [
-          "Delegation: turning a messy note into a structured record is ideal AI-assist work.",
-          "Description: paste your cheat sheet, then use the prompt below on a recent note or photo description.",
-          "Discernment: confirm the priority and that it kept your facts straight — no invented details.",
-          "Diligence: compare it to how long this normally takes, and note anything you'd always double-check."
+        { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
+        {
+          "type": "context-compare",
+          "scenario": "A rooftop HVAC unit is short-cycling and you want a fast, safe first-pass diagnostic before calling a vendor.",
+          "barePrompt": "How do I fix an air conditioner that keeps turning on and off?",
+          "contextBlock": "Context: I'm a building engineer at Rafanelli & Nahas in Boise. The unit is a ~10-ton Carrier rooftop package unit serving the 3rd floor of Boise Plaza. It's short-cycling — running about 2 minutes, shutting off, restarting a few minutes later. Outdoor temp is ~95°F. I've already checked that the filter is clean and the thermostat batteries are good. I'm comfortable with basic checks but not refrigerant work. Give me the most likely causes ranked, the safe checks I can do myself, and the point where I should stop and call a licensed HVAC tech.",
+          "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
+        },
+        { "type": "text", "text": "Same model, same problem. The only thing that changed is what it knew about your unit and what you'd already tried." }
+      ]
+    },
+    {
+      "id": "l-d1-context-file",
+      "moduleId": "m2",
+      "trackId": "all",
+      "title": "Train your new employee",
+      "blocks": [
+        { "type": "text", "text": "Now let's build R&N's shared context file together — the thing every future prompt can start from. Fill in the parts you know best. Don't worry about spelling or polish; more is more, and AI doesn't forget. (Voice dictation works great here — just talk.)" },
+        {
+          "type": "context-file",
+          "intro": "You'll be assigned a section or two to focus on. Add to any that you can.",
+          "sections": [
+            { "id": "who", "label": "Who we are", "hint": "Company, history, size, that we're a Boise CRE owner/operator.", "placeholder": "Rafanelli & Nahas is…" },
+            { "id": "what", "label": "What we do", "hint": "Property types, our buildings, the kind of work we do day to day.", "placeholder": "We own and operate…" },
+            { "id": "market", "label": "What makes us different", "hint": "How we go to market, what we're known for. (Scott's tenant-service ethos goes here.)", "placeholder": "What sets us apart is…" },
+            { "id": "culture", "label": "Our culture & voice", "hint": "Values, how we treat tenants and each other, how we write.", "placeholder": "We communicate like…" },
+            { "id": "always", "label": "What AI should always know", "hint": "Terminology, tone guardrails, things it should never assume.", "placeholder": "Always remember that…" }
+          ]
+        },
+        { "type": "callout", "variant": "tip", "text": "Gabe is assembling everyone's answers into one company file live. You'll each leave with it loaded and ready to use." }
+      ]
+    },
+    {
+      "id": "l-d1-context-test",
+      "moduleId": "m2",
+      "trackId": "all",
+      "title": "Prove it works",
+      "blocks": [
+        { "type": "text", "text": "Here's the payoff. Write one real prompt for your work, then run it two ways — without your context, and with it. Feel the difference." },
+        {
+          "type": "context-file-test",
+          "guidance": "Write a real prompt — a tenant email, a summary, a note, anything from your week. Then run it both ways.",
+          "starterPrompt": "Draft a short, friendly note letting a tenant know we'll be doing planned maintenance in their building next week.",
+          "system": "You are assisting a commercial real estate team. Be concise and practical."
+        }
+      ]
+    },
+
+    {
+      "id": "l-d1-more",
+      "moduleId": "m3",
+      "trackId": "all",
+      "title": "More is more",
+      "blocks": [
+        { "type": "text", "text": "The average person types about 4 words into Google and about 20 into an AI prompt. Best practice is far more than that. A prompt isn't a search box — it's your chance to generate real work, and the quality tracks how much you put in." },
+        { "type": "heading", "text": "One idea, a few moves" },
+        { "type": "list", "items": [
+          "Start with the end in mind — describe what a great result looks like before anything else.",
+          "Give your reasoning, not just the request — the why, what you've tried, and a persona to take (a skeptic, a seasoned broker, a careful lawyer).",
+          "Turn it into a thought partner — ask it to interview you before it drafts.",
+          "Don't settle — the first response is a starting point. Demand more, better, the way you want it."
         ]},
-        { "type": "prompt", "title": "Field note → work-order entry", "text": "Turn the rough note below into a structured work-order entry: Building/Unit, Issue, Priority (Low/Med/High/Emergency), What I observed, Action taken/needed, Parts or vendor required, Follow-up. Keep my facts; don't invent details. If priority isn't clear, ask.\n\nNOTE:\n[paste or dictate your note]" },
-        { "type": "prompt", "title": "First-pass equipment diagnostic", "text": "Act as a building-systems technician. A [equipment type, make/model if known] is showing [symptoms]. Give the 5 most likely causes ranked by probability, the safe checks I can do myself, and the point where I should stop and call a licensed pro. Safety first — flag anything I should not touch." }
+        { "type": "callout", "variant": "note", "text": "You don't need a paragraph every time — this is meant to speed you up, not slow you down. But on real, thorny work, the extra minute spent on the prompt pays for itself many times over." }
+      ]
+    },
+    {
+      "id": "l-d1-builder-leadership",
+      "moduleId": "m3",
+      "trackId": "leadership",
+      "title": "Build your prompt",
+      "blocks": [
+        { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
+        {
+          "type": "prompt-builder",
+          "challenges": [
+            { "id": "decision", "label": "Pressure-test a decision", "text": "You're deciding whether to sign a 10-year renewal with an anchor tenant at ~8% below market to lock in occupancy this year." },
+            { "id": "update", "label": "Draft a partner update", "text": "You need to write the monthly ownership update: occupancy, leasing pipeline, and the one risk you're watching." }
+          ],
+          "chunks": [
+            { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a tight one-page analysis I could hand a co-owner", "prefix": "My goal: " },
+            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "Why does this matter, what do you already know, and who should the AI act as?", "placeholder": "e.g. Act as a skeptical co-owner; we hold long-term and protect tenant relationships", "prefix": "Context & reasoning: " },
+            { "id": "c3", "label": "Ask it to interview you", "instruction": "Invite the AI to ask you clarifying questions before it drafts.", "placeholder": "e.g. Before you answer, ask me anything that would sharpen this", "prefix": "" }
+          ],
+          "genericPrompt": "Should I renew this tenant?",
+          "genericOutput": "It depends on several factors. You should consider the current market rate, the tenant's payment history, the cost of finding a new tenant, and your overall occupancy goals. Weigh the pros and cons and consult your team before deciding.",
+          "system": "You are assisting a commercial real estate owner/operator. Be concise, direct, and practical."
+        }
+      ]
+    },
+    {
+      "id": "l-d1-builder-ops",
+      "moduleId": "m3",
+      "trackId": "ops",
+      "title": "Build your prompt",
+      "blocks": [
+        { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
+        {
+          "type": "prompt-builder",
+          "challenges": [
+            { "id": "cam", "label": "The late-CAM email", "text": "A long-time tenant is 15 days past due on their CAM reconciliation balance and you need to nudge them without straining the relationship." },
+            { "id": "amend", "label": "Summarize an amendment", "text": "Turn a redlined lease amendment into a plain-English summary of what changed and why it matters." }
+          ],
+          "chunks": [
+            { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a warm-but-firm email that gets a payment date this week", "prefix": "My goal: " },
+            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "Why does this matter, what's the situation, and who should the AI act as?", "placeholder": "e.g. Act as a seasoned property manager; this tenant's been with us 6 years and tenant service is our north star", "prefix": "Context & reasoning: " },
+            { "id": "c3", "label": "Ask it to interview you", "instruction": "Invite the AI to ask you clarifying questions before it drafts.", "placeholder": "e.g. Before you write it, ask me anything that would make it land better", "prefix": "" }
+          ],
+          "genericPrompt": "Write me an email to a tenant.",
+          "genericOutput": "Dear Tenant,\n\nWe are writing to inform you regarding your account. Please contact our office at your earliest convenience to discuss. Thank you for your attention to this matter.\n\nSincerely,\nManagement",
+          "system": "You are assisting a commercial real estate property manager. Match a warm-but-firm professional tone."
+        }
+      ]
+    },
+    {
+      "id": "l-d1-builder-maintenance",
+      "moduleId": "m3",
+      "trackId": "maintenance",
+      "title": "Build your prompt",
+      "blocks": [
+        { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
+        {
+          "type": "prompt-builder",
+          "challenges": [
+            { "id": "workorder", "label": "Field note → work order", "text": "Turn your rough note about a broken rooftop HVAC unit into a clean, structured work order." },
+            { "id": "diag", "label": "First-pass diagnostic", "text": "A rooftop unit at Boise Plaza is short-cycling; you want likely causes and safe checks before calling a vendor." }
+          ],
+          "chunks": [
+            { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a clean work-order entry with priority and next steps", "prefix": "My goal: " },
+            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "What's the situation, what have you tried, and who should the AI act as?", "placeholder": "e.g. Act as a senior building engineer; 10-ton Carrier RTU, filter's clean, I don't do refrigerant work", "prefix": "Context & reasoning: " },
+            { "id": "c3", "label": "Ask it to interview you", "instruction": "Invite the AI to ask you clarifying questions before it answers.", "placeholder": "e.g. Before you answer, ask me anything you need about the unit", "prefix": "" }
+          ],
+          "genericPrompt": "How do I fix an AC unit?",
+          "genericOutput": "There are many possible reasons an AC unit may not work. Check the power, the thermostat, the filter, and the circuit breaker. If it still doesn't work, you may need to call a professional HVAC technician to inspect it.",
+          "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
+        }
+      ]
+    },
+
+    {
+      "id": "l-d1-responsible",
+      "moduleId": "m4",
+      "trackId": "all",
+      "title": "Your data, your guardrails",
+      "blocks": [
+        { "type": "text", "text": "We've covered how to get great output. Just as important: how to use this safely. The confidence to use AI comes from knowing the boundaries." },
+        { "type": "callout", "variant": "note", "title": "The essentials", "items": [
+          "Your data stays yours — on our plan, what you enter isn't used to train models and doesn't leave our environment.",
+          "One sanctioned tool — we standardize on Claude. Never paste company or client info into random consumer tools.",
+          "Humans own the output — AI drafts; you decide. Your name, your judgment. \"The AI did it\" isn't a thing.",
+          "Verify what matters — dollar amounts, dates, clause language, legal terms. Trust it on low-stakes drafting.",
+          "Know the access boundary — AI can read and draft, but never sends or edits our system of record on its own.",
+          "Be transparent — if a client asks \"do you use AI?\", you should like your honest answer."
+        ]},
+        { "type": "callout", "variant": "exercise", "title": "Next — together, out loud", "text": "We're going to write R&N's AI usage policy as a team, on screen. It's a shared agreement, not a rulebook handed down — which is exactly why we write it together. Gabe will capture it and we'll ratify it as a group in Session 2." }
+      ]
+    },
+    {
+      "id": "l-d1-claude",
+      "moduleId": "m4",
+      "trackId": "all",
+      "title": "Meet Claude — your new assistant",
+      "blocks": [
+        { "type": "text", "text": "Everything you did today — giving context, prompting well, setting guardrails — is how you get the most out of Claude, the tool R&N chose. Before you leave, let's get it onto your own devices so it's ready Monday morning." },
+        { "type": "callout", "variant": "exercise", "title": "Get set up", "items": [
+          "Install Claude on your desktop and your phone, and sign in.",
+          "Load your company context file so every chat starts smart.",
+          "Try one real thing before Session 2 — bring what surprised you."
+        ]},
+        { "type": "callout", "variant": "tip", "title": "Where Claude fits", "text": "There are a handful of major AI providers (Anthropic — that's Claude — plus OpenAI, Google, and others). With Scott and Justin, R&N chose Claude for this work. Day 2 is where we go deep: refining AI's output, mapping your real workflows, and building reusable Skills." }
       ]
     },
 

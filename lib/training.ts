@@ -40,7 +40,44 @@ export type Block =
       items?: string[];
     }
   | { type: "prompt"; title: string; text: string }
-  | { type: "video"; url: string; label: string };
+  | { type: "video"; url: string; label: string }
+  // ── Interactive Day-1 exercise blocks (Fieldwork live app) ──────────────────
+  // #3 — Context compare: run a bare prompt, then the same prompt with context.
+  | {
+      type: "context-compare";
+      scenario: string; // the role-tailored CRE situation
+      barePrompt: string; // the weak, context-free ask
+      contextBlock: string; // the context to layer on
+      system?: string; // optional system prompt for the live call
+    }
+  // #4a — Company context file: everyone contributes sections; captured live.
+  | {
+      type: "context-file";
+      intro?: string;
+      sections: { id: string; label: string; hint: string; placeholder?: string }[];
+    }
+  // #4b — Prove it: write a prompt, run it with vs. without your context.
+  | {
+      type: "context-file-test";
+      guidance: string;
+      starterPrompt?: string;
+      system?: string;
+    }
+  // #5 ⭐ — "More is More" chunked prompt-builder. The output that matters is the prompt.
+  | {
+      type: "prompt-builder";
+      challenges: { id: string; label: string; text: string }[]; // predefined, pick one
+      chunks: {
+        id: string;
+        label: string; // e.g. "Describe the end state"
+        instruction: string;
+        placeholder?: string;
+        prefix?: string; // prepended when assembling the paragraph
+      }[];
+      genericPrompt: string; // the weak prompt shown on the "before" side
+      genericOutput: string; // fixed weak output to contrast against the live one
+      system?: string;
+    };
 
 export type Lesson = {
   id: string;

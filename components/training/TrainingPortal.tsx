@@ -12,6 +12,7 @@ import {
   type PortalData,
   type Session,
 } from "@/lib/training";
+import { ExerciseBlock, type ExerciseCtx } from "./exercises";
 
 type SignOn = { name: string; trackId: string };
 type Step = "code" | "name" | "course";
@@ -531,7 +532,11 @@ function CoursePlayer({
                   </h1>
                   <div className="space-y-5">
                     {active.blocks.map((b, i) => (
-                      <BlockView key={i} block={b} />
+                      <BlockView
+                        key={i}
+                        block={b}
+                        ctx={{ sessionId: session.id, name, trackId }}
+                      />
                     ))}
                   </div>
                 </motion.article>
@@ -692,7 +697,7 @@ function Check({ done, active }: { done: boolean; active: boolean }) {
 
 // ── Block renderer ─────────────────────────────────────────────────────────────
 
-function BlockView({ block }: { block: Block }) {
+function BlockView({ block, ctx }: { block: Block; ctx: ExerciseCtx }) {
   switch (block.type) {
     case "heading":
       return (
@@ -742,6 +747,9 @@ function BlockView({ block }: { block: Block }) {
           <span className="font-inter text-sm font-medium text-slate">{block.label}</span>
         </a>
       );
+    default:
+      // Interactive exercise blocks (context-compare, context-file, prompt-builder…)
+      return <ExerciseBlock block={block} ctx={ctx} />;
   }
 }
 

@@ -1,0 +1,20 @@
+name = "fw-training"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+
+# KV namespace for capture records + rate-limit counters.
+# Create it once with:  npx wrangler kv namespace create FW_KV
+# then paste the returned id below.
+[[kv_namespaces]]
+binding = "FW_KV"
+id = "b955783c9cd747fc8d23ecd5a53718d3"
+
+[vars]
+# Origins allowed to call this Worker. Add your production domain(s).
+ALLOWED_ORIGINS = "https://getfieldworkai.com,https://www.getfieldworkai.com,http://localhost:3000"
+# Claude model used for exercise generation.
+MODEL = "claude-sonnet-5"
+
+# Secrets (NOT stored here) — set once with wrangler:
+#   npx wrangler secret put ANTHROPIC_API_KEY
+#   npx wrangler secret put FW_TOKEN
