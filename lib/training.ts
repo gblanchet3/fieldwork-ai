@@ -77,6 +77,13 @@ export type Block =
       genericPrompt: string; // the weak prompt shown on the "before" side
       genericOutput: string; // fixed weak output to contrast against the live one
       system?: string;
+    }
+  // Iterate: run a real task, then push back once to refine it (the "best use" muscle).
+  | {
+      type: "iterate";
+      intro?: string;
+      starterTask?: string;
+      system?: string;
     };
 
 export type Lesson = {
@@ -85,6 +92,7 @@ export type Lesson = {
   trackId: string; // "all" = every track, else track-specific
   title: string;
   blocks: Block[];
+  variantGroup?: string; // lessons sharing this are the same exercise across tracks
 };
 
 export type PortalData = {
@@ -156,4 +164,24 @@ export function buildCurriculum(
 
   flat.forEach((l, i) => (l.index = i));
   return { modules: grouped, lessons: flat };
+}
+
+/**
+ * The per-track variants of a lesson (same variantGroup), each paired with its
+ * track, in track-declaration order. Empty when the lesson has no variants.
+ * Powers the "peek at what other tracks are doing" toggle.
+ */
+export function variantSiblings(
+  data: PortalData,
+  lesson: Lesson
+): { track: Track; lesson: Lesson }[] {
+  if (!lesson.variantGroup) return [];
+  const out: { track: Track; lesson: Lesson }[] = [];
+  for (const track of data.tracks) {
+    const l = data.lessons.find(
+      (x) => x.variantGroup === lesson.variantGroup && x.trackId === track.id
+    );
+    if (l) out.push({ track, lesson: l });
+  }
+  return out;
 }

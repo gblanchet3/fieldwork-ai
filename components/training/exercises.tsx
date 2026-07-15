@@ -258,7 +258,11 @@ function Composer({
 function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context-compare" }>; ctx: ExerciseCtx }) {
   const bare = useStream(ctx.sessionId);
   const rich = useStream(ctx.sessionId);
-  const richPrompt = `${block.contextBlock}\n\n${block.barePrompt}`;
+  const [extra, setExtra] = useState("");
+  const richPrompt = useMemo(
+    () => `${block.contextBlock}${extra.trim() ? "\n" + extra.trim() : ""}\n\n${block.barePrompt}`,
+    [block.contextBlock, block.barePrompt, extra]
+  );
 
   return (
     <div className="space-y-4">
@@ -285,6 +289,13 @@ function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context
 
         <div className="space-y-2">
           <p className="font-inter text-xs text-steel">2 · Same ask — with context</p>
+          <Composer
+            value={extra}
+            onValueChange={setExtra}
+            rows={2}
+            placeholder="Optional: add a line of your own context…"
+          />
+          <p className="font-inter text-[11px] text-steel/60">This is what gets sent:</p>
           <pre className="whitespace-pre-wrap font-inter text-xs bg-amber/5 text-slate/70 px-3 py-2 border border-amber/30 max-h-32 overflow-y-auto">
             {richPrompt}
           </pre>
@@ -515,9 +526,102 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
   );
 }
 
+// ── Iterate — run a real task, then push back once to refine ────────────────────
+
+function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterate" }>; ctx: ExerciseCtx }) {
+  const [task, setTask] = useState(block.starterTask ?? "");
+  const first = useStream(ctx.sessionId);
+  const [refine, setRefine] = useState("");
+  const refined = useStream(ctx.sessionId);
+
+  function runFirst() {
+    capture({
+      sessionId: ctx.sessionId,
+      kind: "iterate",
+      name: ctx.name,
+      trackId: ctx.trackId,
+      payload: { stage: "first", task },
+    });
+    first.run(task, block.system, CANNED.iterateFirst);
+  }
+
+  function runRefine() {
+    const combined = `${task}\n\nYour first draft was:\n"""\n${first.text}\n"""\n\nRevise it based on this feedback: ${refine}`;
+    capture({
+      sessionId: ctx.sessionId,
+      kind: "iterate",
+      name: ctx.name,
+      trackId: ctx.trackId,
+      payload: { stage: "refine", task, refine },
+    });
+    refined.run(combined, block.system, CANNED.iterateRefined);
+  }
+
+  return (
+    <div className="space-y-4">
+      {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
+
+      <div>
+        <p className="section-label text-steel mb-2">1 · Your task</p>
+        <Composer
+          value={task}
+          onValueChange={setTask}
+          rows={3}
+          placeholder="Describe a real task from your week and what a good result looks like…"
+          showModel
+        />
+        <div className="mt-2">
+          <RunButton onClick={runFirst} disabled={!task.trim()} busy={first.status === "streaming"}>
+            Get a first draft →
+          </RunButton>
+        </div>
+        {first.status !== "idle" && (
+          <div className="mt-3">
+            <OutputPanel label="First draft" text={first.text} status={first.status} canned={first.canned} />
+          </div>
+        )}
+      </div>
+
+      {first.status === "done" && (
+        <div className="border-t border-dust pt-4">
+          <p className="section-label text-steel mb-2">2 · Push back — don&apos;t settle</p>
+          <p className="font-inter text-xs text-steel mb-2">
+            Tell it what to change. &ldquo;Too formal — warmer.&rdquo; &ldquo;You missed the timeline.&rdquo;
+            &ldquo;Shorter, lead with the ask.&rdquo;
+          </p>
+          <Composer value={refine} onValueChange={setRefine} rows={2} placeholder="What should it change?" />
+          <div className="mt-2">
+            <RunButton onClick={runRefine} disabled={!refine.trim()} busy={refined.status === "streaming"}>
+              Refine it →
+            </RunButton>
+          </div>
+          {refined.status !== "idle" && (
+            <div className="mt-3">
+              <OutputPanel label="Revised draft" text={refined.text} status={refined.status} canned={refined.canned} />
+            </div>
+          )}
+        </div>
+      )}
+
+      {refined.status === "done" && (
+        <p className="font-inter text-xs text-steel/70 italic">
+          That back-and-forth — describe, read, redirect — is the whole game. The first answer is a starting point,
+          not the answer.
+        </p>
+      )}
+    </div>
+  );
+}
+
 // ── dispatcher ───────────────────────────────────────────────────────────────
 
-export const INTERACTIVE_TYPES = new Set(["context-compare", "context-file", "context-file-test", "prompt-builder"]);
+export const INTERACTIVE_TYPES = new Set([
+  "context-compare",
+  "context-file",
+  "context-file-test",
+  "prompt-builder",
+  "iterate",
+]);
 
 export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }) {
   switch (block.type) {
@@ -529,6 +633,8 @@ export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }
       return <ContextFileTest block={block} ctx={ctx} />;
     case "prompt-builder":
       return <PromptBuilder block={block} ctx={ctx} />;
+    case "iterate":
+      return <IterateExercise block={block} ctx={ctx} />;
     default:
       return null;
   }
@@ -547,4 +653,8 @@ const CANNED = {
     "[Tailored to your company file — matches your tenant-service voice, references your properties and the way your team actually communicates.]",
   builderRich:
     "Here's a first draft built to your spec:\n\n• Opens with the relationship, not the ask\n• States the specific issue (amount, days past due, property)\n• Firm but warm — preserves the tenant relationship\n• Ends with one clear call to action and a date\n\n[Because you described the end state, gave your reasoning, and let it ask clarifying questions, this landed far closer to send-ready than a one-line prompt ever would.]",
+  iterateFirst:
+    "Here's a first draft based on your task. It covers the basics and is a reasonable starting point — but it's a little generic, and there are a couple of spots you'll probably want to sharpen. Read it with a critical eye, then tell it what to fix.",
+  iterateRefined:
+    "Here's the revised version — retoned and tightened around exactly what you flagged. [Notice how one round of specific feedback moved it from \"fine\" to \"send-ready.\" That back-and-forth is where the real quality comes from.]",
 };

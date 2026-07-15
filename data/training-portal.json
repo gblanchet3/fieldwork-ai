@@ -89,6 +89,7 @@
       "id": "l-d1-context-compare-leadership",
       "moduleId": "m2",
       "trackId": "leadership",
+      "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
         { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
@@ -106,6 +107,7 @@
       "id": "l-d1-context-compare-ops",
       "moduleId": "m2",
       "trackId": "ops",
+      "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
         { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
@@ -123,6 +125,7 @@
       "id": "l-d1-context-compare-maintenance",
       "moduleId": "m2",
       "trackId": "maintenance",
+      "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
         { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
@@ -194,6 +197,7 @@
       "id": "l-d1-builder-leadership",
       "moduleId": "m3",
       "trackId": "leadership",
+      "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
         { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
@@ -218,6 +222,7 @@
       "id": "l-d1-builder-ops",
       "moduleId": "m3",
       "trackId": "ops",
+      "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
         { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
@@ -242,6 +247,7 @@
       "id": "l-d1-builder-maintenance",
       "moduleId": "m3",
       "trackId": "maintenance",
+      "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
         { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
@@ -259,6 +265,20 @@
           "genericPrompt": "How do I fix an AC unit?",
           "genericOutput": "There are many possible reasons an AC unit may not work. Check the power, the thermostat, the filter, and the circuit breaker. If it still doesn't work, you may need to call a professional HVAC technician to inspect it.",
           "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
+        }
+      ]
+    },
+    {
+      "id": "l-d1-iterate",
+      "moduleId": "m3",
+      "trackId": "all",
+      "title": "Now push back — iterate on real work",
+      "blocks": [
+        { "type": "text", "text": "The first answer is never the last word. The best AI users don't accept a mediocre draft — they steer it. Let's practice that on something real to you." },
+        {
+          "type": "iterate",
+          "intro": "Bring a real task from your week — a tenant email, a summary, a note, a plan. Get a first draft, then push back once and watch it get sharper.",
+          "system": "You are assisting a commercial real estate team at Rafanelli & Nahas (a Boise owner/operator; tenant service is the north star). Be concise, practical, and match a warm, professional tone."
         }
       ]
     },

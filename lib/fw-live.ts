@@ -104,6 +104,7 @@ export type CaptureKind =
   | "wordcloud"
   | "context-file"
   | "prompt-builder"
+  | "iterate"
   | "policy";
 
 /**

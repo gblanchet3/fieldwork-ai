@@ -6,6 +6,7 @@ import {
   getPortalData,
   findSessionByCode,
   buildCurriculum,
+  variantSiblings,
   type Block,
   type FlatLesson,
   type ModuleWithLessons,
@@ -431,6 +432,7 @@ function CoursePlayer({
   const [activeIndex, setActiveIndex] = useState(0);
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [viewTrackId, setViewTrackId] = useState(trackId); // which track's variant is on screen
 
   // Resume where the learner left off.
   useEffect(() => {
@@ -454,6 +456,17 @@ function CoursePlayer({
     });
     if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
   }, [active, session.id, name]);
+
+  // Reset the "peek at other tracks" toggle back to your own track on each lesson.
+  useEffect(() => {
+    setViewTrackId(trackId);
+  }, [active?.id, trackId]);
+
+  const siblings = active?.variantGroup ? variantSiblings(data, active) : [];
+  const displayed =
+    active && active.variantGroup
+      ? siblings.find((s) => s.track.id === viewTrackId)?.lesson ?? active
+      : active;
 
   function go(i: number) {
     if (i < 0 || i >= lessons.length) return;
@@ -517,30 +530,65 @@ function CoursePlayer({
         {/* Main */}
         <main className="flex-1 min-w-0">
           <div className="max-w-2xl mx-auto px-6 md:px-10 py-10 md:py-14">
-            {active && (
-              <AnimatePresence mode="wait">
-                <motion.article
-                  key={active.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <p className="section-label text-amber mb-3">{active.moduleTitle}</p>
-                  <h1 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-8 leading-[1.1]">
-                    {active.title}
-                  </h1>
-                  <div className="space-y-5">
-                    {active.blocks.map((b, i) => (
-                      <BlockView
-                        key={i}
-                        block={b}
-                        ctx={{ sessionId: session.id, name, trackId }}
-                      />
-                    ))}
+            {active && displayed && (
+              <>
+                {siblings.length > 1 && (
+                  <div className="mb-6">
+                    <p className="section-label text-steel mb-2">
+                      Your track — curious what the others are doing? Take a peek.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {siblings.map((s) => {
+                        const isYou = s.track.id === trackId;
+                        const isActive = s.track.id === viewTrackId;
+                        return (
+                          <button
+                            key={s.track.id}
+                            onClick={() => setViewTrackId(s.track.id)}
+                            className={`font-inter text-xs px-3 py-1.5 border rounded-full transition-colors ${
+                              isActive
+                                ? "border-amber bg-amber/10 text-slate font-medium"
+                                : "border-dust bg-white text-steel hover:border-steel/50"
+                            }`}
+                          >
+                            {s.track.label}
+                            {isYou && <span className="text-amber"> · yours</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {viewTrackId !== trackId && (
+                      <p className="font-inter text-xs text-amber mt-2">
+                        Peeking at the {siblings.find((s) => s.track.id === viewTrackId)?.track.label} track — your
+                        own version is under &ldquo;{siblings.find((s) => s.track.id === trackId)?.track.label} · yours&rdquo;.
+                      </p>
+                    )}
                   </div>
-                </motion.article>
-              </AnimatePresence>
+                )}
+                <AnimatePresence mode="wait">
+                  <motion.article
+                    key={displayed.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <p className="section-label text-amber mb-3">{active.moduleTitle}</p>
+                    <h1 className="font-syne font-semibold text-3xl md:text-4xl tracking-tighter text-slate mb-8 leading-[1.1]">
+                      {active.title}
+                    </h1>
+                    <div className="space-y-5">
+                      {displayed.blocks.map((b, i) => (
+                        <BlockView
+                          key={i}
+                          block={b}
+                          ctx={{ sessionId: session.id, name, trackId }}
+                        />
+                      ))}
+                    </div>
+                  </motion.article>
+                </AnimatePresence>
+              </>
             )}
 
             {finished && (
