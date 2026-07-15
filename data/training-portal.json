@@ -30,14 +30,20 @@
   ],
 
   "tracks": [
-    { "id": "leadership", "label": "Leadership", "audience": "Scott, partners, decision-makers" },
-    { "id": "ops", "label": "Ops & Portfolio", "audience": "Justin + portfolio / property management" },
-    { "id": "maintenance", "label": "Building Maintenance & Engineering", "audience": "Facilities, maintenance & engineering" }
+    { "id": "pm", "label": "Property Management", "audience": "Property managers, portfolio & partners" },
+    { "id": "facilities", "label": "Facilities Management", "audience": "Maintenance & engineering" }
   ],
 
   "roster": [
-    { "name": "Scott Schoenherr", "trackId": "leadership" },
-    { "name": "Justin Vogel", "trackId": "ops" }
+    { "name": "Justin Vogel", "trackId": "pm" },
+    { "name": "Scott Schoenherr", "trackId": "pm" },
+    { "name": "Ron Nahas", "trackId": "pm" },
+    { "name": "Pete Schoenherr", "trackId": "pm" },
+    { "name": "Sarah Bobst", "trackId": "pm" },
+    { "name": "Chelsea Gorringe", "trackId": "pm" },
+    { "name": "Mark Kennedy", "trackId": "facilities" },
+    { "name": "Mark Cosgrove", "trackId": "facilities" },
+    { "name": "Justin Covert", "trackId": "facilities" }
   ],
 
   "modules": [
@@ -86,27 +92,9 @@
       ]
     },
     {
-      "id": "l-d1-context-compare-leadership",
+      "id": "l-d1-context-compare-pm",
       "moduleId": "m2",
-      "trackId": "leadership",
-      "variantGroup": "d1-context-compare",
-      "title": "See it for yourself",
-      "blocks": [
-        { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
-        {
-          "type": "context-compare",
-          "scenario": "You're weighing whether to renew a major office tenant at slightly below market to protect occupancy in a soft leasing year.",
-          "barePrompt": "Should I renew this tenant below market or hold out for market rate?",
-          "contextBlock": "Context: I'm a partner at Rafanelli & Nahas, a privately held Boise CRE owner/operator (~1M sq ft, long-hold strategy, tenant-service is our north star). The tenant occupies 22,000 sq ft in a Class-A downtown building, has been with us 9 years, always pays on time, and is asking for a 10-year renewal at ~8% under current market. Downtown office is soft; re-tenanting this space would likely take 12–18 months. Act as a skeptical co-owner. I want the case for, the case against, the assumptions it hinges on, and what would make this a mistake.",
-          "system": "You are assisting a commercial real estate owner/operator. Be concise, direct, and practical."
-        },
-        { "type": "text", "text": "Same model, same question. The only thing that changed is what it knew about your situation." }
-      ]
-    },
-    {
-      "id": "l-d1-context-compare-ops",
-      "moduleId": "m2",
-      "trackId": "ops",
+      "trackId": "pm",
       "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
@@ -122,9 +110,9 @@
       ]
     },
     {
-      "id": "l-d1-context-compare-maintenance",
+      "id": "l-d1-context-compare-facilities",
       "moduleId": "m2",
-      "trackId": "maintenance",
+      "trackId": "facilities",
       "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
@@ -194,34 +182,9 @@
       ]
     },
     {
-      "id": "l-d1-builder-leadership",
+      "id": "l-d1-builder-pm",
       "moduleId": "m3",
-      "trackId": "leadership",
-      "variantGroup": "d1-prompt-builder",
-      "title": "Build your prompt",
-      "blocks": [
-        { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
-        {
-          "type": "prompt-builder",
-          "challenges": [
-            { "id": "decision", "label": "Pressure-test a decision", "text": "You're deciding whether to sign a 10-year renewal with an anchor tenant at ~8% below market to lock in occupancy this year." },
-            { "id": "update", "label": "Draft a partner update", "text": "You need to write the monthly ownership update: occupancy, leasing pipeline, and the one risk you're watching." }
-          ],
-          "chunks": [
-            { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a tight one-page analysis I could hand a co-owner", "prefix": "My goal: " },
-            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "Why does this matter, what do you already know, and who should the AI act as?", "placeholder": "e.g. Act as a skeptical co-owner; we hold long-term and protect tenant relationships", "prefix": "Context & reasoning: " },
-            { "id": "c3", "label": "Ask it to interview you", "instruction": "Invite the AI to ask you clarifying questions before it drafts.", "placeholder": "e.g. Before you answer, ask me anything that would sharpen this", "prefix": "" }
-          ],
-          "genericPrompt": "Should I renew this tenant?",
-          "genericOutput": "It depends on several factors. You should consider the current market rate, the tenant's payment history, the cost of finding a new tenant, and your overall occupancy goals. Weigh the pros and cons and consult your team before deciding.",
-          "system": "You are assisting a commercial real estate owner/operator. Be concise, direct, and practical."
-        }
-      ]
-    },
-    {
-      "id": "l-d1-builder-ops",
-      "moduleId": "m3",
-      "trackId": "ops",
+      "trackId": "pm",
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
@@ -244,9 +207,9 @@
       ]
     },
     {
-      "id": "l-d1-builder-maintenance",
+      "id": "l-d1-builder-facilities",
       "moduleId": "m3",
-      "trackId": "maintenance",
+      "trackId": "facilities",
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
