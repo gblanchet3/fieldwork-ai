@@ -81,7 +81,9 @@ export default function TrainingPortal() {
       return r ? { ...p, trackId: r.trackId } : p;
     });
     const seen = new Set(local.map((p) => p.name.toLowerCase()));
-    return [...local, ...data.roster.filter((r) => !seen.has(r.name.toLowerCase()))];
+    const merged = [...local, ...data.roster.filter((r) => !seen.has(r.name.toLowerCase()))];
+    const lastName = (n: string) => n.trim().split(/\s+/).slice(-1)[0].toLowerCase();
+    return merged.sort((a, b) => lastName(a.name).localeCompare(lastName(b.name)));
   }, [data, session, step]);
 
   const rosterTrackFor = (n: string): string | null =>
