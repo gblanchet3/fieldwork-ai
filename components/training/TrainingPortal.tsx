@@ -641,39 +641,53 @@ function Sidebar({
   ownTrackId: string;
   onPickTrack: (id: string) => void;
 }) {
+  const [peekOpen, setPeekOpen] = useState(false);
+  useEffect(() => setPeekOpen(false), [activeId]);
+
   const body = (
     <nav className="p-5" aria-label="Course contents">
-      <div className="mb-5">
+      <div className="mb-5 relative">
         <p className="section-label text-steel">Your track</p>
-        <p className="font-inter text-sm font-medium text-slate mt-1">{trackLabel}</p>
-        <p className="font-inter text-xs text-steel mt-2">{pct}% complete</p>
-      </div>
-
-      {siblings.length > 1 && (
-        <div className="mb-5 pb-5 border-b border-dust">
-          <p className="section-label text-steel mb-2">Peek at other tracks</p>
-          <div className="space-y-1.5">
-            {siblings.map((s) => {
-              const isYou = s.track.id === ownTrackId;
-              const isActive = s.track.id === viewTrackId;
-              return (
-                <button
-                  key={s.track.id}
-                  onClick={() => onPickTrack(s.track.id)}
-                  className={`w-full text-left font-inter text-xs px-3 py-2 border rounded-lg transition-colors ${
-                    isActive
-                      ? "border-amber bg-amber/10 text-slate font-medium"
-                      : "border-dust bg-white text-steel hover:border-steel/50"
-                  }`}
-                >
-                  {s.track.label}
-                  {isYou && <span className="text-amber"> · yours</span>}
-                </button>
-              );
-            })}
-          </div>
+        <div className="flex items-center gap-2 mt-1">
+          <p className="font-inter text-sm font-medium text-slate">{trackLabel}</p>
+          {siblings.length > 1 && (
+            <button
+              onClick={() => setPeekOpen((v) => !v)}
+              className="font-inter text-xs text-amber hover:underline whitespace-nowrap"
+            >
+              Peek others ›
+            </button>
+          )}
         </div>
-      )}
+        <p className="font-inter text-xs text-steel mt-2">{pct}% complete</p>
+
+        {peekOpen && siblings.length > 1 && (
+          <>
+            <div className="fixed inset-0 z-10" onClick={() => setPeekOpen(false)} aria-hidden="true" />
+            <div className="absolute left-0 right-0 top-full mt-1 z-20 bg-white border border-dust rounded-xl shadow-lg p-1.5 space-y-1">
+              {siblings.map((s) => {
+                const isYou = s.track.id === ownTrackId;
+                const isActive = s.track.id === viewTrackId;
+                return (
+                  <button
+                    key={s.track.id}
+                    onClick={() => {
+                      onPickTrack(s.track.id);
+                      setPeekOpen(false);
+                    }}
+                    className={`w-full text-left font-inter text-xs px-3 py-2 rounded-lg transition-colors ${
+                      isActive ? "bg-amber/10 text-slate font-medium" : "text-steel hover:bg-dust/50"
+                    }`}
+                  >
+                    {s.track.label}
+                    {isYou && <span className="text-amber"> · yours</span>}
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        )}
+      </div>
       {modules.map((m) => (
         <div key={m.module.id} className="mb-5">
           <p className="font-syne font-semibold text-sm text-slate mb-1.5">{m.module.title}</p>
