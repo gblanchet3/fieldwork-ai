@@ -12,6 +12,7 @@ import {
   type ModuleWithLessons,
   type PortalData,
   type Session,
+  type Track,
 } from "@/lib/training";
 import { ExerciseBlock, type ExerciseCtx } from "./exercises";
 
@@ -525,6 +526,10 @@ function CoursePlayer({
           onClose={() => setSidebarOpen(false)}
           trackLabel={track?.label}
           pct={pct}
+          siblings={siblings}
+          viewTrackId={viewTrackId}
+          ownTrackId={trackId}
+          onPickTrack={setViewTrackId}
         />
 
         {/* Main */}
@@ -532,37 +537,17 @@ function CoursePlayer({
           <div className="max-w-2xl mx-auto px-6 md:px-10 py-10 md:py-14">
             {active && displayed && (
               <>
-                {siblings.length > 1 && (
-                  <div className="mb-6">
-                    <p className="section-label text-steel mb-2">
-                      Your track — curious what the others are doing? Take a peek.
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {siblings.map((s) => {
-                        const isYou = s.track.id === trackId;
-                        const isActive = s.track.id === viewTrackId;
-                        return (
-                          <button
-                            key={s.track.id}
-                            onClick={() => setViewTrackId(s.track.id)}
-                            className={`font-inter text-xs px-3 py-1.5 border rounded-full transition-colors ${
-                              isActive
-                                ? "border-amber bg-amber/10 text-slate font-medium"
-                                : "border-dust bg-white text-steel hover:border-steel/50"
-                            }`}
-                          >
-                            {s.track.label}
-                            {isYou && <span className="text-amber"> · yours</span>}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {viewTrackId !== trackId && (
-                      <p className="font-inter text-xs text-amber mt-2">
-                        Peeking at the {siblings.find((s) => s.track.id === viewTrackId)?.track.label} track — your
-                        own version is under &ldquo;{siblings.find((s) => s.track.id === trackId)?.track.label} · yours&rdquo;.
-                      </p>
-                    )}
+                {viewTrackId !== trackId && (
+                  <div className="mb-5 inline-flex items-center gap-2 bg-amber/10 border border-amber/30 rounded-full px-3 py-1.5">
+                    <span className="font-inter text-xs text-slate">
+                      Peeking at the {siblings.find((s) => s.track.id === viewTrackId)?.track.label} track
+                    </span>
+                    <button
+                      onClick={() => setViewTrackId(trackId)}
+                      className="font-inter text-xs font-medium text-amber hover:underline"
+                    >
+                      back to yours
+                    </button>
                   </div>
                 )}
                 <AnimatePresence mode="wait">
@@ -638,6 +623,10 @@ function Sidebar({
   onClose,
   trackLabel,
   pct,
+  siblings,
+  viewTrackId,
+  ownTrackId,
+  onPickTrack,
 }: {
   modules: ModuleWithLessons[];
   activeId?: string;
@@ -647,6 +636,10 @@ function Sidebar({
   onClose: () => void;
   trackLabel?: string;
   pct: number;
+  siblings: { track: Track }[];
+  viewTrackId: string;
+  ownTrackId: string;
+  onPickTrack: (id: string) => void;
 }) {
   const body = (
     <nav className="p-5" aria-label="Course contents">
@@ -655,6 +648,32 @@ function Sidebar({
         <p className="font-inter text-sm font-medium text-slate mt-1">{trackLabel}</p>
         <p className="font-inter text-xs text-steel mt-2">{pct}% complete</p>
       </div>
+
+      {siblings.length > 1 && (
+        <div className="mb-5 pb-5 border-b border-dust">
+          <p className="section-label text-steel mb-2">Peek at other tracks</p>
+          <div className="space-y-1.5">
+            {siblings.map((s) => {
+              const isYou = s.track.id === ownTrackId;
+              const isActive = s.track.id === viewTrackId;
+              return (
+                <button
+                  key={s.track.id}
+                  onClick={() => onPickTrack(s.track.id)}
+                  className={`w-full text-left font-inter text-xs px-3 py-2 border rounded-lg transition-colors ${
+                    isActive
+                      ? "border-amber bg-amber/10 text-slate font-medium"
+                      : "border-dust bg-white text-steel hover:border-steel/50"
+                  }`}
+                >
+                  {s.track.label}
+                  {isYou && <span className="text-amber"> · yours</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
       {modules.map((m) => (
         <div key={m.module.id} className="mb-5">
           <p className="font-syne font-semibold text-sm text-slate mb-1.5">{m.module.title}</p>
