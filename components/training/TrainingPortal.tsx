@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   getPortalData,
@@ -66,10 +66,30 @@ export default function TrainingPortal() {
   const [chosenTrack, setChosenTrack] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [trackId, setTrackId] = useState("");
+  const [pendingLesson, setPendingLesson] = useState<string | null>(null);
+  const deepLinkDone = useRef(false);
 
   useEffect(() => {
     getPortalData().then(setData).catch(() => setLoadError(true));
   }, []);
+
+  // QR deep-link: ?code=<access code>&to=<lesson id> skips the access-code gate
+  // (e.g. scanning the setup-tour QR on your phone → straight onto that page).
+  useEffect(() => {
+    if (!data || deepLinkDone.current || typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    if (!code) return;
+    deepLinkDone.current = true;
+    const found = findSessionByCode(data, code);
+    if (found) {
+      setSession(found);
+      setPendingLesson(params.get("to"));
+      setStep("name");
+    }
+    // Clean the URL so a later refresh doesn't bounce them back to the name step.
+    window.history.replaceState({}, "", window.location.pathname);
+  }, [data]);
 
   const knownPeople: SignOn[] = useMemo(() => {
     if (!data || !session) return [];
@@ -158,6 +178,7 @@ export default function TrainingPortal() {
         session={session}
         name={name}
         trackId={trackId}
+        startLessonId={pendingLesson}
         onSignOut={signOut}
       />
     );
@@ -424,12 +445,14 @@ function CoursePlayer({
   session,
   name,
   trackId,
+  startLessonId,
   onSignOut,
 }: {
   data: PortalData;
   session: Session;
   name: string;
   trackId: string;
+  startLessonId?: string | null;
   onSignOut: () => void;
 }) {
   const { modules, lessons } = useMemo(
@@ -447,6 +470,14 @@ function CoursePlayer({
   useEffect(() => {
     const done = readProgress(session.id, name);
     setCompleted(new Set(done));
+    // Deep-linked (QR): jump straight to the requested lesson if it exists.
+    if (startLessonId) {
+      const idx = lessons.findIndex((l) => l.id === startLessonId);
+      if (idx !== -1) {
+        setActiveIndex(idx);
+        return;
+      }
+    }
     const firstUndone = lessons.findIndex((l) => !done.includes(l.id));
     setActiveIndex(firstUndone === -1 ? 0 : firstUndone);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -575,7 +606,13 @@ function CoursePlayer({
                         <BlockView
                           key={i}
                           block={b}
-                          ctx={{ sessionId: session.id, name, trackId }}
+                          ctx={{
+                            sessionId: session.id,
+                            name,
+                            trackId,
+                            sessionCode: session.code,
+                            lessonId: displayed.id,
+                          }}
                         />
                       ))}
                     </div>

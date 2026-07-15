@@ -11,7 +11,13 @@ import QRCode from "qrcode";
 import { streamGenerate, capture, liveEnabled } from "@/lib/fw-live";
 import type { Block } from "@/lib/training";
 
-export type ExerciseCtx = { sessionId: string; name: string; trackId: string };
+export type ExerciseCtx = {
+  sessionId: string;
+  name: string;
+  trackId: string;
+  sessionCode: string; // for the QR deep-link (skips the access-code gate)
+  lessonId: string; // current lesson, so the QR reopens this page
+};
 
 // localStorage key for a person's own context-file contributions (reused in 4b).
 const ctxFileKey = (sessionId: string, name: string) =>
@@ -633,7 +639,10 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
   const [copied, setCopied] = useState(false);
 
   const mobileUrl =
-    block.mobileUrl || (typeof window !== "undefined" ? `${window.location.origin}/training` : "");
+    block.mobileUrl ||
+    (typeof window !== "undefined"
+      ? `${window.location.origin}/training?code=${encodeURIComponent(ctx.sessionCode)}&to=${encodeURIComponent(ctx.lessonId)}`
+      : "");
 
   useEffect(() => {
     if (!mobileUrl) return;
