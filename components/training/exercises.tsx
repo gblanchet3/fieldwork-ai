@@ -63,7 +63,7 @@ function useStream(sessionId: string) {
     // Live, with retries — upstream occasionally returns an empty stream,
     // more often under the concurrency of a full room. Empties fail fast, so
     // a couple of quick retries make it near-invisible.
-    const MAX_ATTEMPTS = 3;
+    const MAX_ATTEMPTS = 4;
     for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
       if (!alive()) return;
       const ac = new AbortController();
@@ -84,7 +84,8 @@ function useStream(sessionId: string) {
       } catch {
         if (!alive()) return;
         if (attempt < MAX_ATTEMPTS - 1) {
-          await new Promise((r) => setTimeout(r, 700));
+          // Growing backoff (0.6s → 1.2s → 2.4s) rides out brief rate-limit windows.
+          await new Promise((r) => setTimeout(r, 600 * Math.pow(2, attempt)));
           continue; // retry
         }
         // Give up on live — show the canned version so the box is never blank.
@@ -803,9 +804,9 @@ const CANNED = {
   contextRich:
     "Hi James,\n\nHope the team at Suite 400 is settling in well after the HVAC upgrade last month. I'm following up on the March CAM reconciliation — the $2,140 balance is now 15 days past due.\n\nI know invoicing can slip through the cracks this time of year, so no worries at all. Could you confirm a payment date this week? Happy to resend the itemized statement if useful.\n\nAppreciate you — and as always, let me know if there's anything Boise Plaza can do on our end.\n\nWarmly,\n[You]",
   testWithout:
-    "Here is a professional draft based on your request. [Generic structure, neutral tone, no company-specific detail.]",
+    "Subject: Notice of Planned Maintenance\n\nDear Tenant,\n\nPlease be advised that maintenance will be performed in your building next week. We apologize for any inconvenience this may cause. Should you have any questions, please contact our office.\n\nSincerely,\nProperty Management",
   testWith:
-    "[Tailored to your company file — matches your tenant-service voice, references your properties and the way your team actually communicates.]",
+    "Subject: Quick heads-up — planned maintenance at Boise Plaza next week\n\nHi James,\n\nWanted to give you plenty of notice: our maintenance team will be doing some planned upkeep in the building next week (likely Tuesday–Wednesday). You shouldn't see any disruption to your suite — you may just notice our crew in the common areas.\n\nIf there's a window that works better or worse for your team, let me know and we'll coordinate around you. As always, thanks for being a great part of Boise Plaza.\n\nWarmly,\n[You]",
   builderRich:
     "Here's a first draft built to your spec:\n\n• Opens with the relationship, not the ask\n• States the specific issue (amount, days past due, property)\n• Firm but warm — preserves the tenant relationship\n• Ends with one clear call to action and a date\n\n[Because you described the end state, gave your reasoning, and let it ask clarifying questions, this landed far closer to send-ready than a one-line prompt ever would.]",
   iterateFirst:
