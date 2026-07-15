@@ -73,7 +73,13 @@ export default function TrainingPortal() {
 
   const knownPeople: SignOn[] = useMemo(() => {
     if (!data || !session) return [];
-    const local = readSignOns(session.id);
+    const rosterByName = new Map(data.roster.map((r) => [r.name.toLowerCase(), r]));
+    // Roster track is canonical — heal any stale local sign-on track (e.g. after
+    // a track rename) so a returning name never shows the wrong / missing track.
+    const local = readSignOns(session.id).map((p) => {
+      const r = rosterByName.get(p.name.toLowerCase());
+      return r ? { ...p, trackId: r.trackId } : p;
+    });
     const seen = new Set(local.map((p) => p.name.toLowerCase()));
     return [...local, ...data.roster.filter((r) => !seen.has(r.name.toLowerCase()))];
   }, [data, session, step]);
