@@ -80,6 +80,23 @@
         ]}
       ]
     },
+    {
+      "id": "l-d1-wow",
+      "moduleId": "m1",
+      "trackId": "all",
+      "title": "See what it can do",
+      "blocks": [
+        { "type": "text", "text": "Before the how, a quick taste of the what. Snap a photo of anything around you — a piece of equipment, a broken part, a label you can't read, a document — and let Claude take a look." },
+        {
+          "type": "vision-demo",
+          "intro": "Try it on something real: the data plate on a rooftop unit, a worn valve, a part you need to replace. Claude will identify it and point you to where to get a new one.",
+          "prompt": "This is a photo from a commercial property. Identify what it is as specifically as you can — read any model, serial, or part numbers on labels. If it's a part or piece of equipment, tell me the likely replacement part and 2–3 reputable places to buy it, and flag anything I should confirm before ordering. Be concrete and practical.",
+          "system": "You are assisting a commercial real estate maintenance/operations team. Be concise, practical, and specific about parts and suppliers.",
+          "cta": "📷 Take or upload a photo"
+        },
+        { "type": "callout", "variant": "tip", "text": "That's a 30-minute hunt through a manual turned into 30 seconds. Today is about making you fluent at getting results like this — for whatever your job throws at you." }
+      ]
+    },
 
     {
       "id": "l-d1-context-why",
@@ -143,6 +160,7 @@
             { "id": "what", "label": "What we do", "hint": "Property types, our buildings, the kind of work we do day to day.", "placeholder": "We own and operate…" },
             { "id": "market", "label": "What makes us different", "hint": "How we go to market, what we're known for. (Scott's tenant-service ethos goes here.)", "placeholder": "What sets us apart is…" },
             { "id": "culture", "label": "Our culture & voice", "hint": "Values, how we treat tenants and each other, how we write.", "placeholder": "We communicate like…" },
+            { "id": "operate", "label": "What we run day to day", "hint": "Our buildings, the systems and equipment we maintain, the vendors and suppliers we rely on. (Facilities, this one's for you.)", "placeholder": "We operate…" },
             { "id": "always", "label": "What AI should always know", "hint": "Terminology, tone guardrails, things it should never assume.", "placeholder": "Always remember that…" }
           ]
         },
@@ -160,7 +178,8 @@
           "type": "context-file-test",
           "guidance": "Write a real prompt — a tenant email, a summary, a note, anything from your week. Then run it both ways.",
           "starterPrompt": "Draft a short, friendly note letting a tenant know we'll be doing planned maintenance in their building next week.",
-          "system": "You are assisting a commercial real estate team. Be concise and practical."
+          "system": "You are assisting a commercial real estate team. Be concise and practical.",
+          "sampleContext": "About us: Rafanelli & Nahas is a privately held Boise commercial real estate owner/operator — we own and manage ~1M sq ft of mostly Class-A office downtown and at Parkcenter, plus a hotel and some industrial. Our north star is tenant service (Scott's '10 Commandments of Tenant Service'). We're warm but firm, never adversarial, and we compete on service and relationships, not price. Write like a buttoned-up property team that genuinely cares about its tenants."
         }
       ]
     },
@@ -193,6 +212,7 @@
         {
           "type": "prompt-builder",
           "challenges": [
+            { "id": "lease-language", "label": "Draft custom lease language", "text": "A growing startup tenant wants a 3-year lease but the right to terminate at year 2 if they outgrow the space and we can't relocate them to something bigger in the portfolio. Draft the clause." },
             { "id": "cam", "label": "The late-CAM email", "text": "A long-time tenant is 15 days past due on their CAM reconciliation balance and you need to nudge them without straining the relationship." },
             { "id": "amend", "label": "Summarize an amendment", "text": "Turn a redlined lease amendment into a plain-English summary of what changed and why it matters." }
           ],
@@ -215,6 +235,7 @@
       "title": "Build your prompt",
       "blocks": [
         { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
+        { "type": "callout", "variant": "tip", "text": "🎤 Not a fast typer? Tap the mic in any box and just talk — Claude fills it in for you. Out in the field, this is how you'll use it most." },
         {
           "type": "prompt-builder",
           "challenges": [

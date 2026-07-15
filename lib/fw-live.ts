@@ -39,6 +39,7 @@ export async function streamGenerate(opts: {
   sessionId: string;
   prompt: string;
   system?: string;
+  image?: { data: string; mediaType: string }; // base64 (no data: prefix) + media type
   onToken: (t: string) => void;
   signal?: AbortSignal;
 }): Promise<string> {
@@ -54,6 +55,7 @@ export async function streamGenerate(opts: {
         sessionId: opts.sessionId,
         prompt: opts.prompt,
         system: opts.system,
+        image: opts.image,
       }),
       signal: opts.signal,
     });

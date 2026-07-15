@@ -62,6 +62,15 @@ export type Block =
       guidance: string;
       starterPrompt?: string;
       system?: string;
+      sampleContext?: string; // fallback R&N context so the contrast always lands
+    }
+  // Vision "wow" demo: snap/upload a photo → Claude identifies it + next steps.
+  | {
+      type: "vision-demo";
+      intro?: string;
+      prompt: string; // instruction sent alongside the photo
+      system?: string;
+      cta?: string; // upload-button label
     }
   // #5 ⭐ — "More is More" chunked prompt-builder. The output that matters is the prompt.
   | {
