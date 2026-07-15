@@ -105,6 +105,7 @@ export type CaptureKind =
   | "context-file"
   | "prompt-builder"
   | "iterate"
+  | "setup"
   | "policy";
 
 /**

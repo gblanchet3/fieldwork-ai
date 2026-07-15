@@ -6,7 +6,8 @@
 // the portal is fully usable offline / on dead wifi.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import QRCode from "qrcode";
 import { streamGenerate, capture, liveEnabled } from "@/lib/fw-live";
 import type { Block } from "@/lib/training";
 
@@ -613,6 +614,157 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
   );
 }
 
+// ── Setup tour — the desktop/mobile handoff (checklist + missions + QR + cheat sheet) ──
+
+const setupKey = (sessionId: string, name: string) =>
+  `fw_setup_${sessionId}_${name.trim().toLowerCase()}`;
+
+function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" }>; ctx: ExerciseCtx }) {
+  const [done, setDone] = useState<Record<string, boolean>>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      return JSON.parse(localStorage.getItem(setupKey(ctx.sessionId, ctx.name)) || "{}");
+    } catch {
+      return {};
+    }
+  });
+  const [qr, setQr] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const mobileUrl =
+    block.mobileUrl || (typeof window !== "undefined" ? `${window.location.origin}/training` : "");
+
+  useEffect(() => {
+    if (!mobileUrl) return;
+    QRCode.toDataURL(mobileUrl, { margin: 1, width: 240, color: { dark: "#0F1923", light: "#F0EBE1" } })
+      .then(setQr)
+      .catch(() => {});
+  }, [mobileUrl]);
+
+  function toggle(id: string) {
+    const next = { ...done, [id]: !done[id] };
+    setDone(next);
+    localStorage.setItem(setupKey(ctx.sessionId, ctx.name), JSON.stringify(next));
+    capture({
+      sessionId: ctx.sessionId,
+      kind: "setup",
+      name: ctx.name,
+      trackId: ctx.trackId,
+      payload: { done: next },
+    });
+  }
+
+  const allIds = [...block.steps.map((s) => s.id), ...block.missions.map((m) => m.id)];
+  const doneCount = allIds.filter((id) => done[id]).length;
+  const pct = allIds.length ? Math.round((doneCount / allIds.length) * 100) : 0;
+
+  function copyCheatsheet() {
+    if (!block.cheatsheet) return;
+    const text =
+      "Claude cheat sheet\n\n" + block.cheatsheet.map((r) => `${r.q}\n  ${r.a}`).join("\n\n");
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      },
+      () => {}
+    );
+  }
+
+  const CheckRow = ({ id, label, detail, icon }: { id: string; label: string; detail?: string; icon?: string }) => (
+    <button
+      onClick={() => toggle(id)}
+      className={`w-full flex items-start gap-3 text-left px-4 py-3 border rounded-xl transition-colors ${
+        done[id] ? "border-olive/40 bg-olive/5" : "border-dust bg-white hover:border-amber/60"
+      }`}
+    >
+      <span
+        className={`shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center transition-colors ${
+          done[id] ? "bg-olive" : "border border-steel/40"
+        }`}
+      >
+        {done[id] && (
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+            <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </span>
+      <span className="min-w-0">
+        <span className={`font-inter text-sm ${done[id] ? "text-slate/60 line-through" : "text-slate font-medium"}`}>
+          {icon ? `${icon} ` : ""}
+          {label}
+        </span>
+        {detail && <span className="block font-inter text-xs text-steel mt-0.5 no-underline">{detail}</span>}
+      </span>
+    </button>
+  );
+
+  return (
+    <div className="space-y-6">
+      {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
+
+      {/* progress */}
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="section-label text-steel">Your setup · {doneCount}/{allIds.length}</span>
+          <span className="font-inter text-xs text-steel">{pct}%</span>
+        </div>
+        <div className="h-1.5 bg-dust rounded-full overflow-hidden">
+          <div className="h-full bg-amber transition-all duration-500" style={{ width: `${pct}%` }} />
+        </div>
+      </div>
+
+      {/* checklist + QR side by side */}
+      <div className="grid md:grid-cols-[1fr_auto] gap-5 items-start">
+        <div className="space-y-2">
+          <p className="section-label text-steel mb-1">Get set up</p>
+          {block.steps.map((s) => (
+            <CheckRow key={s.id} id={s.id} label={s.label} />
+          ))}
+        </div>
+        {qr && (
+          <div className="text-center bg-slate rounded-2xl p-4 md:w-52">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={qr} alt="Scan to open on your phone" className="w-40 h-40 mx-auto rounded-lg" />
+            <p className="font-inter text-xs text-bone/70 mt-2">Scan to open this on your phone</p>
+          </div>
+        )}
+      </div>
+
+      {/* missions */}
+      <div className="space-y-2">
+        <p className="section-label text-steel mb-1">First missions — try these in your own Claude</p>
+        {block.missions.map((m) => (
+          <CheckRow key={m.id} id={m.id} label={m.label} detail={m.detail} icon={m.icon} />
+        ))}
+      </div>
+
+      {/* cheat sheet */}
+      {block.cheatsheet && block.cheatsheet.length > 0 && (
+        <div className="bg-white border border-dust rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-dust">
+            <span className="section-label text-steel">Claude cheat sheet — keep this</span>
+            <button
+              onClick={copyCheatsheet}
+              className="font-inter text-xs font-medium border border-amber/50 text-amber px-3 py-1.5 rounded-full hover:bg-amber hover:text-white transition-colors"
+            >
+              {copied ? "Copied ✓" : "Copy"}
+            </button>
+          </div>
+          <dl className="divide-y divide-dust">
+            {block.cheatsheet.map((r, i) => (
+              <div key={i} className="px-4 py-3">
+                <dt className="font-inter text-sm font-medium text-slate">{r.q}</dt>
+                <dd className="font-inter text-sm text-slate/70 mt-0.5 leading-body">{r.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── dispatcher ───────────────────────────────────────────────────────────────
 
 export const INTERACTIVE_TYPES = new Set([
@@ -621,6 +773,7 @@ export const INTERACTIVE_TYPES = new Set([
   "context-file-test",
   "prompt-builder",
   "iterate",
+  "setup-tour",
 ]);
 
 export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }) {
@@ -635,6 +788,8 @@ export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }
       return <PromptBuilder block={block} ctx={ctx} />;
     case "iterate":
       return <IterateExercise block={block} ctx={ctx} />;
+    case "setup-tour":
+      return <SetupTour block={block} ctx={ctx} />;
     default:
       return null;
   }

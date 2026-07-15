@@ -13,7 +13,12 @@ import { fetchSessionData, liveEnabled, type CaptureRecord } from "@/lib/fw-live
 
 const FACILITATOR_CODE = process.env.NEXT_PUBLIC_FW_FACILITATOR_CODE || "FW-COACH";
 
-type Tab = "icebreaker" | "wordcloud" | "context" | "prompts" | "policy";
+type Tab = "icebreaker" | "wordcloud" | "context" | "prompts" | "setup" | "policy";
+
+type SetupCfg = {
+  steps: { id: string; label: string }[];
+  missions: { id: string; label: string; icon?: string; detail?: string }[];
+};
 
 // ── download helper ─────────────────────────────────────────────────────────
 
@@ -57,6 +62,19 @@ export default function FacilitatorPortal() {
   useEffect(() => {
     if (session) refresh();
   }, [session, refresh]);
+
+  // Pull the setup-tour config (step/mission labels) from this session's lessons.
+  const setupCfg = useMemo<SetupCfg | null>(() => {
+    if (!data || !session) return null;
+    const modIds = new Set(data.modules.filter((m) => m.sessionId === session.id).map((m) => m.id));
+    for (const l of data.lessons) {
+      if (!modIds.has(l.moduleId)) continue;
+      for (const b of l.blocks) {
+        if (b.type === "setup-tour") return { steps: b.steps, missions: b.missions };
+      }
+    }
+    return null;
+  }, [data, session]);
 
   if (!ok) {
     return (
@@ -116,6 +134,7 @@ export default function FacilitatorPortal() {
     { id: "wordcloud", label: "Word cloud" },
     { id: "context", label: "Context file" },
     { id: "prompts", label: "Prompt gallery" },
+    { id: "setup", label: "Setup board" },
     { id: "policy", label: "Policy" },
   ];
 
@@ -171,6 +190,7 @@ export default function FacilitatorPortal() {
         {tab === "wordcloud" && <WordCloud />}
         {tab === "context" && <ContextAggregate records={records} sessionName={session.title} />}
         {tab === "prompts" && <PromptGallery records={records} />}
+        {tab === "setup" && <SetupBoard records={records} config={setupCfg} />}
         {tab === "policy" && <Policy sessionName={session.title} />}
       </div>
     </Shell>
@@ -446,6 +466,88 @@ function PromptGallery({ records }: { records: CaptureRecord[] }) {
           <Btn onClick={exportMd} ghost>Export prompt-gallery.md</Btn>
         </div>
       )}
+    </div>
+  );
+}
+
+// ── Setup board — live room progress (projector-friendly) ──────────────────────
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-white border border-dust rounded-xl px-4 py-3 min-w-[7rem]">
+      <p className="font-syne font-semibold text-2xl text-slate leading-none">{value}</p>
+      <p className="font-inter text-xs text-steel mt-1">{label}</p>
+    </div>
+  );
+}
+
+function SetupBoard({ records, config }: { records: CaptureRecord[]; config: SetupCfg | null }) {
+  const byName = new Map<string, Record<string, boolean>>();
+  for (const r of records) {
+    if (r.kind !== "setup") continue;
+    if (!byName.has(r.name)) byName.set(r.name, (r.payload?.done as Record<string, boolean>) || {});
+  }
+  const people = Array.from(byName.entries());
+  const items = config ? [...config.steps, ...config.missions] : [];
+
+  if (!config) {
+    return <p className="font-inter text-sm text-steel">No setup section found in this session&apos;s content.</p>;
+  }
+  if (people.length === 0) {
+    return (
+      <p className="font-inter text-sm text-steel/60">
+        No one has started setup yet. This lights up as the room installs Claude and runs the missions.
+      </p>
+    );
+  }
+
+  const doneFor = (d: Record<string, boolean>) => items.filter((it) => d[it.id]).length;
+  const fullyDone = people.filter(([, d]) => doneFor(d) === items.length).length;
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-wrap gap-3">
+        <Metric label="In the room" value={`${people.length}`} />
+        <Metric label="Fully set up" value={`${fullyDone}/${people.length}`} />
+        {config.steps.map((s) => (
+          <Metric key={s.id} label={s.label} value={`${people.filter(([, d]) => d[s.id]).length}/${people.length}`} />
+        ))}
+      </div>
+
+      <div className="space-y-2">
+        {people
+          .slice()
+          .sort((a, b) => doneFor(b[1]) - doneFor(a[1]))
+          .map(([name, d]) => {
+            const n = doneFor(d);
+            const complete = n === items.length;
+            return (
+              <div
+                key={name}
+                className={`flex items-center gap-3 px-4 py-2.5 border rounded-xl ${
+                  complete ? "border-olive/40 bg-olive/5" : "border-dust bg-white"
+                }`}
+              >
+                <span className="font-inter text-sm font-medium text-slate w-36 truncate">{name}</span>
+                <div className="flex flex-wrap gap-1.5 flex-1">
+                  {items.map((it) => (
+                    <span
+                      key={it.id}
+                      title={it.label}
+                      className={`w-3.5 h-3.5 rounded-full ${d[it.id] ? "bg-olive" : "bg-dust"}`}
+                    />
+                  ))}
+                </div>
+                <span className={`font-inter text-xs shrink-0 ${complete ? "text-olive font-medium" : "text-steel"}`}>
+                  {complete ? "ready ✓" : `${n}/${items.length}`}
+                </span>
+              </div>
+            );
+          })}
+      </div>
+      <p className="font-inter text-xs text-steel/60">
+        Green dots = done. Cast this on the projector and watch the room go green. Hit Refresh to update.
+      </p>
     </div>
   );
 }

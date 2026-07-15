@@ -84,6 +84,16 @@ export type Block =
       intro?: string;
       starterTask?: string;
       system?: string;
+    }
+  // Setup tour: the desktop/mobile handoff — checklist + missions + QR, captured
+  // to a live facilitator progress board.
+  | {
+      type: "setup-tour";
+      intro?: string;
+      steps: { id: string; label: string }[];
+      missions: { id: string; icon?: string; label: string; detail?: string }[];
+      mobileUrl?: string; // QR target (defaults to this site's /training)
+      cheatsheet?: { q: string; a: string }[];
     };
 
 export type Lesson = {
