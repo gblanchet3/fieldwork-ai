@@ -784,69 +784,6 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
   );
 }
 
-// ── Vision "wow" demo — snap a photo, Claude identifies it + next steps ─────────
-
-function VisionDemo({ block, ctx }: { block: Extract<Block, { type: "vision-demo" }>; ctx: ExerciseCtx }) {
-  const [img, setImg] = useState<{ data: string; media: string; url: string } | null>(null);
-  const out = useStream(ctx.sessionId);
-  const fileRef = useRef<HTMLInputElement | null>(null);
-
-  function onFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const url = String(reader.result); // data:<media>;base64,<data>
-      const media = url.slice(5, url.indexOf(";"));
-      const data = url.slice(url.indexOf(",") + 1);
-      setImg({ data, media, url });
-    };
-    reader.readAsDataURL(file);
-  }
-
-  return (
-    <div className="space-y-4">
-      {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
-      <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={onFile} />
-      <div className="grid md:grid-cols-2 gap-4 items-start">
-        <div className="space-y-3">
-          {img ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={img.url} alt="Your photo" className="w-full max-h-72 object-contain rounded-xl border border-dust bg-white" />
-          ) : (
-            <button
-              onClick={() => fileRef.current?.click()}
-              className="w-full aspect-[4/3] rounded-xl border-2 border-dashed border-dust hover:border-amber/60 bg-white flex flex-col items-center justify-center gap-2 transition-colors"
-            >
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" className="text-steel">
-                <path d="M4 8a2 2 0 0 1 2-2h1.5l1-1.5h5l1 1.5H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z" stroke="currentColor" strokeWidth="1.6" />
-                <circle cx="12" cy="12.5" r="3.2" stroke="currentColor" strokeWidth="1.6" />
-              </svg>
-              <span className="font-inter text-sm text-steel">{block.cta ?? "Take or upload a photo"}</span>
-            </button>
-          )}
-          <div className="flex items-center gap-3 flex-wrap">
-            <RunButton
-              onClick={() => img && out.run(block.prompt, block.system, CANNED.vision, { data: img.data, mediaType: img.media })}
-              disabled={!img}
-              busy={out.status === "streaming"}
-            >
-              Ask Claude →
-            </RunButton>
-            {img && (
-              <button onClick={() => fileRef.current?.click()} className="font-inter text-xs text-steel hover:text-amber">
-                Change photo
-              </button>
-            )}
-            <ModelBadge />
-          </div>
-        </div>
-        <OutputPanel label="Claude" text={out.text} status={out.status} canned={out.canned} />
-      </div>
-    </div>
-  );
-}
-
 // ── dispatcher ───────────────────────────────────────────────────────────────
 
 export const INTERACTIVE_TYPES = new Set([
@@ -856,7 +793,6 @@ export const INTERACTIVE_TYPES = new Set([
   "prompt-builder",
   "iterate",
   "setup-tour",
-  "vision-demo",
 ]);
 
 export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }) {
@@ -873,8 +809,6 @@ export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }
       return <IterateExercise block={block} ctx={ctx} />;
     case "setup-tour":
       return <SetupTour block={block} ctx={ctx} />;
-    case "vision-demo":
-      return <VisionDemo block={block} ctx={ctx} />;
     default:
       return null;
   }
@@ -897,6 +831,4 @@ const CANNED = {
     "Here's a first draft based on your task. It covers the basics and is a reasonable starting point — but it's a little generic, and there are a couple of spots you'll probably want to sharpen. Read it with a critical eye, then tell it what to fix.",
   iterateRefined:
     "Here's the revised version — retoned and tightened around exactly what you flagged. [Notice how one round of specific feedback moved it from \"fine\" to \"send-ready.\" That back-and-forth is where the real quality comes from.]",
-  vision:
-    "Looking at your photo: this appears to be a common building/appliance component. From any model or part numbers visible on the label, I can identify the exact replacement and point you to a few places to buy it — plus flag anything to check before ordering.\n\n[Offline sample. Connect the live backend and this reads your real photo — the model plate, the part, and where to source it.]",
 };

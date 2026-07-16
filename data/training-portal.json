@@ -48,7 +48,6 @@
   ],
 
   "modules": [
-    { "id": "m1", "sessionId": "s1", "title": "Welcome" },
     { "id": "m2", "sessionId": "s1", "title": "Context" },
     { "id": "m3", "sessionId": "s1", "title": "Prompting — More is More" },
     { "id": "m4", "sessionId": "s1", "title": "Responsible use & your new assistant" },
@@ -61,21 +60,6 @@
   ],
 
   "lessons": [
-    {
-      "id": "l-d1-wow",
-      "moduleId": "m1",
-      "trackId": "all",
-      "title": "See what it can do",
-      "blocks": [
-        {
-          "type": "vision-demo",
-          "intro": "Try it on something real: the data plate on a rooftop unit, a worn valve, a part you need to replace. Claude will identify it and point you to where to get a new one.",
-          "prompt": "This is a photo from a commercial property. Identify what it is as specifically as you can — read any model, serial, or part numbers on labels. If it's a part or piece of equipment, tell me the likely replacement part and 2–3 reputable places to buy it, and flag anything I should confirm before ordering. Be concrete and practical.",
-          "system": "You are assisting a commercial real estate maintenance/operations team. Be concise, practical, and specific about parts and suppliers.",
-          "cta": "📷 Take or upload a photo"
-        }
-      ]
-    },
     {
       "id": "l-d1-context-compare-pm",
       "moduleId": "m2",
