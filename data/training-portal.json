@@ -62,51 +62,18 @@
 
   "lessons": [
     {
-      "id": "l-d1-welcome",
-      "moduleId": "m1",
-      "trackId": "all",
-      "title": "How today works",
-      "blocks": [
-        { "type": "text", "text": "Today is hands-on. You'll build the skills by doing them, right here in this portal, on real Rafanelli & Nahas work — not slides about AI, but AI itself." },
-        { "type": "text", "text": "Think of AI as a brand-new assistant you're onboarding. A great assistant needs three things from you: background so they understand your world, clear direction when you hand off a task, and guardrails for what they should never do. That's exactly what today covers — context, prompting, and responsible use." },
-        { "type": "callout", "variant": "note", "title": "Two rules for the day", "items": [
-          "Bring real work. Every exercise uses an actual R&N task. You'll leave with things you built.",
-          "You own the result. AI drafts; you decide. Nothing leaves the building without a human signing off."
-        ]},
-        { "type": "callout", "variant": "tip", "title": "What you'll walk out with", "items": [
-          "A company context file every future prompt can use.",
-          "A prompt-building habit that gets far better output.",
-          "A team AI usage policy you helped write."
-        ]}
-      ]
-    },
-    {
       "id": "l-d1-wow",
       "moduleId": "m1",
       "trackId": "all",
       "title": "See what it can do",
       "blocks": [
-        { "type": "text", "text": "Before the how, a quick taste of the what. Snap a photo of anything around you — a piece of equipment, a broken part, a label you can't read, a document — and let Claude take a look." },
         {
           "type": "vision-demo",
           "intro": "Try it on something real: the data plate on a rooftop unit, a worn valve, a part you need to replace. Claude will identify it and point you to where to get a new one.",
           "prompt": "This is a photo from a commercial property. Identify what it is as specifically as you can — read any model, serial, or part numbers on labels. If it's a part or piece of equipment, tell me the likely replacement part and 2–3 reputable places to buy it, and flag anything I should confirm before ordering. Be concrete and practical.",
           "system": "You are assisting a commercial real estate maintenance/operations team. Be concise, practical, and specific about parts and suppliers.",
           "cta": "📷 Take or upload a photo"
-        },
-        { "type": "callout", "variant": "tip", "text": "That's a 30-minute hunt through a manual turned into 30 seconds. Today is about making you fluent at getting results like this — for whatever your job throws at you." }
-      ]
-    },
-
-    {
-      "id": "l-d1-context-why",
-      "moduleId": "m2",
-      "trackId": "all",
-      "title": "Context is everything",
-      "blocks": [
-        { "type": "text", "text": "The single biggest lever on the quality of what you get out of AI is the context you put in. Same question, wildly different answers — depending on what the AI knows about you." },
-        { "type": "text", "text": "Think about seeing a new doctor. You don't just walk in and get a prescription — you fill out the paperwork, they take your history, they read your chart. All of that is context, and it's what lets them help you specifically instead of generically. Every AI conversation starts with no chart. You provide it." },
-        { "type": "callout", "variant": "note", "text": "Context lives in a few places: right inside a prompt, and — more powerfully — in a saved file or project instructions the AI reuses every time. Build it once; stop re-explaining yourself." }
+        }
       ]
     },
     {
@@ -116,15 +83,13 @@
       "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
-        { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
         {
           "type": "context-compare",
           "scenario": "A long-time tenant is 15 days past due on their CAM reconciliation balance and you need to nudge them without straining the relationship.",
           "barePrompt": "Write an email to a tenant about a late payment.",
           "contextBlock": "Context: I'm a property manager at Rafanelli & Nahas, a Boise CRE owner/operator whose north star is tenant service. Our voice is warm but firm — never adversarial. The tenant is James at Suite 400, Boise Plaza, with us 6 years, generally reliable. The March CAM reconciliation balance of $2,140 is 15 days past due. I want a short email that preserves the relationship, states the specifics, and asks for a payment date this week.",
           "system": "You are assisting a commercial real estate property manager. Be concise and match a warm-but-firm professional tone."
-        },
-        { "type": "text", "text": "Same model, same ask. The only thing that changed is what it knew about you and the tenant." }
+        }
       ]
     },
     {
@@ -134,15 +99,13 @@
       "variantGroup": "d1-context-compare",
       "title": "See it for yourself",
       "blocks": [
-        { "type": "text", "text": "Run the same ask twice — once cold, once with context — and watch what changes." },
         {
           "type": "context-compare",
           "scenario": "A rooftop HVAC unit is short-cycling and you want a fast, safe first-pass diagnostic before calling a vendor.",
           "barePrompt": "How do I fix an air conditioner that keeps turning on and off?",
           "contextBlock": "Context: I'm a building engineer at Rafanelli & Nahas in Boise. The unit is a ~10-ton Carrier rooftop package unit serving the 3rd floor of Boise Plaza. It's short-cycling — running about 2 minutes, shutting off, restarting a few minutes later. Outdoor temp is ~95°F. I've already checked that the filter is clean and the thermostat batteries are good. I'm comfortable with basic checks but not refrigerant work. Give me the most likely causes ranked, the safe checks I can do myself, and the point where I should stop and call a licensed HVAC tech.",
           "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
-        },
-        { "type": "text", "text": "Same model, same problem. The only thing that changed is what it knew about your unit and what you'd already tried." }
+        }
       ]
     },
     {
@@ -151,10 +114,9 @@
       "trackId": "all",
       "title": "Train your new employee",
       "blocks": [
-        { "type": "text", "text": "Now let's build R&N's shared context file together — the thing every future prompt can start from. Fill in the parts you know best. Don't worry about spelling or polish; more is more, and AI doesn't forget. (Voice dictation works great here — just talk.)" },
         {
           "type": "context-file",
-          "intro": "You'll be assigned a section or two to focus on. Add to any that you can.",
+          "intro": "Build R&N's shared context file. Fill in what you know — don't worry about polish, and use the mic to talk instead of type.",
           "sections": [
             { "id": "who", "label": "Who we are", "hint": "Company, history, size, that we're a Boise CRE owner/operator.", "placeholder": "Rafanelli & Nahas is…" },
             { "id": "what", "label": "What we do", "hint": "Property types, our buildings, the kind of work we do day to day.", "placeholder": "We own and operate…" },
@@ -163,8 +125,7 @@
             { "id": "operate", "label": "What we run day to day", "hint": "Our buildings, the systems and equipment we maintain, the vendors and suppliers we rely on. (Facilities, this one's for you.)", "placeholder": "We operate…" },
             { "id": "always", "label": "What AI should always know", "hint": "Terminology, tone guardrails, things it should never assume.", "placeholder": "Always remember that…" }
           ]
-        },
-        { "type": "callout", "variant": "tip", "text": "Gabe is assembling everyone's answers into one company file live. You'll each leave with it loaded and ready to use." }
+        }
       ]
     },
     {
@@ -173,7 +134,6 @@
       "trackId": "all",
       "title": "Prove it works",
       "blocks": [
-        { "type": "text", "text": "Here's the payoff. Write one real prompt for your work, then run it two ways — without your context, and with it. Feel the difference." },
         {
           "type": "context-file-test",
           "guidance": "Write a real prompt — a tenant email, a summary, a note, anything from your week. Then run it both ways.",
@@ -185,30 +145,13 @@
     },
 
     {
-      "id": "l-d1-more",
-      "moduleId": "m3",
-      "trackId": "all",
-      "title": "More is more",
-      "blocks": [
-        { "type": "text", "text": "The average person types about 4 words into Google and about 20 into an AI prompt. Best practice is far more than that. A prompt isn't a search box — it's your chance to generate real work, and the quality tracks how much you put in." },
-        { "type": "heading", "text": "One idea, a few moves" },
-        { "type": "list", "items": [
-          "Start with the end in mind — describe what a great result looks like before anything else.",
-          "Give your reasoning, not just the request — the why, what you've tried, and a persona to take (a skeptic, a seasoned broker, a careful lawyer).",
-          "Turn it into a thought partner — ask it to interview you before it drafts.",
-          "Don't settle — the first response is a starting point. Demand more, better, the way you want it."
-        ]},
-        { "type": "callout", "variant": "note", "text": "You don't need a paragraph every time — this is meant to speed you up, not slow you down. But on real, thorny work, the extra minute spent on the prompt pays for itself many times over." }
-      ]
-    },
-    {
       "id": "l-d1-builder-pm",
       "moduleId": "m3",
       "trackId": "pm",
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
+        { "type": "text", "text": "More is more — the fuller your prompt, the better the result. Build one in three moves, then run it against the lazy version." },
         {
           "type": "prompt-builder",
           "challenges": [
@@ -234,7 +177,7 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "Pick a challenge, then build the prompt one piece at a time. Watch it assemble into one strong paragraph at the bottom — that finished prompt is the point. Then run it against the lazy version." },
+        { "type": "text", "text": "More is more — the fuller your prompt, the better the result. Build one in three moves, then run it against the lazy version." },
         { "type": "callout", "variant": "tip", "text": "🎤 Not a fast typer? Tap the mic in any box and just talk — Claude fills it in for you. Out in the field, this is how you'll use it most." },
         {
           "type": "prompt-builder",
@@ -259,7 +202,6 @@
       "trackId": "all",
       "title": "Now push back — iterate on real work",
       "blocks": [
-        { "type": "text", "text": "The first answer is never the last word. The best AI users don't accept a mediocre draft — they steer it. Let's practice that on something real to you." },
         {
           "type": "iterate",
           "intro": "Bring a real task from your week — a tenant email, a summary, a note, a plan. Get a first draft, then push back once and watch it get sharper.",
@@ -274,7 +216,6 @@
       "trackId": "all",
       "title": "Your data, your guardrails",
       "blocks": [
-        { "type": "text", "text": "We've covered how to get great output. Just as important: how to use this safely. The confidence to use AI comes from knowing the boundaries." },
         { "type": "callout", "variant": "note", "title": "The essentials", "items": [
           "Your data stays yours — on our plan, what you enter isn't used to train models and doesn't leave our environment.",
           "One sanctioned tool — we standardize on Claude. Never paste company or client info into random consumer tools.",
@@ -282,8 +223,7 @@
           "Verify what matters — dollar amounts, dates, clause language, legal terms. Trust it on low-stakes drafting.",
           "Know the access boundary — AI can read and draft, but never sends or edits our system of record on its own.",
           "Be transparent — if a client asks \"do you use AI?\", you should like your honest answer."
-        ]},
-        { "type": "callout", "variant": "exercise", "title": "Next — together, out loud", "text": "We're going to write R&N's AI usage policy as a team, on screen. It's a shared agreement, not a rulebook handed down — which is exactly why we write it together. Gabe will capture it and we'll ratify it as a group in Session 2." }
+        ]}
       ]
     },
     {
@@ -292,7 +232,6 @@
       "trackId": "all",
       "title": "Meet Claude — your new assistant",
       "blocks": [
-        { "type": "text", "text": "Everything you did today — giving context, prompting well, setting guardrails — is how you get the most out of Claude, the tool R&N chose. Now let's get it onto your own devices and take it for a spin." },
         {
           "type": "setup-tour",
           "intro": "Work through this on your own laptop and phone. Your progress shows up on the big screen — let's get the whole room green.",
@@ -317,8 +256,7 @@
             { "q": "How do I give it context?", "a": "Create a Project and paste your company context file into its instructions once — it's reused in every chat there." },
             { "q": "Is my data safe?", "a": "On our plan, what you enter isn't used to train models. Keep confidential work in Claude, never in free consumer tools." }
           ]
-        },
-        { "type": "callout", "variant": "tip", "title": "Where Claude fits", "text": "There are a handful of major AI providers (Anthropic — that's Claude — plus OpenAI, Google, and others). With Scott and Justin, R&N chose Claude for this work. Day 2 is where we go deep: refining AI's output, mapping your real workflows, and building reusable Skills." }
+        }
       ]
     },
 
