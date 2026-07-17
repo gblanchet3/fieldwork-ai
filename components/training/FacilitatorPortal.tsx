@@ -9,7 +9,14 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getPortalData, type PortalData, type Session } from "@/lib/training";
-import { fetchSessionData, liveEnabled, type CaptureRecord } from "@/lib/fw-live";
+import {
+  fetchSessionData,
+  liveEnabled,
+  streamGenerate,
+  publishSharedContext,
+  fetchSharedContext,
+  type CaptureRecord,
+} from "@/lib/fw-live";
 
 const FACILITATOR_CODE = process.env.NEXT_PUBLIC_FW_FACILITATOR_CODE || "FW-COACH";
 
@@ -188,7 +195,7 @@ export default function FacilitatorPortal() {
 
         {tab === "icebreaker" && <Icebreaker />}
         {tab === "wordcloud" && <WordCloud />}
-        {tab === "context" && <ContextAggregate records={records} sessionName={session.title} />}
+        {tab === "context" && <ContextAggregate records={records} sessionId={session.id} sessionName={session.title} />}
         {tab === "prompts" && <PromptGallery records={records} />}
         {tab === "setup" && <SetupBoard records={records} config={setupCfg} />}
         {tab === "policy" && <Policy sessionName={session.title} />}
@@ -379,7 +386,15 @@ const CTX_SECTIONS: { id: string; label: string }[] = [
   { id: "always", label: "What AI should always know" },
 ];
 
-function ContextAggregate({ records, sessionName }: { records: CaptureRecord[]; sessionName: string }) {
+function ContextAggregate({
+  records,
+  sessionId,
+  sessionName,
+}: {
+  records: CaptureRecord[];
+  sessionId: string;
+  sessionName: string;
+}) {
   const contribs = records.filter((r) => r.kind === "context-file");
 
   const bySection = useMemo(() => {
@@ -395,37 +410,109 @@ function ContextAggregate({ records, sessionName }: { records: CaptureRecord[]; 
     return out;
   }, [contribs]);
 
-  function exportMd() {
-    let md = `# ${sessionName} — Company Context File\n\n*Assembled live from the team.*\n\n`;
-    for (const s of CTX_SECTIONS) {
-      md += `## ${s.label}\n`;
-      const items = bySection[s.id];
-      md += items.length ? items.map((i) => `- ${i.text}  \n  _— ${i.name}_`).join("\n") : "_(no input yet)_";
-      md += "\n\n";
+  const [draft, setDraft] = useState("");
+  const [gen, setGen] = useState<"idle" | "running" | "done">("idle");
+  const [pub, setPub] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [hasPublished, setHasPublished] = useState(false);
+
+  // Load any already-published version so the facilitator can see / re-edit it.
+  useEffect(() => {
+    fetchSharedContext(sessionId).then((d) => {
+      if (d) {
+        setHasPublished(true);
+        setDraft((cur) => cur || d);
+      }
+    });
+  }, [sessionId]);
+
+  const rawContributions = useMemo(
+    () =>
+      CTX_SECTIONS.map((s) => {
+        const items = bySection[s.id];
+        return `## ${s.label}\n` + (items.length ? items.map((i) => `- ${i.text}`).join("\n") : "- (none)");
+      }).join("\n\n"),
+    [bySection]
+  );
+
+  async function synthesize() {
+    setGen("running");
+    setDraft("");
+    setPub("idle");
+    const prompt = `You are assembling the company "context file" for ${sessionName} from raw notes the team contributed during an AI training. Synthesize the notes below into ONE clear, well-organized markdown company context file — the background you'd paste at the top of every AI conversation so it understands the company. Keep it concrete and faithful to the inputs; de-duplicate, resolve overlaps sensibly, and write in a confident, useful voice. Cover: who we are, what we do, what makes us different, our culture & voice, what we run day to day, and what AI should always know. Output only the markdown file.\n\nRAW CONTRIBUTIONS:\n\n${rawContributions}`;
+    try {
+      await streamGenerate({
+        sessionId,
+        prompt,
+        system: "You write crisp, well-structured company context documents that make an AI assistant instantly useful. Output clean markdown only — no preamble.",
+        model: "claude-opus-4-8",
+        maxTokens: 3000,
+        onToken: (t) => setDraft((p) => p + t),
+      });
+    } catch {
+      /* leave whatever streamed */
     }
-    download("company-context-file.md", md);
+    setGen("done");
+  }
+
+  async function publish() {
+    if (!draft.trim()) return;
+    setPub("saving");
+    try {
+      await publishSharedContext(sessionId, draft);
+      setPub("saved");
+      setHasPublished(true);
+    } catch {
+      setPub("error");
+    }
   }
 
   return (
-    <div>
-      <p className="font-inter text-sm text-steel mb-4">{contribs.length} contribution(s) · assembled by section.</p>
-      <div className="space-y-4">
-        {CTX_SECTIONS.map((s) => (
-          <div key={s.id} className="bg-white border border-dust">
-            <p className="section-label text-amber px-4 py-2 border-b border-dust">{s.label}</p>
-            <ul className="px-4 py-3 space-y-2">
-              {bySection[s.id].length === 0 && <li className="text-sm text-steel/40">No input yet.</li>}
-              {bySection[s.id].map((i, idx) => (
-                <li key={idx} className="text-sm text-slate/80">
-                  {i.text} <span className="text-steel/50 text-xs">— {i.name}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+    <div className="space-y-6">
+      {/* what came in */}
+      <div>
+        <p className="section-label text-steel mb-2">{contribs.length} contribution(s) — what came in</p>
+        <div className="space-y-3">
+          {CTX_SECTIONS.map((s) => (
+            <div key={s.id} className="bg-white border border-dust">
+              <p className="section-label text-amber px-4 py-2 border-b border-dust">{s.label}</p>
+              <ul className="px-4 py-3 space-y-2">
+                {bySection[s.id].length === 0 && <li className="text-sm text-steel/40">No input yet.</li>}
+                {bySection[s.id].map((i, idx) => (
+                  <li key={idx} className="text-sm text-slate/80">
+                    {i.text} <span className="text-steel/50 text-xs">— {i.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="mt-5">
-        <Btn onClick={exportMd} ghost>Export company-context-file.md</Btn>
+
+      {/* synthesize → edit → publish */}
+      <div className="border-t border-dust pt-5 space-y-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          <Btn onClick={synthesize}>{gen === "running" ? "Synthesizing (Opus)…" : "Synthesize with Opus"}</Btn>
+          <span className="font-inter text-xs text-steel">
+            Builds one company file from everything above (plus anything you type). Edit it, then publish.
+          </span>
+        </div>
+        <textarea
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          rows={14}
+          placeholder="Synthesize from the contributions, or paste / type the company context file here…"
+          className="w-full bg-white border border-dust focus:border-amber px-4 py-3 outline-none text-sm leading-body rounded font-mono"
+        />
+        <div className="flex items-center gap-3 flex-wrap">
+          <Btn onClick={publish}>Publish to the room →</Btn>
+          {pub === "saved" && (
+            <span className="font-inter text-sm text-olive">Published ✓ — this now feeds &ldquo;Prove it works.&rdquo;</span>
+          )}
+          {pub === "error" && <span className="font-inter text-sm text-amber">Couldn&apos;t publish — try again.</span>}
+          {pub === "idle" && hasPublished && (
+            <span className="font-inter text-xs text-steel">A published version exists — publishing replaces it.</span>
+          )}
+        </div>
       </div>
     </div>
   );

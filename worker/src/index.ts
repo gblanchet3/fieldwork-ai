@@ -40,6 +40,8 @@ export default {
       if (url.pathname === "/generate" && req.method === "POST") return handleGenerate(req, env, cors);
       if (url.pathname === "/capture" && req.method === "POST") return handleCapture(req, env, cors);
       if (url.pathname === "/session-data" && req.method === "GET") return handleSessionData(url, env, cors);
+      if (url.pathname === "/publish" && req.method === "POST") return handlePublish(req, env, cors);
+      if (url.pathname === "/shared" && req.method === "GET") return handleShared(url, env, cors);
       return json({ error: "not found" }, 404, cors);
     } catch (err) {
       return json({ error: String(err) }, 500, cors);
@@ -56,6 +58,8 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
     prompt?: string;
     system?: string;
     image?: { data: string; mediaType: string }; // base64 (no data: prefix) + media type
+    model?: string; // per-request override (e.g. Opus for the context synthesis)
+    maxTokens?: number;
   };
   if (body.token !== env.FW_TOKEN) return json({ error: "bad token" }, 401, cors);
   if (!body.prompt) return json({ error: "missing prompt" }, 400, cors);
@@ -79,8 +83,8 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      model: env.MODEL || "claude-sonnet-5",
-      max_tokens: 1500,
+      model: body.model || env.MODEL || "claude-sonnet-5",
+      max_tokens: body.maxTokens || 1500,
       stream: true,
       system: body.system,
       messages: [{ role: "user", content }],
@@ -182,6 +186,25 @@ async function handleSessionData(url: URL, env: Env, cors: Record<string, string
   );
   const clean = records.filter(Boolean).sort((a, b) => b.ts - a.ts);
   return json({ records: clean }, 200, cors);
+}
+
+// ── /publish + /shared — the facilitator-approved company context file ──────────
+
+async function handlePublish(req: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  const body = (await req.json().catch(() => ({}))) as { token?: string; sessionId?: string; doc?: string };
+  if (body.token !== env.FW_TOKEN) return json({ error: "bad token" }, 401, cors);
+  const sessionId = String(body.sessionId ?? "");
+  if (!sessionId) return json({ error: "missing sessionId" }, 400, cors);
+  await env.FW_KV.put(`shared:${sessionId}:context`, String(body.doc ?? ""), { expirationTtl: RECORD_TTL_S });
+  return json({ ok: true }, 200, cors);
+}
+
+async function handleShared(url: URL, env: Env, cors: Record<string, string>): Promise<Response> {
+  if (url.searchParams.get("token") !== env.FW_TOKEN) return json({ error: "bad token" }, 401, cors);
+  const sessionId = url.searchParams.get("sessionId") ?? "";
+  if (!sessionId) return json({ error: "missing sessionId" }, 400, cors);
+  const doc = await env.FW_KV.get(`shared:${sessionId}:context`);
+  return json({ doc: doc ?? null }, 200, cors);
 }
 
 // ── helpers ────────────────────────────────────────────────────────────────────

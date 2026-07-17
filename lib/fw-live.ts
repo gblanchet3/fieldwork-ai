@@ -40,6 +40,8 @@ export async function streamGenerate(opts: {
   prompt: string;
   system?: string;
   image?: { data: string; mediaType: string }; // base64 (no data: prefix) + media type
+  model?: string; // per-request override (e.g. Opus for context synthesis)
+  maxTokens?: number;
   onToken: (t: string) => void;
   signal?: AbortSignal;
 }): Promise<string> {
@@ -56,6 +58,8 @@ export async function streamGenerate(opts: {
         prompt: opts.prompt,
         system: opts.system,
         image: opts.image,
+        model: opts.model,
+        maxTokens: opts.maxTokens,
       }),
       signal: opts.signal,
     });
@@ -154,4 +158,31 @@ export async function fetchSessionData(sessionId: string): Promise<CaptureRecord
   if (!res.ok) throw new LiveUnavailable(`Worker ${res.status}`);
   const data = (await res.json()) as { records?: CaptureRecord[] };
   return data.records ?? [];
+}
+
+/** Facilitator: publish the approved company context file for a session. */
+export async function publishSharedContext(sessionId: string, doc: string): Promise<void> {
+  if (!WORKER) throw new LiveUnavailable("NEXT_PUBLIC_FW_WORKER not set");
+  const res = await fetch(`${WORKER}/publish`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token: TOKEN, sessionId, doc }),
+  });
+  if (!res.ok) throw new LiveUnavailable(`Worker ${res.status}`);
+}
+
+/** Anyone: fetch the published company context file (null if not published yet). */
+export async function fetchSharedContext(sessionId: string): Promise<string | null> {
+  if (!WORKER) return null;
+  try {
+    const res = await fetch(
+      `${WORKER}/shared?token=${encodeURIComponent(TOKEN)}&sessionId=${encodeURIComponent(sessionId)}`,
+      { cache: "no-store" }
+    );
+    if (!res.ok) return null;
+    const data = (await res.json()) as { doc?: string | null };
+    return data.doc ?? null;
+  } catch {
+    return null;
+  }
 }

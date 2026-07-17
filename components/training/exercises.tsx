@@ -8,7 +8,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
-import { streamGenerate, capture, liveEnabled } from "@/lib/fw-live";
+import { streamGenerate, capture, liveEnabled, fetchSharedContext } from "@/lib/fw-live";
 import type { Block } from "@/lib/training";
 
 export type ExerciseCtx = {
@@ -396,19 +396,41 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
     }
   }, [ctx.sessionId, ctx.name]);
 
-  // Use the person's own contributions if they filled them; otherwise fall back
-  // to a representative R&N context so the with/without contrast always lands.
-  const effectiveContext = myContext.trim() || (block.sampleContext ?? "");
-  const usingSample = !myContext.trim() && !!block.sampleContext;
+  // Prefer the facilitator-published company context file; else this person's own
+  // contributions; else a representative sample so the contrast always lands.
+  const [published, setPublished] = useState<string | null>(null);
+  useEffect(() => {
+    fetchSharedContext(ctx.sessionId).then(setPublished);
+  }, [ctx.sessionId]);
+
+  const source: "published" | "own" | "sample" | "none" =
+    published && published.trim()
+      ? "published"
+      : myContext.trim()
+        ? "own"
+        : block.sampleContext
+          ? "sample"
+          : "none";
+  const effectiveContext =
+    source === "published"
+      ? (published as string)
+      : source === "own"
+        ? myContext
+        : source === "sample"
+          ? (block.sampleContext as string)
+          : "";
 
   return (
     <div className="space-y-4">
       <p className="font-inter text-slate/80 leading-body">{block.guidance}</p>
       <Composer value={prompt} onValueChange={setPrompt} rows={3} placeholder="Write a real prompt for your work…" showModel />
 
-      {usingSample && (
+      {source === "published" && (
+        <p className="font-inter text-xs text-olive">Using the company context file we built together.</p>
+      )}
+      {source === "sample" && (
         <p className="font-inter text-xs text-steel">
-          Using a sample R&amp;N context for the &ldquo;with context&rdquo; run — fill in your own above to make it truly yours.
+          Using a sample R&amp;N context — your team&apos;s file will replace this once it&apos;s published.
         </p>
       )}
       <div className="grid md:grid-cols-2 gap-4">
