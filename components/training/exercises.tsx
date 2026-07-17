@@ -6,7 +6,7 @@
 // the portal is fully usable offline / on dead wifi.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { streamGenerate, capture, liveEnabled, fetchSharedContext } from "@/lib/fw-live";
 import type { Block } from "@/lib/training";
@@ -399,9 +399,15 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
   // Prefer the facilitator-published company context file; else this person's own
   // contributions; else a representative sample so the contrast always lands.
   const [published, setPublished] = useState<string | null>(null);
-  useEffect(() => {
-    fetchSharedContext(ctx.sessionId).then(setPublished);
+  const [checking, setChecking] = useState(false);
+  const loadShared = useCallback(async () => {
+    setChecking(true);
+    setPublished(await fetchSharedContext(ctx.sessionId));
+    setChecking(false);
   }, [ctx.sessionId]);
+  useEffect(() => {
+    loadShared();
+  }, [loadShared]);
 
   const source: "published" | "own" | "sample" | "none" =
     published && published.trim()
@@ -433,6 +439,9 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
           Using a sample R&amp;N context — your team&apos;s file will replace this once it&apos;s published.
         </p>
       )}
+      <button onClick={loadShared} className="font-inter text-xs text-amber hover:underline w-fit">
+        {checking ? "Checking…" : "↻ Refresh company file"}
+      </button>
       <div className="grid md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <p className="font-inter text-xs text-steel">Without your context</p>
