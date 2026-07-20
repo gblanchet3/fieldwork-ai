@@ -44,7 +44,9 @@
     { "name": "Rosanna Gamache", "trackId": "pm" },
     { "name": "Mark Kennedy", "trackId": "facilities" },
     { "name": "Mark Cosgrove", "trackId": "facilities" },
-    { "name": "Justin Covert", "trackId": "facilities" }
+    { "name": "Justin Covert", "trackId": "facilities" },
+    { "name": "Gabe Blanchet", "trackId": "pm" },
+    { "name": "Chris Testa", "trackId": "facilities" }
   ],
 
   "modules": [
