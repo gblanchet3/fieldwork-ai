@@ -15,6 +15,7 @@ import {
   streamGenerate,
   publishSharedContext,
   fetchSharedContext,
+  resetSession,
   type CaptureRecord,
 } from "@/lib/fw-live";
 
@@ -50,6 +51,7 @@ export default function FacilitatorPortal() {
 
   const [records, setRecords] = useState<CaptureRecord[]>([]);
   const [pulledAt, setPulledAt] = useState<string>("");
+  const [resetState, setResetState] = useState<"idle" | "confirm" | "working" | "done">("idle");
 
   useEffect(() => {
     getPortalData().then(setData).catch(() => {});
@@ -63,6 +65,19 @@ export default function FacilitatorPortal() {
       setPulledAt(new Date().toLocaleTimeString());
     } catch {
       /* worker not configured / unreachable */
+    }
+  }, [session]);
+
+  const doReset = useCallback(async () => {
+    if (!session) return;
+    setResetState("working");
+    try {
+      await resetSession(session.id);
+      setRecords([]);
+      setResetState("done");
+      setTimeout(() => setResetState("idle"), 2500);
+    } catch {
+      setResetState("idle");
     }
   }, [session]);
 
@@ -187,9 +202,28 @@ export default function FacilitatorPortal() {
             )}
           </p>
           {liveEnabled() && (
-            <button onClick={refresh} className="font-inter text-xs font-medium border border-amber/50 text-amber px-3 py-1.5 hover:bg-amber hover:text-white transition-colors">
-              Refresh
-            </button>
+            <div className="flex items-center gap-3">
+              {resetState === "idle" && (
+                <button
+                  onClick={() => setResetState("confirm")}
+                  className="font-inter text-xs text-steel/60 hover:text-red-500 transition-colors"
+                >
+                  Reset session data
+                </button>
+              )}
+              {resetState === "confirm" && (
+                <span className="flex items-center gap-2 font-inter text-xs">
+                  <span className="text-slate">Wipe all data for {session.title}?</span>
+                  <button onClick={doReset} className="font-medium text-red-500 hover:underline">Yes, wipe</button>
+                  <button onClick={() => setResetState("idle")} className="text-steel hover:text-slate">cancel</button>
+                </span>
+              )}
+              {resetState === "working" && <span className="font-inter text-xs text-steel">Wiping…</span>}
+              {resetState === "done" && <span className="font-inter text-xs text-olive">Cleared ✓</span>}
+              <button onClick={refresh} className="font-inter text-xs font-medium border border-amber/50 text-amber px-3 py-1.5 hover:bg-amber hover:text-white transition-colors">
+                Refresh
+              </button>
+            </div>
           )}
         </div>
 

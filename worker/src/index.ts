@@ -42,6 +42,7 @@ export default {
       if (url.pathname === "/session-data" && req.method === "GET") return handleSessionData(url, env, cors);
       if (url.pathname === "/publish" && req.method === "POST") return handlePublish(req, env, cors);
       if (url.pathname === "/shared" && req.method === "GET") return handleShared(url, env, cors);
+      if (url.pathname === "/reset" && req.method === "POST") return handleReset(req, env, cors);
       return json({ error: "not found" }, 404, cors);
     } catch (err) {
       return json({ error: String(err) }, 500, cors);
@@ -205,6 +206,28 @@ async function handleShared(url: URL, env: Env, cors: Record<string, string>): P
   if (!sessionId) return json({ error: "missing sessionId" }, 400, cors);
   const doc = await env.FW_KV.get(`shared:${sessionId}:context`);
   return json({ doc: doc ?? null }, 200, cors);
+}
+
+// Wipe all captures + the published context for a session (facilitator reset).
+async function handleReset(req: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+  const body = (await req.json().catch(() => ({}))) as { token?: string; sessionId?: string };
+  if (body.token !== env.FW_TOKEN) return json({ error: "bad token" }, 401, cors);
+  const sessionId = String(body.sessionId ?? "");
+  if (!sessionId) return json({ error: "missing sessionId" }, 400, cors);
+
+  let deleted = 0;
+  let cursor: string | undefined = undefined;
+  while (true) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const res: any = await env.FW_KV.list({ prefix: `rec:${sessionId}:`, cursor });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await Promise.all(res.keys.map((k: any) => env.FW_KV.delete(k.name)));
+    deleted += res.keys.length;
+    if (res.list_complete) break;
+    cursor = res.cursor;
+  }
+  await env.FW_KV.delete(`shared:${sessionId}:context`);
+  return json({ ok: true, deleted }, 200, cors);
 }
 
 // ── helpers ────────────────────────────────────────────────────────────────────

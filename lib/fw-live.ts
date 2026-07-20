@@ -171,6 +171,19 @@ export async function publishSharedContext(sessionId: string, doc: string): Prom
   if (!res.ok) throw new LiveUnavailable(`Worker ${res.status}`);
 }
 
+/** Facilitator: wipe all captures + the published context for a session. Returns count deleted. */
+export async function resetSession(sessionId: string): Promise<number> {
+  if (!WORKER) throw new LiveUnavailable("NEXT_PUBLIC_FW_WORKER not set");
+  const res = await fetch(`${WORKER}/reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token: TOKEN, sessionId }),
+  });
+  if (!res.ok) throw new LiveUnavailable(`Worker ${res.status}`);
+  const data = (await res.json()) as { deleted?: number };
+  return data.deleted ?? 0;
+}
+
 /** Anyone: fetch the published company context file (null if not published yet). */
 export async function fetchSharedContext(sessionId: string): Promise<string | null> {
   if (!WORKER) return null;
