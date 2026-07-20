@@ -516,7 +516,6 @@ function CoursePlayer({
 
   const doneCount = lessons.filter((l) => completed.has(l.id)).length;
   const pct = lessons.length ? Math.round((doneCount / lessons.length) * 100) : 0;
-  const finished = doneCount === lessons.length && lessons.length > 0;
 
   return (
     <div className="min-h-screen bg-bone text-slate font-inter flex flex-col">
@@ -619,15 +618,6 @@ function CoursePlayer({
                   </motion.article>
                 </AnimatePresence>
               </>
-            )}
-
-            {finished && (
-              <div className="mt-12 border border-olive/30 bg-olive/5 px-6 py-8 text-center">
-                <p className="font-syne font-semibold text-2xl text-olive mb-1">Session complete ★</p>
-                <p className="font-inter text-sm text-steel">
-                  You&apos;ve finished every lesson in {session.title.replace(/^Session \d+ — /, "")}.
-                </p>
-              </div>
             )}
 
             {/* Footer nav */}
