@@ -1059,11 +1059,58 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
 
 // ── AI usage policy — facilitated mad-lib ────────────────────────────────────────
 
+type PolicyFill = { id: string; before: string; after?: string; options: string[]; multi?: boolean; placeholder?: string };
+
+function joinList(arr: string[]): string {
+  if (arr.length <= 1) return arr[0] ?? "";
+  return arr.slice(0, -1).join(", ") + " and " + arr[arr.length - 1];
+}
+
 function PolicyMadlib({ block, ctx }: { block: Extract<Block, { type: "policy-madlib" }>; ctx: ExerciseCtx }) {
-  const [fills, setFills] = useState<Record<string, string>>({});
-  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [picks, setPicks] = useState<Record<string, string[]>>({}); // fillId → chosen options
+  const [custom, setCustom] = useState<Record<string, string>>({}); // fillId → free text
+  const [removed, setRemoved] = useState<Record<string, boolean>>({}); // `${secId}:${i}` → excluded
+  const [added, setAdded] = useState<Record<string, string[]>>({}); // secId → custom items
+  const [addDraft, setAddDraft] = useState<Record<string, string>>({});
+  const [notes, setNotes] = useState<Record<string, string>>({});
   const [question, setQuestion] = useState("");
   const [state, setState] = useState<"idle" | "agreed" | "asked">("idle");
+  const [copied, setCopied] = useState(false);
+
+  const fillValue = (f: PolicyFill): string => {
+    const chosen = picks[f.id] ?? [];
+    const c = (custom[f.id] ?? "").trim();
+    return joinList([...chosen, ...(c ? [c] : [])]);
+  };
+
+  const toggleChip = (f: PolicyFill, o: string) =>
+    setPicks((p) => {
+      const cur = p[f.id] ?? [];
+      if (f.multi) return { ...p, [f.id]: cur.includes(o) ? cur.filter((x) => x !== o) : [...cur, o] };
+      return { ...p, [f.id]: cur.includes(o) ? [] : [o] };
+    });
+
+  function assembleMarkdown(): string {
+    let md = `# ${block.docTitle}\n`;
+    if (block.docSubtitle) md += `_${block.docSubtitle}_\n`;
+    block.sections.forEach((s, i) => {
+      md += `\n## ${i + 1}. ${s.title}\n`;
+      if (s.kind === "statement") {
+        for (const f of s.fills) md += `${f.before} ${fillValue(f) || "____"}${f.after ?? ""}\n`;
+      } else if (s.kind === "checklist") {
+        s.items.forEach((it, idx) => {
+          if (!removed[`${s.id}:${idx}`]) md += `- ${it}\n`;
+        });
+        (added[s.id] ?? []).forEach((it) => (md += `- ${it}\n`));
+      } else if (s.kind === "fixed") {
+        for (const l of s.lines) md += `- ${l}\n`;
+      } else {
+        md += `${(notes[s.id] ?? "").trim() || "_(none yet)_"}\n`;
+      }
+    });
+    if (block.ratify) md += `\n_${block.ratify}_\n`;
+    return md;
+  }
 
   function push(kind: "agree" | "question") {
     capture({
@@ -1071,99 +1118,175 @@ function PolicyMadlib({ block, ctx }: { block: Extract<Block, { type: "policy-ma
       kind: "policy",
       name: ctx.name,
       trackId: ctx.trackId,
-      payload: { fills, checked, question: question.trim(), agreed: kind === "agree" },
+      payload: { picks, custom, removed, added, notes, question: question.trim(), agreed: kind === "agree", doc: assembleMarkdown() },
     });
     setState(kind === "agree" ? "agreed" : "asked");
   }
 
+  function copyDoc() {
+    navigator.clipboard.writeText(assembleMarkdown()).then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      },
+      () => {}
+    );
+  }
+
+  const Chip = ({ on, label, onClick }: { on: boolean; label: string; onClick: () => void }) => (
+    <button
+      onClick={onClick}
+      className={`font-inter text-xs px-2.5 py-1 rounded-full border transition-colors ${
+        on ? "border-amber bg-amber/10 text-slate" : "border-dust text-steel hover:border-amber/60"
+      }`}
+    >
+      {label}
+    </button>
+  );
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
 
-      {/* mad-lib blanks */}
-      <div className="space-y-4">
-        {block.fills.map((f) => (
-          <div key={f.id} className="bg-white border border-dust rounded-xl px-4 py-3">
-            <p className="font-inter text-sm text-slate leading-body">
-              {f.before}{" "}
-              <span className="font-medium text-amber">{fills[f.id]?.trim() || "______"}</span>
-              {f.after}
-            </p>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {f.options.map((o) => (
-                <button
-                  key={o}
-                  onClick={() => setFills((v) => ({ ...v, [f.id]: v[f.id]?.trim() === o ? "" : o }))}
-                  className={`font-inter text-xs px-2.5 py-1 rounded-full border transition-colors ${
-                    fills[f.id]?.trim() === o ? "border-amber bg-amber/10 text-slate" : "border-dust text-steel hover:border-amber/60"
-                  }`}
-                >
-                  {o}
-                </button>
-              ))}
-            </div>
-            <input
-              value={fills[f.id] ?? ""}
-              onChange={(e) => setFills((v) => ({ ...v, [f.id]: e.target.value }))}
-              placeholder={f.placeholder ?? "or type your own…"}
-              className="w-full mt-2 bg-transparent border-b border-dust focus:border-amber outline-none font-inter text-sm text-slate py-1 placeholder:text-steel/40"
-            />
-          </div>
-        ))}
-      </div>
+      {/* the document */}
+      <article className="bg-white border border-dust rounded-2xl shadow-sm px-5 md:px-8 py-6 md:py-8">
+        <header className="border-b border-dust pb-4 mb-5">
+          <h3 className="font-syne text-2xl text-slate leading-tight">{block.docTitle}</h3>
+          {block.docSubtitle && <p className="font-inter text-xs text-steel mt-1">{block.docSubtitle}</p>}
+        </header>
 
-      {/* the checklists — tick what you agree with */}
-      <div className="grid md:grid-cols-2 gap-4">
-        {block.lists.map((list) => (
-          <div key={list.id} className="bg-white border border-dust rounded-xl overflow-hidden">
-            <p className="section-label text-amber px-4 py-2 border-b border-dust">{list.title}</p>
-            <ul className="px-4 py-3 space-y-2">
-              {list.items.map((item, i) => {
-                const id = `${list.id}-${i}`;
-                return (
-                  <li key={id}>
-                    <button onClick={() => setChecked((c) => ({ ...c, [id]: !c[id] }))} className="flex items-start gap-2.5 text-left w-full">
-                      <span
-                        className={`shrink-0 mt-0.5 w-4 h-4 rounded flex items-center justify-center ${
-                          checked[id] ? "bg-olive" : "border border-steel/40"
-                        }`}
-                      >
-                        {checked[id] && (
-                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-                            <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        )}
+        <div className="space-y-7">
+          {block.sections.map((s, i) => (
+            <section key={s.id}>
+              <h4 className="font-syne text-base text-slate mb-1.5">
+                <span className="text-amber">{i + 1}.</span> {s.title}
+              </h4>
+              {"lead" in s && s.lead && <p className="font-inter text-sm text-slate/70 leading-body mb-3">{s.lead}</p>}
+
+              {s.kind === "statement" && (
+                <div className="space-y-4">
+                  {s.fills.map((f) => (
+                    <div key={f.id}>
+                      <p className="font-inter text-[15px] text-slate leading-relaxed">
+                        {f.before}{" "}
+                        <span className="font-medium text-amber border-b border-amber/40">{fillValue(f) || "  ______  "}</span>
+                        {f.after}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {f.options.map((o) => (
+                          <Chip key={o} on={(picks[f.id] ?? []).includes(o)} label={o} onClick={() => toggleChip(f, o)} />
+                        ))}
+                      </div>
+                      <input
+                        value={custom[f.id] ?? ""}
+                        onChange={(e) => setCustom((v) => ({ ...v, [f.id]: e.target.value }))}
+                        placeholder={f.placeholder ?? "or type your own…"}
+                        className="w-full mt-2 bg-transparent border-b border-dust focus:border-amber outline-none font-inter text-sm text-slate py-1 placeholder:text-steel/40"
+                      />
+                      {f.multi && <p className="font-inter text-[11px] text-steel/50 mt-1">Pick all that apply.</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {s.kind === "checklist" && (
+                <ul className="space-y-2">
+                  {s.items.map((item, idx) => {
+                    const key = `${s.id}:${idx}`;
+                    const on = !removed[key];
+                    return (
+                      <li key={key}>
+                        <button
+                          onClick={() => setRemoved((r) => ({ ...r, [key]: !r[key] }))}
+                          className="flex items-start gap-2.5 text-left w-full group"
+                        >
+                          <span className={`shrink-0 mt-0.5 w-4 h-4 rounded flex items-center justify-center ${on ? "bg-olive" : "border border-steel/40"}`}>
+                            {on && (
+                              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                                <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            )}
+                          </span>
+                          <span className={`font-inter text-sm leading-body ${on ? "text-slate/80" : "text-steel/40 line-through"}`}>{item}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                  {(added[s.id] ?? []).map((item, idx) => (
+                    <li key={`add-${idx}`} className="flex items-start gap-2.5">
+                      <span className="shrink-0 mt-0.5 w-4 h-4 rounded bg-olive flex items-center justify-center">
+                        <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                          <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
                       </span>
-                      <span className="font-inter text-sm text-slate/80 leading-body">{item}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
-      </div>
+                      <span className="font-inter text-sm text-slate/80 leading-body flex-1">{item}</span>
+                      <button
+                        onClick={() => setAdded((a) => ({ ...a, [s.id]: (a[s.id] ?? []).filter((_, j) => j !== idx) }))}
+                        className="font-inter text-xs text-steel/50 hover:text-amber"
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                  {s.allowAdd && (
+                    <li className="flex items-center gap-2 pt-1">
+                      <input
+                        value={addDraft[s.id] ?? ""}
+                        onChange={(e) => setAddDraft((d) => ({ ...d, [s.id]: e.target.value }))}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && (addDraft[s.id] ?? "").trim()) {
+                            setAdded((a) => ({ ...a, [s.id]: [...(a[s.id] ?? []), addDraft[s.id].trim()] }));
+                            setAddDraft((d) => ({ ...d, [s.id]: "" }));
+                          }
+                        }}
+                        placeholder="add one of ours…"
+                        className="flex-1 bg-transparent border-b border-dust focus:border-amber outline-none font-inter text-sm text-slate py-1 placeholder:text-steel/40"
+                      />
+                      <button
+                        onClick={() => {
+                          if (!(addDraft[s.id] ?? "").trim()) return;
+                          setAdded((a) => ({ ...a, [s.id]: [...(a[s.id] ?? []), addDraft[s.id].trim()] }));
+                          setAddDraft((d) => ({ ...d, [s.id]: "" }));
+                        }}
+                        className="font-inter text-xs text-amber hover:underline"
+                      >
+                        + add
+                      </button>
+                    </li>
+                  )}
+                </ul>
+              )}
 
-      {/* fixed guardrails */}
-      {block.guardrails && block.guardrails.length > 0 && (
-        <div className="border-l-2 border-slate/20 bg-dust/30 px-4 py-3">
-          <p className="section-label text-steel mb-2">The non-negotiables</p>
-          <ul className="space-y-1.5">
-            {block.guardrails.map((g, i) => (
-              <li key={i} className="font-inter text-sm text-slate/80 leading-body flex gap-2">
-                <span className="text-amber">•</span>
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
+              {s.kind === "fixed" && (
+                <ul className="space-y-1.5">
+                  {s.lines.map((l, idx) => (
+                    <li key={idx} className="font-inter text-sm text-slate/80 leading-body flex gap-2">
+                      <span className="text-amber">•</span>
+                      <span>{l}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {s.kind === "notes" && (
+                <textarea
+                  value={notes[s.id] ?? ""}
+                  onChange={(e) => setNotes((n) => ({ ...n, [s.id]: e.target.value }))}
+                  rows={3}
+                  placeholder={s.placeholder ?? "…"}
+                  className="w-full bg-dust/30 border border-dust focus:border-amber rounded-lg px-3 py-2 outline-none font-inter text-sm text-slate leading-body placeholder:text-steel/40"
+                />
+              )}
+            </section>
+          ))}
         </div>
-      )}
 
-      {/* agree + push back */}
-      <div className="border-t border-dust pt-4 space-y-3">
-        <p className="font-inter text-xs text-steel">
-          We&apos;re writing this together, out loud. Tick what you agree with — and if you&apos;d change something, say it here.
-        </p>
+        {block.ratify && <p className="font-inter text-xs text-steel/60 italic border-t border-dust mt-6 pt-4">{block.ratify}</p>}
+      </article>
+
+      {/* agree · push back · copy */}
+      <div className="space-y-3">
+        <p className="font-inter text-xs text-steel">We&apos;re writing this together, out loud. Shape it above — and if you&apos;d change something, say it here.</p>
         <Composer value={question} onValueChange={setQuestion} placeholder="A question or something you'd push back on…" rows={2} />
         <div className="flex items-center gap-3 flex-wrap">
           <RunButton onClick={() => push("agree")}>I&apos;m on board ✓</RunButton>
@@ -1174,12 +1297,13 @@ function PolicyMadlib({ block, ctx }: { block: Extract<Block, { type: "policy-ma
           >
             Raise it →
           </button>
+          <button onClick={copyDoc} className="font-inter text-xs text-steel hover:text-amber ml-auto">
+            {copied ? "Copied ✓" : "Copy the draft"}
+          </button>
           {state === "agreed" && <span className="font-inter text-sm text-olive">Logged ✓</span>}
           {state === "asked" && <span className="font-inter text-sm text-olive">Sent to the room ✓</span>}
         </div>
       </div>
-
-      {block.ratify && <p className="font-inter text-xs text-steel/70 italic">{block.ratify}</p>}
     </div>
   );
 }

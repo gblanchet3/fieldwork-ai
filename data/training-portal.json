@@ -221,24 +221,104 @@
       "blocks": [
         {
           "type": "policy-madlib",
-          "intro": "This is our shared agreement — not a rulebook handed down. We'll write it together, out loud, line by line. Read along on your laptop, tap what you agree with, and speak up wherever you'd change it.",
-          "fills": [
-            { "id": "why", "before": "We use AI to", "after": ". A human is always accountable for the result.", "options": ["serve our tenants faster", "free our team for higher-value work", "cut the busywork so we focus on judgment"], "placeholder": "why we use it, in our words" },
-            { "id": "verify", "before": "Before anything goes out the door, we always double-check the", "after": ".", "options": ["dollar amounts", "dates & deadlines", "lease & legal language", "names & addresses"], "placeholder": "what we verify every time" },
-            { "id": "point", "before": "When something's unclear or goes sideways, our AI point person is", "after": ".", "options": ["Justin", "Scott"], "placeholder": "name" }
+          "intro": "This is our shared agreement — not a rulebook handed down. Chris will walk it section by section; read along on your laptop, tap the choices that fit us, untick anything you'd drop, and speak up where you'd change it. What we land on is the draft we adopt in Session 2.",
+          "docTitle": "Rafanelli & Nahas — AI Usage Policy",
+          "docSubtitle": "Working draft — written together, adopted in Session 2",
+          "sections": [
+            {
+              "id": "why",
+              "kind": "statement",
+              "title": "Why we use AI",
+              "fills": [
+                { "id": "why", "before": "We use AI to", "after": " — with a human always accountable for the result.", "multi": false, "options": ["serve our tenants faster", "free our team for higher-value work", "cut the busywork so we focus on judgment", "do more without adding headcount"], "placeholder": "in our own words" }
+              ]
+            },
+            {
+              "id": "usefor",
+              "kind": "checklist",
+              "title": "What we use AI for",
+              "lead": "The everyday work we're comfortable using AI for. Untick any that don't fit; add your own.",
+              "allowAdd": true,
+              "items": [
+                "Drafting emails, letters, and notices",
+                "Summarizing leases, long threads, and reports",
+                "Researching comps, prospects, specs, and suppliers",
+                "Turning rough notes into clean work orders",
+                "First-pass diagnostics and troubleshooting",
+                "Organizing and cleaning up data",
+                "Brainstorming and thinking options through"
+              ]
+            },
+            {
+              "id": "human",
+              "kind": "checklist",
+              "title": "What stays human",
+              "lead": "AI can help, but a person always finishes and decides these.",
+              "allowAdd": true,
+              "items": [
+                "Final legal review",
+                "Signed lease terms and negotiation",
+                "Anything a tenant or client sees — before a human reads it",
+                "High-stakes financial calls",
+                "Hiring, firing, and personnel decisions",
+                "Any promise or commitment made on the company's behalf"
+              ]
+            },
+            {
+              "id": "share",
+              "kind": "statement",
+              "title": "What we put in",
+              "fills": [
+                { "id": "ok", "before": "It's fine to give AI", "after": ".", "multi": true, "options": ["general business context", "draft text we're working on", "public information", "redacted or de-identified documents"], "placeholder": "anything else that's OK" }
+              ]
+            },
+            {
+              "id": "verify",
+              "kind": "statement",
+              "title": "How we double-check it",
+              "fills": [
+                { "id": "verify", "before": "Before anything leaves the building, we verify the", "after": ".", "multi": true, "options": ["dollar amounts", "dates & deadlines", "lease & legal language", "names & addresses", "measurements & square footage", "anything a client will see"], "placeholder": "add another" }
+              ]
+            },
+            {
+              "id": "accountable",
+              "kind": "statement",
+              "title": "How we stay accountable",
+              "lead": "Humans own every output — our name, our judgment. \"The AI did it\" isn't a thing here.",
+              "fills": [
+                { "id": "point", "before": "Our AI point person is", "after": ".", "multi": false, "options": ["Justin", "Scott"], "placeholder": "name" },
+                { "id": "whenwrong", "before": "When something's unsure or goes sideways, we", "after": ".", "multi": true, "options": ["flag it to our point person", "stop and check with a human", "treat it as a learning, not a blame"], "placeholder": "add another" }
+              ]
+            },
+            {
+              "id": "transparency",
+              "kind": "statement",
+              "title": "Being transparent",
+              "fills": [
+                { "id": "transparency", "before": "When AI has materially shaped client-facing work, we", "after": ".", "multi": false, "options": ["are transparent about it if asked", "note it internally", "proactively disclose when it's relevant"], "placeholder": "our stance" }
+              ]
+            },
+            {
+              "id": "nonneg",
+              "kind": "fixed",
+              "title": "The non-negotiables",
+              "lead": "These don't change.",
+              "lines": [
+                "Our one sanctioned AI tool is Claude — no company or client info goes into any other AI tool.",
+                "Never put in SSNs, bank or payment details, unredacted tenant PII, or passwords.",
+                "AI reads and drafts; it never sends, signs, or edits our system of record on its own.",
+                "On our plan, what we enter is not used to train models."
+              ]
+            },
+            {
+              "id": "open",
+              "kind": "notes",
+              "title": "Open questions to settle",
+              "lead": "Anything we're not sure about yet — we'll resolve these with leadership before we adopt it.",
+              "placeholder": "e.g. Can we use it on tenant financials? Who approves adding a new tool?"
+            }
           ],
-          "lists": [
-            { "id": "usefor", "title": "What we use AI for", "items": ["Drafting tenant emails, notices, letters", "Summarizing leases, long threads, reports", "Researching comps, prospects, specs, suppliers", "Organizing notes, work orders, and data"] },
-            { "id": "human", "title": "What stays human (AI never does alone)", "items": ["Final legal review", "Signed lease terms & negotiation", "Anything sent to a tenant or client without a human read", "High-stakes financial or judgment calls"] }
-          ],
-          "guardrails": [
-            "Our sanctioned AI is Claude — no company or client info goes into unapproved tools.",
-            "Never paste SSNs, banking info, or unredacted tenant PII.",
-            "AI reads and drafts; it never edits our system of record or hits send on its own.",
-            "On our plan, what we enter is not used to train models.",
-            "We're transparent when AI materially shaped client-facing work."
-          ],
-          "ratify": "We'll settle any open questions with leadership and formally adopt this in Session 2."
+          "ratify": "We'll settle the open questions with leadership and formally adopt this in Session 2."
         }
       ]
     },

@@ -87,13 +87,25 @@ export type Block =
       starterTask?: string;
       system?: string;
     }
-  // AI usage policy — a facilitated mad-lib (Chris drives out loud; folks read/fill along).
+  // AI usage policy — a facilitated, document-style mad-lib (Chris drives out loud;
+  // the page reads like the policy taking shape as the room fills it in).
   | {
       type: "policy-madlib";
-      intro?: string;
-      fills: { id: string; before: string; after?: string; options: string[]; placeholder?: string }[];
-      lists: { id: string; title: string; items: string[] }[];
-      guardrails?: string[]; // fixed lines, read-only
+      intro?: string; // facilitator framing, shown above the document
+      docTitle: string;
+      docSubtitle?: string;
+      sections: (
+        | {
+            id: string;
+            kind: "statement";
+            title: string;
+            lead?: string;
+            fills: { id: string; before: string; after?: string; options: string[]; multi?: boolean; placeholder?: string }[];
+          }
+        | { id: string; kind: "checklist"; title: string; lead?: string; items: string[]; allowAdd?: boolean }
+        | { id: string; kind: "fixed"; title: string; lead?: string; lines: string[] }
+        | { id: string; kind: "notes"; title: string; lead?: string; placeholder?: string }
+      )[];
       ratify?: string;
     }
   // Setup tour / walk-through: install checklist + tiered, self-guided missions
