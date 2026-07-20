@@ -230,7 +230,7 @@
               "kind": "statement",
               "title": "Why we use AI",
               "fills": [
-                { "id": "why", "before": "We use AI to", "after": " — with a human always accountable for the result.", "multi": false, "options": ["serve our tenants faster", "free our team for higher-value work", "cut the busywork so we focus on judgment", "do more without adding headcount"], "placeholder": "in our own words" }
+                { "id": "why", "before": "We use AI to", "after": " — with a human always accountable for the result.", "multi": false, "options": ["serve our tenants faster", "free our team for higher-value work", "cut the busywork so we focus on judgment and relationships", "do more without adding headcount"], "placeholder": "in our own words" }
               ]
             },
             {
