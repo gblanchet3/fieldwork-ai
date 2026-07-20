@@ -35,9 +35,12 @@ export class LiveUnavailable extends Error {
  * fragment as it arrives and resolves with the full text. Throws
  * LiveUnavailable if no Worker is configured or the request fails to open.
  */
+export type ChatTurn = { role: "user" | "assistant"; content: string };
+
 export async function streamGenerate(opts: {
   sessionId: string;
-  prompt: string;
+  prompt?: string;
+  messages?: ChatTurn[]; // multi-turn history (newest last); overrides prompt when set
   system?: string;
   image?: { data: string; mediaType: string }; // base64 (no data: prefix) + media type
   model?: string; // per-request override (e.g. Opus for context synthesis)
@@ -56,6 +59,7 @@ export async function streamGenerate(opts: {
         token: TOKEN,
         sessionId: opts.sessionId,
         prompt: opts.prompt,
+        messages: opts.messages,
         system: opts.system,
         image: opts.image,
         model: opts.model,

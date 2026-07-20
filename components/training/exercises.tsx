@@ -8,7 +8,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
-import { streamGenerate, capture, liveEnabled, fetchSharedContext, fetchSessionData } from "@/lib/fw-live";
+import { streamGenerate, capture, liveEnabled, fetchSharedContext, fetchSessionData, type ChatTurn } from "@/lib/fw-live";
 import type { Block } from "@/lib/training";
 
 export type ExerciseCtx = {
@@ -470,105 +470,278 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
   );
 }
 
-// ── #5 ⭐ More-is-More chunked prompt-builder ────────────────────────────────────
+// ── #5 ⭐ More-is-More prompt-builder → guided multi-turn conversation ───────────
+
+const PUSH_CHIPS = ["Make it shorter", "Warmer tone", "Lead with the ask", "More formal", "More specific"];
+
+// Offline samples, indexed by how many assistant turns have already landed.
+const CANNED_CONVO = [
+  "Happy to help — a few quick questions first:\n\n1. Who's the audience, and what tone should I strike?\n2. What's the single most important outcome?\n3. Any specifics I must include — names, dates, numbers?\n4. Anything to avoid?\n\n[Offline sample — connect the live backend and Claude asks about your actual task.]",
+  "Here's a first draft based on what you told me:\n\n[Your tailored draft would appear here.]\n\n[Offline sample. Live, this reflects your answers.]",
+  "Updated — tightened and retoned around exactly what you flagged:\n\n[The revised version would appear here.]\n\n[Offline sample of a push-back rep.]",
+  "Refined once more:\n\n[The further-improved version would appear here.]\n\n[Offline sample. Two reps in, you can feel it converge.]",
+];
+
+const BUILD_STEPS = ["Describe", "Answer", "Push back ×2"];
 
 function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-builder" }>; ctx: ExerciseCtx }) {
   const [challengeId, setChallengeId] = useState<string>(block.challenges[0]?.id ?? "");
   const [chunks, setChunks] = useState<Record<string, string>>({});
-  const out = useStream(ctx.sessionId);
+  const [phase, setPhase] = useState<"build" | "chat">("build");
+  const [turns, setTurns] = useState<ChatTurn[]>([]);
+  const [live, setLive] = useState("");
+  const [streaming, setStreaming] = useState(false);
+  const [canned, setCanned] = useState(false);
+  const [reply, setReply] = useState("");
+  const [showLazy, setShowLazy] = useState(false);
 
   const challenge = block.challenges.find((c) => c.id === challengeId);
+  const filled = block.chunks.filter((c) => (chunks[c.id] ?? "").trim()).length;
+  const ready = filled === block.chunks.length && !!challenge;
 
-  const assembled = useMemo(() => {
+  const builtPrompt = useMemo(() => {
     const parts = [challenge?.text ?? ""];
     for (const c of block.chunks) {
       const v = (chunks[c.id] ?? "").trim();
       if (v) parts.push(`${c.prefix ?? ""}${v}`);
     }
+    if (block.interviewInstruction) parts.push(block.interviewInstruction);
     return parts.filter(Boolean).join("\n\n");
-  }, [challenge, chunks, block.chunks]);
+  }, [challenge, chunks, block.chunks, block.interviewInstruction]);
 
-  const filledCount = block.chunks.filter((c) => (chunks[c.id] ?? "").trim()).length;
-  const ready = filledCount === block.chunks.length && !!challenge;
+  const assistantTurns = turns.filter((t) => t.role === "assistant").length;
+  const done = assistantTurns >= 4;
+  const step = phase === "build" || assistantTurns === 0 ? 1 : assistantTurns === 1 ? 2 : 3;
 
-  function runMine() {
+  async function send(userText: string) {
+    if (streaming || !userText.trim()) return;
+    const history: ChatTurn[] = [...turns, { role: "user", content: userText.trim() }];
+    const cannedText = CANNED_CONVO[Math.min(assistantTurns, CANNED_CONVO.length - 1)];
+    setTurns(history);
+    setReply("");
+    setStreaming(true);
+    setLive("");
+    let full = "";
+    if (liveEnabled()) {
+      const MAX = 4;
+      for (let attempt = 0; attempt < MAX; attempt++) {
+        full = "";
+        setLive("");
+        try {
+          await streamGenerate({
+            sessionId: ctx.sessionId,
+            messages: history,
+            system: block.system,
+            onToken: (t) => {
+              full += t;
+              setLive((p) => p + t);
+            },
+          });
+          break;
+        } catch {
+          full = "";
+          if (attempt < MAX - 1) {
+            await new Promise((r) => setTimeout(r, 600 * Math.pow(2, attempt)));
+            continue;
+          }
+          setCanned(true);
+          full = cannedText;
+          setLive("");
+          await typeOut(cannedText, setLive, () => true);
+        }
+      }
+    } else {
+      setCanned(true);
+      full = cannedText;
+      await typeOut(cannedText, setLive, () => true);
+    }
+    setTurns([...history, { role: "assistant", content: full }]);
+    setLive("");
+    setStreaming(false);
+  }
+
+  function start() {
+    if (!ready) return;
     capture({
       sessionId: ctx.sessionId,
       kind: "prompt-builder",
       name: ctx.name,
       trackId: ctx.trackId,
-      payload: { challengeId, challenge: challenge?.label, prompt: assembled },
+      payload: { challengeId, challenge: challenge?.label, prompt: builtPrompt },
     });
-    out.run(assembled, block.system, CANNED.builderRich);
+    setPhase("chat");
+    send(builtPrompt);
   }
+
+  const composer =
+    assistantTurns === 1
+      ? { label: "✍️ Answer Claude's questions — keep it brief", placeholder: "Answer each in a few words…", chips: [] as string[] }
+      : assistantTurns === 2
+        ? { label: "Now push back — be demanding & direct (rep 1 of 2)", placeholder: "e.g. shorter, lead with the ask, warmer", chips: PUSH_CHIPS }
+        : assistantTurns === 3
+          ? { label: "One more push — refine it further (rep 2 of 2)", placeholder: "Push on tone, length, specifics…", chips: PUSH_CHIPS }
+          : null;
+
+  const Bubble = ({ t }: { t: ChatTurn }) =>
+    t.role === "user" ? (
+      <div className="ml-6 bg-dust/50 border border-dust rounded-2xl px-4 py-2.5">
+        <p className="section-label text-steel mb-1">You</p>
+        <pre className="whitespace-pre-wrap font-inter text-sm text-slate/80 leading-body">{t.content}</pre>
+      </div>
+    ) : (
+      <div className="mr-6 bg-white border border-amber/30 rounded-2xl px-4 py-2.5">
+        <p className="section-label text-amber mb-1">Claude</p>
+        <pre className="whitespace-pre-wrap font-inter text-sm text-slate/80 leading-body">{t.content}</pre>
+      </div>
+    );
 
   return (
     <div className="space-y-5">
-      {/* pick a challenge */}
-      <div>
-        <p className="section-label text-steel mb-2">Pick your challenge</p>
-        <div className="flex flex-wrap gap-2">
-          {block.challenges.map((c) => (
-            <button
-              key={c.id}
-              onClick={() => setChallengeId(c.id)}
-              className={`font-inter text-sm px-3 py-2 border text-left transition-colors ${
-                c.id === challengeId ? "border-amber bg-amber/10 text-slate" : "border-dust bg-white text-steel hover:border-steel/50"
+      {/* step tracker */}
+      <div className="flex items-center gap-2 flex-wrap">
+        {BUILD_STEPS.map((s, i) => {
+          const n = i + 1;
+          const state = done || n < step ? "done" : n === step ? "active" : "todo";
+          return (
+            <span
+              key={s}
+              className={`font-inter text-xs px-2.5 py-1 rounded-full border ${
+                state === "active"
+                  ? "border-amber bg-amber/10 text-slate font-medium"
+                  : state === "done"
+                    ? "border-olive/40 bg-olive/5 text-olive"
+                    : "border-dust text-steel/50"
               }`}
             >
-              {c.label}
-            </button>
-          ))}
-        </div>
-        {challenge && <p className="font-inter text-sm text-slate/80 leading-body mt-3 bg-dust/40 px-3 py-2 border border-dust">{challenge.text}</p>}
+              {n}. {s}
+            </span>
+          );
+        })}
       </div>
 
-      {/* build it in chunks */}
-      <div className="space-y-4">
-        {block.chunks.map((c, i) => (
-          <div key={c.id}>
-            <div className="flex items-baseline gap-2 mb-1">
-              <span className="font-syne text-amber text-sm">{i + 1}.</span>
-              <label className="font-inter text-sm font-medium text-slate">{c.label}</label>
+      {phase === "build" && (
+        <>
+          <div>
+            <p className="section-label text-steel mb-2">Pick your challenge</p>
+            <div className="flex flex-wrap gap-2">
+              {block.challenges.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setChallengeId(c.id)}
+                  className={`font-inter text-sm px-3 py-2 border text-left transition-colors ${
+                    c.id === challengeId ? "border-amber bg-amber/10 text-slate" : "border-dust bg-white text-steel hover:border-steel/50"
+                  }`}
+                >
+                  {c.label}
+                </button>
+              ))}
             </div>
-            <p className="font-inter text-xs text-steel mb-1.5 ml-5">{c.instruction}</p>
-            <Composer
-              value={chunks[c.id] ?? ""}
-              onValueChange={(val) => setChunks((v) => ({ ...v, [c.id]: val }))}
-              placeholder={c.placeholder}
-              rows={2}
-            />
+            {challenge && (
+              <p className="font-inter text-sm text-slate/80 leading-body mt-3 bg-dust/40 px-3 py-2 border border-dust">{challenge.text}</p>
+            )}
           </div>
-        ))}
-      </div>
 
-      {/* assembled paragraph */}
-      <div>
-        <p className="section-label text-steel mb-2">Your prompt so far · {filledCount}/{block.chunks.length}</p>
-        <pre className="whitespace-pre-wrap font-inter text-sm bg-amber/5 border border-amber/30 text-slate/80 px-4 py-3 leading-body min-h-[4rem]">
-          {assembled || <span className="text-steel/40">Fill the steps above and watch your prompt build itself.</span>}
-        </pre>
-      </div>
-
-      <div className="flex items-center gap-3 flex-wrap">
-        <RunButton onClick={runMine} disabled={!ready} busy={out.status === "streaming"}>
-          Run my prompt →
-        </RunButton>
-        <ModelBadge />
-      </div>
-
-      {/* comparison */}
-      {(out.status !== "idle") && (
-        <div className="grid md:grid-cols-2 gap-4 pt-1">
-          <div className="space-y-1">
-            <p className="font-inter text-xs text-steel">The generic version: &ldquo;{block.genericPrompt}&rdquo;</p>
-            <OutputPanel label="Generic output" text={block.genericOutput} status="done" canned tone="steel" />
+          <div className="space-y-4">
+            {block.chunks.map((c, i) => (
+              <div key={c.id}>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="font-syne text-amber text-sm">{i + 1}.</span>
+                  <label className="font-inter text-sm font-medium text-slate">{c.label}</label>
+                </div>
+                <p className="font-inter text-xs text-steel mb-1.5 ml-5">{c.instruction}</p>
+                <Composer
+                  value={chunks[c.id] ?? ""}
+                  onValueChange={(val) => setChunks((v) => ({ ...v, [c.id]: val }))}
+                  placeholder={c.placeholder}
+                  rows={2}
+                />
+              </div>
+            ))}
           </div>
-          <div className="space-y-1">
-            <p className="font-inter text-xs text-steel">Your built prompt</p>
-            <OutputPanel label="Your output" text={out.text} status={out.status} canned={out.canned} />
+
+          <div className="flex items-center gap-3 flex-wrap">
+            <RunButton onClick={start} disabled={!ready}>
+              Start the conversation →
+            </RunButton>
+            <ModelBadge />
           </div>
-        </div>
+          <p className="font-inter text-xs text-steel">Claude will interview you first, then draft — you take it from there.</p>
+        </>
+      )}
+
+      {phase === "chat" && (
+        <>
+          {challenge && <p className="font-inter text-xs text-steel">Working on: <span className="text-slate/70">{challenge.label}</span></p>}
+
+          <div className="space-y-3">
+            {turns.map((t, i) => (
+              <Bubble key={i} t={t} />
+            ))}
+            {streaming && (
+              <div className="mr-6 bg-white border border-amber/30 rounded-2xl px-4 py-2.5">
+                <p className="section-label text-amber mb-1 flex items-center gap-2">
+                  Claude <span className="font-inter text-xs text-amber animate-pulse normal-case tracking-normal">generating…</span>
+                </p>
+                <pre className="whitespace-pre-wrap font-inter text-sm text-slate/80 leading-body">
+                  {live || <span className="text-steel/40">…</span>}
+                </pre>
+              </div>
+            )}
+          </div>
+
+          {composer && !streaming && (
+            <div className="space-y-2">
+              <p className="font-inter text-sm font-medium text-slate">{composer.label}</p>
+              {composer.chips.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {composer.chips.map((chip) => (
+                    <button
+                      key={chip}
+                      onClick={() => setReply((r) => (r.trim() ? r.trim() + "; " + chip.toLowerCase() : chip))}
+                      className="font-inter text-xs px-2.5 py-1 rounded-full border border-dust text-steel hover:border-amber hover:text-amber transition-colors"
+                    >
+                      {chip}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <Composer value={reply} onValueChange={setReply} placeholder={composer.placeholder} rows={2} showModel />
+              <RunButton onClick={() => send(reply)} disabled={!reply.trim()}>
+                Send →
+              </RunButton>
+            </div>
+          )}
+
+          {done && (
+            <>
+              <div className="border-l-2 border-olive/40 bg-olive/5 px-4 py-3">
+                <p className="font-inter text-sm text-slate/80 leading-body">
+                  ✓ You ran the whole loop — described the goal, let Claude interview you, answered, and pushed back twice. That back-and-forth is where the quality comes from.
+                </p>
+              </div>
+              <button onClick={() => setShowLazy((v) => !v)} className="font-inter text-xs text-amber hover:underline w-fit">
+                {showLazy ? "Hide the lazy version" : "See what a one-line prompt would've gotten you"}
+              </button>
+              {showLazy && (
+                <div className="grid md:grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <p className="font-inter text-xs text-steel">&ldquo;{block.genericPrompt}&rdquo;</p>
+                    <OutputPanel label="Lazy output" text={block.genericOutput} status="done" canned tone="steel" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="font-inter text-xs text-steel">Your final version</p>
+                    <OutputPanel
+                      label="Your output"
+                      text={turns.filter((t) => t.role === "assistant").slice(-1)[0]?.content ?? ""}
+                      status="done"
+                      canned={canned}
+                    />
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </>
       )}
     </div>
   );
@@ -884,6 +1057,133 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
 
 // ── dispatcher ───────────────────────────────────────────────────────────────
 
+// ── AI usage policy — facilitated mad-lib ────────────────────────────────────────
+
+function PolicyMadlib({ block, ctx }: { block: Extract<Block, { type: "policy-madlib" }>; ctx: ExerciseCtx }) {
+  const [fills, setFills] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [question, setQuestion] = useState("");
+  const [state, setState] = useState<"idle" | "agreed" | "asked">("idle");
+
+  function push(kind: "agree" | "question") {
+    capture({
+      sessionId: ctx.sessionId,
+      kind: "policy",
+      name: ctx.name,
+      trackId: ctx.trackId,
+      payload: { fills, checked, question: question.trim(), agreed: kind === "agree" },
+    });
+    setState(kind === "agree" ? "agreed" : "asked");
+  }
+
+  return (
+    <div className="space-y-6">
+      {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
+
+      {/* mad-lib blanks */}
+      <div className="space-y-4">
+        {block.fills.map((f) => (
+          <div key={f.id} className="bg-white border border-dust rounded-xl px-4 py-3">
+            <p className="font-inter text-sm text-slate leading-body">
+              {f.before}{" "}
+              <span className="font-medium text-amber">{fills[f.id]?.trim() || "______"}</span>
+              {f.after}
+            </p>
+            <div className="flex flex-wrap gap-2 mt-2">
+              {f.options.map((o) => (
+                <button
+                  key={o}
+                  onClick={() => setFills((v) => ({ ...v, [f.id]: v[f.id]?.trim() === o ? "" : o }))}
+                  className={`font-inter text-xs px-2.5 py-1 rounded-full border transition-colors ${
+                    fills[f.id]?.trim() === o ? "border-amber bg-amber/10 text-slate" : "border-dust text-steel hover:border-amber/60"
+                  }`}
+                >
+                  {o}
+                </button>
+              ))}
+            </div>
+            <input
+              value={fills[f.id] ?? ""}
+              onChange={(e) => setFills((v) => ({ ...v, [f.id]: e.target.value }))}
+              placeholder={f.placeholder ?? "or type your own…"}
+              className="w-full mt-2 bg-transparent border-b border-dust focus:border-amber outline-none font-inter text-sm text-slate py-1 placeholder:text-steel/40"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* the checklists — tick what you agree with */}
+      <div className="grid md:grid-cols-2 gap-4">
+        {block.lists.map((list) => (
+          <div key={list.id} className="bg-white border border-dust rounded-xl overflow-hidden">
+            <p className="section-label text-amber px-4 py-2 border-b border-dust">{list.title}</p>
+            <ul className="px-4 py-3 space-y-2">
+              {list.items.map((item, i) => {
+                const id = `${list.id}-${i}`;
+                return (
+                  <li key={id}>
+                    <button onClick={() => setChecked((c) => ({ ...c, [id]: !c[id] }))} className="flex items-start gap-2.5 text-left w-full">
+                      <span
+                        className={`shrink-0 mt-0.5 w-4 h-4 rounded flex items-center justify-center ${
+                          checked[id] ? "bg-olive" : "border border-steel/40"
+                        }`}
+                      >
+                        {checked[id] && (
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                            <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </span>
+                      <span className="font-inter text-sm text-slate/80 leading-body">{item}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      {/* fixed guardrails */}
+      {block.guardrails && block.guardrails.length > 0 && (
+        <div className="border-l-2 border-slate/20 bg-dust/30 px-4 py-3">
+          <p className="section-label text-steel mb-2">The non-negotiables</p>
+          <ul className="space-y-1.5">
+            {block.guardrails.map((g, i) => (
+              <li key={i} className="font-inter text-sm text-slate/80 leading-body flex gap-2">
+                <span className="text-amber">•</span>
+                <span>{g}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* agree + push back */}
+      <div className="border-t border-dust pt-4 space-y-3">
+        <p className="font-inter text-xs text-steel">
+          We&apos;re writing this together, out loud. Tick what you agree with — and if you&apos;d change something, say it here.
+        </p>
+        <Composer value={question} onValueChange={setQuestion} placeholder="A question or something you'd push back on…" rows={2} />
+        <div className="flex items-center gap-3 flex-wrap">
+          <RunButton onClick={() => push("agree")}>I&apos;m on board ✓</RunButton>
+          <button
+            onClick={() => push("question")}
+            disabled={!question.trim()}
+            className="font-inter text-sm font-medium border border-amber/50 text-amber px-4 py-2 rounded hover:bg-amber hover:text-white transition-colors disabled:opacity-40"
+          >
+            Raise it →
+          </button>
+          {state === "agreed" && <span className="font-inter text-sm text-olive">Logged ✓</span>}
+          {state === "asked" && <span className="font-inter text-sm text-olive">Sent to the room ✓</span>}
+        </div>
+      </div>
+
+      {block.ratify && <p className="font-inter text-xs text-steel/70 italic">{block.ratify}</p>}
+    </div>
+  );
+}
+
 export const INTERACTIVE_TYPES = new Set([
   "context-compare",
   "context-file",
@@ -891,6 +1191,7 @@ export const INTERACTIVE_TYPES = new Set([
   "prompt-builder",
   "iterate",
   "setup-tour",
+  "policy-madlib",
 ]);
 
 export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }) {
@@ -907,6 +1208,8 @@ export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }
       return <IterateExercise block={block} ctx={ctx} />;
     case "setup-tour":
       return <SetupTour block={block} ctx={ctx} />;
+    case "policy-madlib":
+      return <PolicyMadlib block={block} ctx={ctx} />;
     default:
       return null;
   }

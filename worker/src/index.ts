@@ -57,24 +57,35 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
     token?: string;
     sessionId?: string;
     prompt?: string;
+    // Multi-turn: full conversation history, newest turn last (role ends on "user").
+    // Takes precedence over `prompt` when present. Used by the iterate-loop exercise.
+    messages?: { role: "user" | "assistant"; content: string }[];
     system?: string;
     image?: { data: string; mediaType: string }; // base64 (no data: prefix) + media type
     model?: string; // per-request override (e.g. Opus for the context synthesis)
     maxTokens?: number;
   };
   if (body.token !== env.FW_TOKEN) return json({ error: "bad token" }, 401, cors);
-  if (!body.prompt) return json({ error: "missing prompt" }, 400, cors);
+  const hasMessages = Array.isArray(body.messages) && body.messages.length > 0;
+  if (!body.prompt && !hasMessages) return json({ error: "missing prompt" }, 400, cors);
 
   const ip = req.headers.get("CF-Connecting-IP") ?? "unknown";
   if (await isRateLimited(env, ip)) return json({ error: "rate limited" }, 429, cors);
 
-  // Text-only or multimodal (image + text) message content.
-  const content = body.image
-    ? [
-        { type: "image", source: { type: "base64", media_type: body.image.mediaType, data: body.image.data } },
-        { type: "text", text: body.prompt },
-      ]
-    : body.prompt;
+  // Prefer an explicit multi-turn history; else a single (optionally multimodal) user turn.
+  const messages = hasMessages
+    ? body.messages
+    : [
+        {
+          role: "user",
+          content: body.image
+            ? [
+                { type: "image", source: { type: "base64", media_type: body.image.mediaType, data: body.image.data } },
+                { type: "text", text: body.prompt },
+              ]
+            : body.prompt,
+        },
+      ];
 
   const upstream = await fetch(ANTHROPIC_URL, {
     method: "POST",
@@ -88,7 +99,7 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
       max_tokens: body.maxTokens || 1500,
       stream: true,
       system: body.system,
-      messages: [{ role: "user", content }],
+      messages,
     }),
   });
 

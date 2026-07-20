@@ -137,7 +137,7 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "More is more — the fuller your prompt, the better the result. Build one in three moves, then run it against the lazy version." },
+        { "type": "text", "text": "More is more. Set it up in two moves, then Claude interviews you, drafts it, and you push back until it's right — a real back-and-forth." },
         {
           "type": "prompt-builder",
           "challenges": [
@@ -147,12 +147,12 @@
           ],
           "chunks": [
             { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a warm-but-firm email that gets a payment date this week", "prefix": "My goal: " },
-            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "Why does this matter, what's the situation, and who should the AI act as?", "placeholder": "e.g. Act as a seasoned property manager; this tenant's been with us 6 years and tenant service is our north star", "prefix": "Context & reasoning: " },
-            { "id": "c3", "label": "Ask it to interview you", "instruction": "Invite the AI to ask you clarifying questions before it drafts.", "placeholder": "e.g. Before you write it, ask me anything that would make it land better", "prefix": "" }
+            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "Why does this matter, what's the situation, and who should the AI act as?", "placeholder": "e.g. Act as a seasoned property manager; this tenant's been with us 6 years and tenant service is our north star", "prefix": "Context & reasoning: " }
           ],
+          "interviewInstruction": "Before you draft anything, ask me 3–5 short clarifying questions to fill in what you're missing, then wait for my answers.",
           "genericPrompt": "Write me an email to a tenant.",
           "genericOutput": "Dear Tenant,\n\nWe are writing to inform you regarding your account. Please contact our office at your earliest convenience to discuss. Thank you for your attention to this matter.\n\nSincerely,\nManagement",
-          "system": "You are assisting a commercial real estate property manager. Match a warm-but-firm professional tone."
+          "system": "You are assisting a commercial real estate property manager, matching a warm-but-firm professional tone. When the user asks you to interview them first, ask a few concise clarifying questions and wait for answers before drafting. When they push back, revise directly and show the improved version."
         }
       ]
     },
@@ -163,7 +163,7 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "More is more — the fuller your prompt, the better the result. Build one in three moves, then run it against the lazy version." },
+        { "type": "text", "text": "More is more. Set it up in two moves, then Claude interviews you, drafts it, and you push back until it's right — a real back-and-forth." },
         { "type": "callout", "variant": "tip", "text": "🎤 Not a fast typer? Tap the mic in any box and just talk — Claude fills it in for you. Out in the field, this is how you'll use it most." },
         {
           "type": "prompt-builder",
@@ -173,12 +173,12 @@
           ],
           "chunks": [
             { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a clean work-order entry with priority and next steps", "prefix": "My goal: " },
-            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "What's the situation, what have you tried, and who should the AI act as?", "placeholder": "e.g. Act as a senior building engineer; 10-ton Carrier RTU, filter's clean, I don't do refrigerant work", "prefix": "Context & reasoning: " },
-            { "id": "c3", "label": "Ask it to interview you", "instruction": "Invite the AI to ask you clarifying questions before it answers.", "placeholder": "e.g. Before you answer, ask me anything you need about the unit", "prefix": "" }
+            { "id": "c2", "label": "Give your reasoning + a persona", "instruction": "What's the situation, what have you tried, and who should the AI act as?", "placeholder": "e.g. Act as a senior building engineer; 10-ton Carrier RTU, filter's clean, I don't do refrigerant work", "prefix": "Context & reasoning: " }
           ],
+          "interviewInstruction": "Before you answer, ask me 3–5 short clarifying questions about the unit and what I've tried, then wait for my answers.",
           "genericPrompt": "How do I fix an AC unit?",
           "genericOutput": "There are many possible reasons an AC unit may not work. Check the power, the thermostat, the filter, and the circuit breaker. If it still doesn't work, you may need to call a professional HVAC technician to inspect it.",
-          "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
+          "system": "You are assisting a commercial building maintenance engineer — practical and safety-first. When the user asks you to interview them first, ask a few concise clarifying questions and wait for answers before answering. When they push back, revise directly and show the improved version."
         }
       ]
     },
@@ -210,6 +210,35 @@
           "Know the access boundary — AI can read and draft, but never sends or edits our system of record on its own.",
           "Be transparent — if a client asks \"do you use AI?\", you should like your honest answer."
         ]}
+      ]
+    },
+    {
+      "id": "l-d1-policy",
+      "moduleId": "m4",
+      "trackId": "all",
+      "title": "Our AI usage policy",
+      "blocks": [
+        {
+          "type": "policy-madlib",
+          "intro": "This is our shared agreement — not a rulebook handed down. We'll write it together, out loud, line by line. Read along on your laptop, tap what you agree with, and speak up wherever you'd change it.",
+          "fills": [
+            { "id": "why", "before": "We use AI to", "after": ". A human is always accountable for the result.", "options": ["serve our tenants faster", "free our team for higher-value work", "cut the busywork so we focus on judgment"], "placeholder": "why we use it, in our words" },
+            { "id": "verify", "before": "Before anything goes out the door, we always double-check the", "after": ".", "options": ["dollar amounts", "dates & deadlines", "lease & legal language", "names & addresses"], "placeholder": "what we verify every time" },
+            { "id": "point", "before": "When something's unclear or goes sideways, our AI point person is", "after": ".", "options": ["Justin", "Scott"], "placeholder": "name" }
+          ],
+          "lists": [
+            { "id": "usefor", "title": "What we use AI for", "items": ["Drafting tenant emails, notices, letters", "Summarizing leases, long threads, reports", "Researching comps, prospects, specs, suppliers", "Organizing notes, work orders, and data"] },
+            { "id": "human", "title": "What stays human (AI never does alone)", "items": ["Final legal review", "Signed lease terms & negotiation", "Anything sent to a tenant or client without a human read", "High-stakes financial or judgment calls"] }
+          ],
+          "guardrails": [
+            "Our sanctioned AI is Claude — no company or client info goes into unapproved tools.",
+            "Never paste SSNs, banking info, or unredacted tenant PII.",
+            "AI reads and drafts; it never edits our system of record or hits send on its own.",
+            "On our plan, what we enter is not used to train models.",
+            "We're transparent when AI materially shaped client-facing work."
+          ],
+          "ratify": "We'll settle any open questions with leadership and formally adopt this in Session 2."
+        }
       ]
     },
     {

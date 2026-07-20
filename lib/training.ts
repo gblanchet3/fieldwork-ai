@@ -75,6 +75,7 @@ export type Block =
         placeholder?: string;
         prefix?: string; // prepended when assembling the paragraph
       }[];
+      interviewInstruction?: string; // auto-appended so Claude interviews the user first
       genericPrompt: string; // the weak prompt shown on the "before" side
       genericOutput: string; // fixed weak output to contrast against the live one
       system?: string;
@@ -85,6 +86,15 @@ export type Block =
       intro?: string;
       starterTask?: string;
       system?: string;
+    }
+  // AI usage policy — a facilitated mad-lib (Chris drives out loud; folks read/fill along).
+  | {
+      type: "policy-madlib";
+      intro?: string;
+      fills: { id: string; before: string; after?: string; options: string[]; placeholder?: string }[];
+      lists: { id: string; title: string; items: string[] }[];
+      guardrails?: string[]; // fixed lines, read-only
+      ratify?: string;
     }
   // Setup tour / walk-through: install checklist + tiered, self-guided missions
   // (mostly done as homework), captured to a live facilitator progress board.
