@@ -86,13 +86,24 @@ export type Block =
       starterTask?: string;
       system?: string;
     }
-  // Setup tour: the desktop/mobile handoff — checklist + missions + QR, captured
-  // to a live facilitator progress board.
+  // Setup tour / walk-through: install checklist + tiered, self-guided missions
+  // (mostly done as homework), captured to a live facilitator progress board.
   | {
       type: "setup-tour";
       intro?: string;
-      steps: { id: string; label: string }[];
-      missions: { id: string; icon?: string; label: string; detail?: string }[];
+      steps: { id: string; label: string }[]; // install / sign-in checklist
+      missions: {
+        id: string;
+        tier: string; // group heading (e.g. "1 · Set it up right")
+        icon?: string;
+        label: string; // the goal
+        do?: string; // the steps
+        worked?: string; // success signal ("you'll know it worked when…")
+        stuck?: string; // fallback if they get stuck
+        track?: "pm" | "facilities"; // shown only to that track (tracked per applicable)
+        connector?: boolean; // shows an "if enabled" hint
+        sample?: { href: string; label: string }; // downloadable fallback (e.g. a nameplate)
+      }[];
       mobileUrl?: string; // QR target (defaults to this site's /training)
       cheatsheet?: { q: string; a: string }[];
     };

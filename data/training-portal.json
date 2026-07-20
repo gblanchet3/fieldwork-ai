@@ -214,31 +214,42 @@
       "id": "l-d1-claude",
       "moduleId": "m4",
       "trackId": "all",
-      "title": "Meet Claude — your new assistant",
+      "title": "Set up Claude — your walk-through",
       "blocks": [
         {
           "type": "setup-tour",
-          "intro": "Work through this on your own laptop and phone. Your progress shows up on the big screen — let's get the whole room green.",
+          "intro": "Get Claude set up the way you'll actually use it. We'll start together; finish the rest as homework before Day 2. Your progress shows up on the big screen — and picks up wherever you left off, on any device.",
           "steps": [
             { "id": "install-desktop", "label": "Install Claude on your desktop" },
             { "id": "install-mobile", "label": "Install the Claude app on your phone" },
-            { "id": "sign-in", "label": "Sign in on both" },
-            { "id": "load-context", "label": "Load your company context file" },
-            { "id": "find-toggle", "label": "Find the chat ↔ cowork toggle" },
-            { "id": "first-prompt", "label": "Send your first prompt" }
+            { "id": "sign-in", "label": "Sign in on both with your R&N account" }
           ],
           "missions": [
-            { "id": "m-voice", "icon": "📱", "label": "Voice: on your phone, tap the mic and say “draft a friendly text telling a tenant their AC is fixed.”", "detail": "Feel how fast dictation is when your hands are full in the field." },
-            { "id": "m-context", "icon": "📁", "label": "Context: create a Project and paste in the company context file we built today.", "detail": "Now every chat in that project starts already knowing R&N." },
-            { "id": "m-model", "icon": "🔀", "label": "Model: ask something about your job, switch the model, and ask again.", "detail": "Notice what changes between them." },
-            { "id": "m-rap", "icon": "✨", "label": "Bonus: ask Claude for a two-line rap about Rafanelli & Nahas.", "detail": "A taste of the multimodal fun coming on Day 2." }
+            { "id": "m-profile", "tier": "1 · Set it up right", "icon": "👤", "label": "Set your profile", "do": "Open Settings → Profile. Add your name and a line about your role and how you like responses (e.g. “short, lead with the answer, plain language”).", "worked": "Your next answers come back in that style." },
+            { "id": "m-model", "tier": "1 · Set it up right", "icon": "🧠", "label": "Set your default model", "do": "In Settings (or the model menu), set Sonnet as your everyday default — and note where to switch it.", "worked": "New chats open on Sonnet." },
+            { "id": "m-data", "tier": "1 · Set it up right", "icon": "🔒", "label": "Check your data settings", "do": "In Settings, find the privacy / data controls and read the line about your inputs not being used to train models.", "worked": "You've seen, in writing, that your data stays yours." },
+            { "id": "m-voice", "tier": "1 · Set it up right", "icon": "🎙️", "label": "Turn on voice", "do": "On your phone, open a chat, tap the mic, allow access, and just say a sentence.", "worked": "Your words show up as text.", "stuck": "No mic prompt? Check the app's permissions in your phone settings." },
+
+            { "id": "m-orient", "tier": "2 · Know your way around", "icon": "🧭", "label": "Take the tour", "do": "Just locate these four: New chat, Projects, Artifacts, Settings. No need to use them yet — find them.", "worked": "You could point to all four." },
+            { "id": "m-chatcowork", "tier": "2 · Know your way around", "icon": "🔀", "label": "Chat vs. Cowork", "do": "Run the same ask once in Chat, once in Cowork. Chat = quick Q&A. Cowork = it works alongside your files and projects.", "worked": "You can say, in a sentence, when you'd reach for each." },
+            { "id": "m-switch", "tier": "2 · Know your way around", "icon": "⚡", "label": "Switch models", "do": "In a chat, change the model and ask the same question again.", "worked": "You've now tried two models on the same task." },
+            { "id": "m-continue", "tier": "2 · Know your way around", "icon": "🧵", "label": "One chat remembers", "do": "Ask a follow-up in the same chat without repeating yourself — it keeps context. Then open a New chat and notice it's forgotten.", "worked": "You feel the difference between continuing and starting fresh." },
+            { "id": "m-prompt", "tier": "2 · Know your way around", "icon": "✍️", "label": "Practice a great prompt", "do": "Pick a real task and use the moves from today: describe the end state → give your reasoning → ask it to interview you first → don't settle on the first draft.", "worked": "The draft comes back close to usable." },
+
+            { "id": "m-connect-outlook", "tier": "3 · Connect & make it yours", "icon": "📧", "label": "Connect Outlook", "connector": true, "do": "Settings → Connectors → Outlook → sign in with your R&N account → Allow. Then ask: “what are my 3 most recent emails?”", "worked": "It lists your actual recent emails.", "stuck": "Don't see Outlook to connect? It isn't switched on yet — flag Justin and skip for now. (Reminder: Claude drafts, it never sends for you.)" },
+            { "id": "m-connect-sharepoint", "tier": "3 · Connect & make it yours", "icon": "📂", "label": "Connect SharePoint", "connector": true, "do": "Settings → Connectors → SharePoint / OneDrive → sign in → Allow (read-only). Then ask it to find a document by name.", "worked": "It finds a real file from your drive.", "stuck": "Not enabled yet? Flag Justin — meanwhile you can just attach files by hand." },
+            { "id": "m-project", "tier": "3 · Connect & make it yours", "icon": "📁", "label": "Create your R&N Project", "do": "New Project → name it “R&N” → paste the company context file into its instructions.", "worked": "Chats inside that project already know who R&N is." },
+            { "id": "m-work-pm", "tier": "3 · Connect & make it yours", "track": "pm", "icon": "🏢", "label": "Put it to work", "do": "In your R&N project, draft a tenant renewal notice — or attach a lease and ask it to pull the key dates and options.", "worked": "It sounds like us and gets the specifics right." },
+            { "id": "m-work-fac", "tier": "3 · Connect & make it yours", "track": "facilities", "icon": "🔧", "label": "Put it to work", "do": "In your R&N project, dictate a messy field note and ask for a clean work order — or describe a symptom and ask for a first-pass diagnostic.", "worked": "You get a structured, usable result." },
+            { "id": "m-photo-fac", "tier": "3 · Connect & make it yours", "track": "facilities", "icon": "📷", "label": "Send Claude a photo", "do": "Attach a photo of an equipment tag and ask it to identify the unit and where to buy a replacement part. At your desk with nothing to shoot? Download the sample tag below and use that.", "worked": "It reads the model/serial off the plate and returns the part plus suppliers.", "stuck": "Snap anything with a label — a water heater, a thermostat, even the copier.", "sample": { "href": "/sample-nameplate.png", "label": "Download a sample data plate" } }
           ],
           "cheatsheet": [
             { "q": "Chat vs. Cowork?", "a": "Chat = quick questions. Cowork = real work with your files and projects. It's a toggle near the top." },
             { "q": "Where's voice dictation?", "a": "The mic icon in the message box — tap and talk. Best on mobile out in the field." },
             { "q": "How do I switch models?", "a": "Tap the model name near the message box. Sonnet is the fast, everyday default." },
             { "q": "How do I give it context?", "a": "Create a Project and paste your company context file into its instructions once — it's reused in every chat there." },
-            { "q": "Is my data safe?", "a": "On our plan, what you enter isn't used to train models. Keep confidential work in Claude, never in free consumer tools." }
+            { "q": "What's a connector?", "a": "It lets Claude securely see one of your real systems — your Outlook email/calendar, your SharePoint files — so it works with your actual stuff." },
+            { "q": "Is my data safe?", "a": "On our plan, what you enter isn't used to train models. Connectors are read-only where it matters, and Claude drafts — it never sends for you." }
           ]
         }
       ]

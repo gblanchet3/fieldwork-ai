@@ -8,7 +8,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import QRCode from "qrcode";
-import { streamGenerate, capture, liveEnabled, fetchSharedContext } from "@/lib/fw-live";
+import { streamGenerate, capture, liveEnabled, fetchSharedContext, fetchSessionData } from "@/lib/fw-live";
 import type { Block } from "@/lib/training";
 
 export type ExerciseCtx = {
@@ -666,6 +666,8 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
 const setupKey = (sessionId: string, name: string) =>
   `fw_setup_${sessionId}_${name.trim().toLowerCase()}`;
 
+type SetupMission = Extract<Block, { type: "setup-tour" }>["missions"][number];
+
 function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" }>; ctx: ExerciseCtx }) {
   const [done, setDone] = useState<Record<string, boolean>>(() => {
     if (typeof window === "undefined") return {};
@@ -677,6 +679,34 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
   });
   const [qr, setQr] = useState("");
   const [copied, setCopied] = useState(false);
+
+  const persist = useCallback(
+    (next: Record<string, boolean>) => {
+      localStorage.setItem(setupKey(ctx.sessionId, ctx.name), JSON.stringify(next));
+    },
+    [ctx.sessionId, ctx.name]
+  );
+
+  // Cross-device resume: merge in this person's server-side progress on load.
+  useEffect(() => {
+    if (!liveEnabled()) return;
+    fetchSessionData(ctx.sessionId)
+      .then((recs) => {
+        const mine = recs.find(
+          (r) => r.kind === "setup" && r.name.trim().toLowerCase() === ctx.name.trim().toLowerCase()
+        );
+        const serverDone = (mine?.payload?.done ?? {}) as Record<string, boolean>;
+        if (!Object.keys(serverDone).length) return;
+        setDone((prev) => {
+          const merged = { ...prev };
+          for (const [k, v] of Object.entries(serverDone)) if (v) merged[k] = true;
+          persist(merged);
+          return merged;
+        });
+      })
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ctx.sessionId, ctx.name]);
 
   const mobileUrl =
     block.mobileUrl ||
@@ -692,26 +722,26 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
   }, [mobileUrl]);
 
   function toggle(id: string) {
-    const next = { ...done, [id]: !done[id] };
-    setDone(next);
-    localStorage.setItem(setupKey(ctx.sessionId, ctx.name), JSON.stringify(next));
-    capture({
-      sessionId: ctx.sessionId,
-      kind: "setup",
-      name: ctx.name,
-      trackId: ctx.trackId,
-      payload: { done: next },
+    setDone((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      persist(next);
+      capture({ sessionId: ctx.sessionId, kind: "setup", name: ctx.name, trackId: ctx.trackId, payload: { done: next } });
+      return next;
     });
   }
 
-  const allIds = [...block.steps.map((s) => s.id), ...block.missions.map((m) => m.id)];
+  // Missions visible to this person (track-filtered), grouped by tier in order.
+  const visible = block.missions.filter((m) => !m.track || m.track === ctx.trackId);
+  const tiers: string[] = [];
+  for (const m of visible) if (!tiers.includes(m.tier)) tiers.push(m.tier);
+
+  const allIds = [...block.steps.map((s) => s.id), ...visible.map((m) => m.id)];
   const doneCount = allIds.filter((id) => done[id]).length;
   const pct = allIds.length ? Math.round((doneCount / allIds.length) * 100) : 0;
 
   function copyCheatsheet() {
     if (!block.cheatsheet) return;
-    const text =
-      "Claude cheat sheet\n\n" + block.cheatsheet.map((r) => `${r.q}\n  ${r.a}`).join("\n\n");
+    const text = "Claude cheat sheet\n\n" + block.cheatsheet.map((r) => `${r.q}\n  ${r.a}`).join("\n\n");
     navigator.clipboard.writeText(text).then(
       () => {
         setCopied(true);
@@ -721,32 +751,67 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
     );
   }
 
-  const CheckRow = ({ id, label, detail, icon }: { id: string; label: string; detail?: string; icon?: string }) => (
+  const Checkbox = ({ id }: { id: string }) => (
+    <span
+      className={`shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center transition-colors ${
+        done[id] ? "bg-olive" : "border border-steel/40"
+      }`}
+    >
+      {done[id] && (
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+          <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      )}
+    </span>
+  );
+
+  const StepRow = ({ id, label }: { id: string; label: string }) => (
     <button
       onClick={() => toggle(id)}
       className={`w-full flex items-start gap-3 text-left px-4 py-3 border rounded-xl transition-colors ${
         done[id] ? "border-olive/40 bg-olive/5" : "border-dust bg-white hover:border-amber/60"
       }`}
     >
-      <span
-        className={`shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center transition-colors ${
-          done[id] ? "bg-olive" : "border border-steel/40"
-        }`}
-      >
-        {done[id] && (
-          <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-            <path d="M2.5 6.5L5 9l4.5-5" stroke="#F0EBE1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        )}
-      </span>
-      <span className="min-w-0">
-        <span className={`font-inter text-sm ${done[id] ? "text-slate/60 line-through" : "text-slate font-medium"}`}>
-          {icon ? `${icon} ` : ""}
-          {label}
-        </span>
-        {detail && <span className="block font-inter text-xs text-steel mt-0.5 no-underline">{detail}</span>}
-      </span>
+      <Checkbox id={id} />
+      <span className={`font-inter text-sm ${done[id] ? "text-slate/60 line-through" : "text-slate font-medium"}`}>{label}</span>
     </button>
+  );
+
+  const MissionCard = ({ m }: { m: SetupMission }) => (
+    <div
+      className={`border rounded-xl px-4 py-3 transition-colors ${
+        done[m.id] ? "border-olive/40 bg-olive/5" : "border-dust bg-white"
+      }`}
+    >
+      <button onClick={() => toggle(m.id)} className="w-full flex items-start gap-3 text-left">
+        <Checkbox id={m.id} />
+        <span className="flex-1 flex items-center flex-wrap gap-2">
+          <span className={`font-inter text-sm font-medium ${done[m.id] ? "text-slate/60 line-through" : "text-slate"}`}>
+            {m.icon ? `${m.icon} ` : ""}
+            {m.label}
+          </span>
+          {m.connector && (
+            <span className="font-inter text-[10px] uppercase tracking-wide text-amber border border-amber/40 rounded-full px-2 py-0.5">
+              if enabled
+            </span>
+          )}
+        </span>
+      </button>
+      <div className="pl-8 mt-1.5 space-y-1">
+        {m.do && <p className="font-inter text-xs text-slate/70 leading-body">{m.do}</p>}
+        {m.worked && <p className="font-inter text-xs text-olive">✓ {m.worked}</p>}
+        {m.stuck && <p className="font-inter text-xs text-steel/70 italic">Stuck? {m.stuck}</p>}
+        {m.sample && (
+          <a
+            href={m.sample.href}
+            download
+            className="inline-block font-inter text-xs font-medium text-amber hover:underline"
+          >
+            ↓ {m.sample.label}
+          </a>
+        )}
+      </div>
+    </div>
   );
 
   return (
@@ -756,7 +821,7 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
       {/* progress */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
-          <span className="section-label text-steel">Your setup · {doneCount}/{allIds.length}</span>
+          <span className="section-label text-steel">Your progress · {doneCount}/{allIds.length}</span>
           <span className="font-inter text-xs text-steel">{pct}%</span>
         </div>
         <div className="h-1.5 bg-dust rounded-full overflow-hidden">
@@ -764,30 +829,32 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
         </div>
       </div>
 
-      {/* checklist + QR side by side */}
+      {/* install + QR */}
       <div className="grid md:grid-cols-[1fr_auto] gap-5 items-start">
         <div className="space-y-2">
-          <p className="section-label text-steel mb-1">Get set up</p>
+          <p className="section-label text-steel mb-1">Install &amp; sign in</p>
           {block.steps.map((s) => (
-            <CheckRow key={s.id} id={s.id} label={s.label} />
+            <StepRow key={s.id} id={s.id} label={s.label} />
           ))}
         </div>
         {qr && (
           <div className="text-center bg-slate rounded-2xl p-4 md:w-52">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qr} alt="Scan to open on your phone" className="w-40 h-40 mx-auto rounded-lg" />
-            <p className="font-inter text-xs text-bone/70 mt-2">Scan to open this on your phone</p>
+            <p className="font-inter text-xs text-bone/70 mt-2">Scan to continue on your phone</p>
           </div>
         )}
       </div>
 
-      {/* missions */}
-      <div className="space-y-2">
-        <p className="section-label text-steel mb-1">First missions — try these in your own Claude</p>
-        {block.missions.map((m) => (
-          <CheckRow key={m.id} id={m.id} label={m.label} detail={m.detail} icon={m.icon} />
-        ))}
-      </div>
+      {/* tiered missions */}
+      {tiers.map((tier) => (
+        <div key={tier} className="space-y-2">
+          <p className="section-label text-amber mb-1">{tier}</p>
+          {visible.filter((m) => m.tier === tier).map((m) => (
+            <MissionCard key={m.id} m={m} />
+          ))}
+        </div>
+      ))}
 
       {/* cheat sheet */}
       {block.cheatsheet && block.cheatsheet.length > 0 && (

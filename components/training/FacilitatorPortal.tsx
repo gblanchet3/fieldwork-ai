@@ -24,7 +24,7 @@ type Tab = "icebreaker" | "wordcloud" | "context" | "prompts" | "setup" | "polic
 
 type SetupCfg = {
   steps: { id: string; label: string }[];
-  missions: { id: string; label: string; icon?: string; detail?: string }[];
+  missions: { id: string; label: string; icon?: string; tier?: string; track?: "pm" | "facilities" }[];
 };
 
 // ── download helper ─────────────────────────────────────────────────────────
@@ -569,13 +569,13 @@ function Metric({ label, value }: { label: string; value: string }) {
 }
 
 function SetupBoard({ records, config }: { records: CaptureRecord[]; config: SetupCfg | null }) {
-  const byName = new Map<string, Record<string, boolean>>();
+  const byName = new Map<string, { done: Record<string, boolean>; trackId: string }>();
   for (const r of records) {
     if (r.kind !== "setup") continue;
-    if (!byName.has(r.name)) byName.set(r.name, (r.payload?.done as Record<string, boolean>) || {});
+    if (!byName.has(r.name))
+      byName.set(r.name, { done: (r.payload?.done as Record<string, boolean>) || {}, trackId: (r.trackId as string) || "" });
   }
   const people = Array.from(byName.entries());
-  const items = config ? [...config.steps, ...config.missions] : [];
 
   if (!config) {
     return <p className="font-inter text-sm text-steel">No setup section found in this session&apos;s content.</p>;
@@ -583,31 +583,47 @@ function SetupBoard({ records, config }: { records: CaptureRecord[]; config: Set
   if (people.length === 0) {
     return (
       <p className="font-inter text-sm text-steel/60">
-        No one has started setup yet. This lights up as the room installs Claude and runs the missions.
+        No one has started yet. This lights up as the room sets up and works the walk-through (incl. homework).
       </p>
     );
   }
 
-  const doneFor = (d: Record<string, boolean>) => items.filter((it) => d[it.id]).length;
-  const fullyDone = people.filter(([, d]) => doneFor(d) === items.length).length;
+  // Missions this person can actually do (steps are all-track).
+  const applicable = (trackId: string) => [
+    ...config.steps,
+    ...config.missions.filter((m) => !m.track || m.track === trackId),
+  ];
+  const progress = (p: { done: Record<string, boolean>; trackId: string }) => {
+    const items = applicable(p.trackId);
+    return { items, n: items.filter((it) => p.done[it.id]).length, total: items.length };
+  };
+  const fullyDone = people.filter(([, p]) => {
+    const { n, total } = progress(p);
+    return total > 0 && n === total;
+  }).length;
+  const trackLabel = (t: string) => (t === "pm" ? "PM" : t === "facilities" ? "Fac" : "—");
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-3">
         <Metric label="In the room" value={`${people.length}`} />
-        <Metric label="Fully set up" value={`${fullyDone}/${people.length}`} />
+        <Metric label="Fully done" value={`${fullyDone}/${people.length}`} />
         {config.steps.map((s) => (
-          <Metric key={s.id} label={s.label} value={`${people.filter(([, d]) => d[s.id]).length}/${people.length}`} />
+          <Metric key={s.id} label={s.label} value={`${people.filter(([, p]) => p.done[s.id]).length}/${people.length}`} />
         ))}
       </div>
 
       <div className="space-y-2">
         {people
           .slice()
-          .sort((a, b) => doneFor(b[1]) - doneFor(a[1]))
-          .map(([name, d]) => {
-            const n = doneFor(d);
-            const complete = n === items.length;
+          .sort((a, b) => {
+            const A = progress(a[1]);
+            const B = progress(b[1]);
+            return B.n / (B.total || 1) - A.n / (A.total || 1);
+          })
+          .map(([name, p]) => {
+            const { items, n, total } = progress(p);
+            const complete = total > 0 && n === total;
             return (
               <div
                 key={name}
@@ -615,25 +631,27 @@ function SetupBoard({ records, config }: { records: CaptureRecord[]; config: Set
                   complete ? "border-olive/40 bg-olive/5" : "border-dust bg-white"
                 }`}
               >
-                <span className="font-inter text-sm font-medium text-slate w-36 truncate">{name}</span>
+                <span className="font-inter text-sm font-medium text-slate w-36 truncate">
+                  {name} <span className="text-steel/50 text-xs">· {trackLabel(p.trackId)}</span>
+                </span>
                 <div className="flex flex-wrap gap-1.5 flex-1">
                   {items.map((it) => (
                     <span
                       key={it.id}
                       title={it.label}
-                      className={`w-3.5 h-3.5 rounded-full ${d[it.id] ? "bg-olive" : "bg-dust"}`}
+                      className={`w-3.5 h-3.5 rounded-full ${p.done[it.id] ? "bg-olive" : "bg-dust"}`}
                     />
                   ))}
                 </div>
                 <span className={`font-inter text-xs shrink-0 ${complete ? "text-olive font-medium" : "text-steel"}`}>
-                  {complete ? "ready ✓" : `${n}/${items.length}`}
+                  {complete ? "ready ✓" : `${n}/${total}`}
                 </span>
               </div>
             );
           })}
       </div>
       <p className="font-inter text-xs text-steel/60">
-        Green dots = done. Cast this on the projector and watch the room go green. Hit Refresh to update.
+        Green dots = done, track-aware. Your between-sessions homework tracker — hit Refresh to update.
       </p>
     </div>
   );
