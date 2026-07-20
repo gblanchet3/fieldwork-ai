@@ -24,7 +24,7 @@ export interface Env {
 }
 
 const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
-const RATE_LIMIT = 30; // /generate calls per IP per window
+const RATE_LIMIT = 200; // /generate calls per IP per window — a full training room shares one NAT'd IP
 const RATE_WINDOW_S = 60;
 const RECORD_TTL_S = 60 * 60 * 24 * 30; // 30 days
 
