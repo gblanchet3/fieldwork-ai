@@ -381,8 +381,49 @@ function ContextFileContribute({ block, ctx }: { block: Extract<Block, { type: "
 
 // ── #4b Prove it — your prompt with vs. without your context ────────────────────
 
+// ── shared: the published company context file, threaded through post-build exercises ──
+
+/** Load the facilitator-published company context file for this session. */
+function usePublishedContext(sessionId: string) {
+  const [context, setContext] = useState<string | null>(null);
+  const [checking, setChecking] = useState(false);
+  const reload = useCallback(async () => {
+    setChecking(true);
+    setContext(await fetchSharedContext(sessionId));
+    setChecking(false);
+  }, [sessionId]);
+  useEffect(() => {
+    reload();
+  }, [reload]);
+  return { context, checking, reload };
+}
+
+/** Prepend the company context file to a system prompt so every call uses it. */
+function withCompanyContext(companyCtx: string | null | undefined, system?: string): string | undefined {
+  const c = companyCtx?.trim();
+  if (!c) return system;
+  return `Use this company context file as background for everything you produce:\n\n${c}${system ? "\n\n" + system : ""}`;
+}
+
+/** A visible "📎 company context attached" strip for the post-build exercises. */
+function ContextBadge({ loaded, checking, onRefresh }: { loaded: boolean; checking: boolean; onRefresh: () => void }) {
+  return (
+    <div className={`flex items-center gap-2 flex-wrap rounded-xl border px-3 py-2 ${loaded ? "border-olive/40 bg-olive/5" : "border-dust bg-dust/30"}`}>
+      <span className="text-sm">📎</span>
+      <span className={`font-inter text-xs ${loaded ? "text-olive font-medium" : "text-steel"}`}>
+        {loaded ? "Company context file attached — every prompt here uses it, just like in your own Claude Project" : "No company file published yet — Gabe publishes it after the group builds it"}
+      </span>
+      <span className="flex-1" />
+      <button onClick={onRefresh} className="font-inter text-xs text-amber hover:underline">
+        {checking ? "checking…" : "↻ refresh"}
+      </button>
+    </div>
+  );
+}
+
 function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "context-file-test" }>; ctx: ExerciseCtx }) {
   const [prompt, setPrompt] = useState(block.starterPrompt ?? "");
+  const [peek, setPeek] = useState(false);
   const without = useStream(ctx.sessionId);
   const withCtx = useStream(ctx.sessionId);
 
@@ -431,17 +472,53 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
       <p className="font-inter text-slate/80 leading-body">{block.guidance}</p>
       <Composer value={prompt} onValueChange={setPrompt} rows={3} placeholder="Write a real prompt for your work…" showModel />
 
-      {source === "published" && (
-        <p className="font-inter text-xs text-olive">Using the company context file we built together.</p>
-      )}
-      {source === "sample" && (
-        <p className="font-inter text-xs text-steel">
-          Using a sample R&amp;N context — your team&apos;s file will replace this once it&apos;s published.
+      <div
+        className={`rounded-xl border px-4 py-3 ${
+          source === "published"
+            ? "border-olive/50 bg-olive/5"
+            : source === "sample"
+              ? "border-amber/40 bg-amber/5"
+              : source === "own"
+                ? "border-olive/30 bg-olive/5"
+                : "border-dust bg-dust/30"
+        }`}
+      >
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-base">📎</span>
+          <span className="font-inter text-sm font-medium text-slate">
+            {source === "published"
+              ? "Company context file — attached"
+              : source === "own"
+                ? "Your context contributions — attached"
+                : source === "sample"
+                  ? "Sample R&N context — attached"
+                  : "No context attached yet"}
+          </span>
+          <span className="flex-1" />
+          {effectiveContext && (
+            <button onClick={() => setPeek((p) => !p)} className="font-inter text-xs text-steel hover:text-slate">
+              {peek ? "hide" : "peek"}
+            </button>
+          )}
+          <button onClick={loadShared} className="font-inter text-xs text-amber hover:underline">
+            {checking ? "checking…" : "↻ refresh company file"}
+          </button>
+        </div>
+        <p className="font-inter text-xs text-steel/80 mt-1">
+          {source === "published"
+            ? "The right-hand run attaches this file — same as it will in your own Claude Project."
+            : source === "sample"
+              ? "Your team's file replaces this once Gabe publishes it."
+              : source === "own"
+                ? "Using what you added while we built the file."
+                : "Add to the file above, or wait for the published version."}
         </p>
-      )}
-      <button onClick={loadShared} className="font-inter text-xs text-amber hover:underline w-fit">
-        {checking ? "Checking…" : "↻ Refresh company file"}
-      </button>
+        {peek && effectiveContext && (
+          <pre className="whitespace-pre-wrap font-inter text-xs text-slate/70 bg-white border border-dust rounded-lg px-3 py-2 mt-2 max-h-44 overflow-auto">
+            {effectiveContext}
+          </pre>
+        )}
+      </div>
       <div className="grid md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <p className="font-inter text-xs text-steel">Without your context</p>
@@ -455,7 +532,12 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
           <OutputPanel label="Output" text={without.text} status={without.status} canned={without.canned} tone="steel" />
         </div>
         <div className="space-y-2">
-          <p className="font-inter text-xs text-steel">With your context</p>
+          <p className="font-inter text-xs text-steel flex items-center gap-2">
+            With your context
+            <span className="font-inter text-[10px] uppercase tracking-wide text-olive border border-olive/40 rounded-full px-1.5 py-0.5">
+              📎 attached
+            </span>
+          </p>
           <RunButton
             onClick={() => withCtx.run(`${effectiveContext}\n\n${prompt}`, block.system, CANNED.testWith)}
             disabled={!prompt.trim()}
@@ -494,6 +576,7 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
   const [canned, setCanned] = useState(false);
   const [reply, setReply] = useState("");
   const [showLazy, setShowLazy] = useState(false);
+  const cf = usePublishedContext(ctx.sessionId);
 
   const challenge = block.challenges.find((c) => c.id === challengeId);
   const filled = block.chunks.filter((c) => (chunks[c.id] ?? "").trim()).length;
@@ -531,7 +614,7 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
           await streamGenerate({
             sessionId: ctx.sessionId,
             messages: history,
-            system: block.system,
+            system: withCompanyContext(cf.context, block.system),
             onToken: (t) => {
               full += t;
               setLive((p) => p + t);
@@ -618,6 +701,8 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
           );
         })}
       </div>
+
+      <ContextBadge loaded={!!cf.context?.trim()} checking={cf.checking} onRefresh={cf.reload} />
 
       {phase === "build" && (
         <>
@@ -754,6 +839,7 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
   const first = useStream(ctx.sessionId);
   const [refine, setRefine] = useState("");
   const refined = useStream(ctx.sessionId);
+  const cf = usePublishedContext(ctx.sessionId);
 
   function runFirst() {
     capture({
@@ -763,7 +849,7 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
       trackId: ctx.trackId,
       payload: { stage: "first", task },
     });
-    first.run(task, block.system, CANNED.iterateFirst);
+    first.run(task, withCompanyContext(cf.context, block.system), CANNED.iterateFirst);
   }
 
   function runRefine() {
@@ -775,12 +861,13 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
       trackId: ctx.trackId,
       payload: { stage: "refine", task, refine },
     });
-    refined.run(combined, block.system, CANNED.iterateRefined);
+    refined.run(combined, withCompanyContext(cf.context, block.system), CANNED.iterateRefined);
   }
 
   return (
     <div className="space-y-4">
       {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
+      <ContextBadge loaded={!!cf.context?.trim()} checking={cf.checking} onRefresh={cf.reload} />
 
       <div>
         <p className="section-label text-steel mb-2">1 · Your task</p>
