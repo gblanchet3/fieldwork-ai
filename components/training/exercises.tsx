@@ -114,6 +114,71 @@ function useStream(sessionId: string) {
 
 // ── presentational bits ─────────────────────────────────────────────────────
 
+/** Inline markdown: **bold**, *italic* / _italic_, `code`. Unclosed markers
+ *  (mid-stream) render literally until their partner arrives. */
+function renderInline(s: string): React.ReactNode {
+  const re = /(\*\*[^\n]+?\*\*|`[^`\n]+`|\*[^*\n]+?\*|_[^_\n]+?_)/g;
+  const out: React.ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let k = 0;
+  while ((m = re.exec(s))) {
+    if (m.index > last) out.push(s.slice(last, m.index));
+    const tok = m[0];
+    if (tok.startsWith("**")) out.push(<strong key={k++}>{tok.slice(2, -2)}</strong>);
+    else if (tok.startsWith("`"))
+      out.push(<code key={k++} className="font-mono text-[0.85em] bg-dust/60 rounded px-1 py-0.5">{tok.slice(1, -1)}</code>);
+    else out.push(<em key={k++}>{tok.slice(1, -1)}</em>);
+    last = re.lastIndex;
+  }
+  if (last < s.length) out.push(s.slice(last));
+  return out;
+}
+
+/** Lightweight markdown renderer for Claude output: bold/italic/code, headings,
+ *  bullet + numbered lists, with line breaks preserved (for emails). */
+function Rich({ text }: { text: string }) {
+  const blocks: React.ReactNode[] = [];
+  let list: { ordered: boolean; items: string[] } | null = null;
+  let key = 0;
+  const flush = () => {
+    if (!list) return;
+    const items = list.items.map((it, i) => <li key={i}>{renderInline(it)}</li>);
+    blocks.push(
+      list.ordered ? (
+        <ol key={key++} className="list-decimal ml-5 space-y-0.5">{items}</ol>
+      ) : (
+        <ul key={key++} className="list-disc ml-5 space-y-0.5">{items}</ul>
+      )
+    );
+    list = null;
+  };
+  for (const raw of text.split("\n")) {
+    const line = raw.replace(/\s+$/, "");
+    const h = line.match(/^(#{1,4})\s+(.*)/);
+    const b = line.match(/^\s*[-*]\s+(.*)/);
+    const n = line.match(/^\s*\d+[.)]\s+(.*)/);
+    if (h) {
+      flush();
+      blocks.push(<p key={key++} className="font-semibold text-slate mt-2 mb-0.5">{renderInline(h[2])}</p>);
+    } else if (b) {
+      if (!list || list.ordered) { flush(); list = { ordered: false, items: [] }; }
+      list.items.push(b[1]);
+    } else if (n) {
+      if (!list || !list.ordered) { flush(); list = { ordered: true, items: [] }; }
+      list.items.push(n[1]);
+    } else if (line.trim() === "") {
+      flush();
+      blocks.push(<div key={key++} className="h-2" />);
+    } else {
+      flush();
+      blocks.push(<div key={key++}>{renderInline(line)}</div>);
+    }
+  }
+  flush();
+  return <div className="leading-body">{blocks}</div>;
+}
+
 function OutputPanel({
   label,
   text,
@@ -137,9 +202,9 @@ function OutputPanel({
           <span className="font-inter text-[10px] uppercase tracking-wide text-steel/60">sample</span>
         )}
       </div>
-      <pre className="whitespace-pre-wrap font-inter text-sm text-slate/80 leading-body px-4 py-3 flex-1">
-        {text || <span className="text-steel/40">Run it to see the output.</span>}
-      </pre>
+      <div className="font-inter text-sm text-slate/80 leading-body px-4 py-3 flex-1">
+        {text ? <Rich text={text} /> : <span className="text-steel/40">Run it to see the output.</span>}
+      </div>
     </div>
   );
 }
@@ -674,7 +739,9 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
     ) : (
       <div className="mr-6 bg-white border border-amber/30 rounded-2xl px-4 py-2.5">
         <p className="section-label text-amber mb-1">Claude</p>
-        <pre className="whitespace-pre-wrap font-inter text-sm text-slate/80 leading-body">{t.content}</pre>
+        <div className="font-inter text-sm text-slate/80 leading-body">
+          <Rich text={t.content} />
+        </div>
       </div>
     );
 
@@ -767,9 +834,9 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
                 <p className="section-label text-amber mb-1 flex items-center gap-2">
                   Claude <span className="font-inter text-xs text-amber animate-pulse normal-case tracking-normal">generating…</span>
                 </p>
-                <pre className="whitespace-pre-wrap font-inter text-sm text-slate/80 leading-body">
-                  {live || <span className="text-steel/40">…</span>}
-                </pre>
+                <div className="font-inter text-sm text-slate/80 leading-body">
+                  {live ? <Rich text={live} /> : <span className="text-steel/40">…</span>}
+                </div>
               </div>
             )}
           </div>
