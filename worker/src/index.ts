@@ -116,7 +116,15 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
 
   const stream = new ReadableStream({
     async pull(controller) {
-      const { value, done } = await reader.read();
+      let value: Uint8Array | undefined, done: boolean;
+      try {
+        ({ value, done } = await reader.read());
+      } catch {
+        // Upstream connection dropped mid-stream — surface it so the client retries.
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: "stream read failed" })}\n\n`));
+        controller.close();
+        return;
+      }
       if (done) {
         controller.enqueue(encoder.encode("data: [DONE]\n\n"));
         controller.close();
