@@ -476,10 +476,10 @@ const PUSH_CHIPS = ["Make it shorter", "Warmer tone", "Lead with the ask", "More
 
 // Offline samples, indexed by how many assistant turns have already landed.
 const CANNED_CONVO = [
-  "Happy to help — a few quick questions first:\n\n1. Who's the audience, and what tone should I strike?\n2. What's the single most important outcome?\n3. Any specifics I must include — names, dates, numbers?\n4. Anything to avoid?\n\n[Offline sample — connect the live backend and Claude asks about your actual task.]",
-  "Here's a first draft based on what you told me:\n\n[Your tailored draft would appear here.]\n\n[Offline sample. Live, this reflects your answers.]",
-  "Updated — tightened and retoned around exactly what you flagged:\n\n[The revised version would appear here.]\n\n[Offline sample of a push-back rep.]",
-  "Refined once more:\n\n[The further-improved version would appear here.]\n\n[Offline sample. Two reps in, you can feel it converge.]",
+  "Happy to help — a couple of quick questions first:\n\n1. Who's the recipient, and what tone should I strike?\n2. What's the one outcome that matters most here?\n3. Any specifics I should include — a name, amount, or date?\n\nAnswer in a few words each and I'll draft it. (Offline sample — live, Claude asks about your actual task.)",
+  "Here's a first draft:\n\nSubject: Quick follow-up on your account\n\nHi [name],\n\nHope you're doing well! I wanted to reach out about the balance on your account — our records show about [amount] outstanding, now a couple of weeks past due. I know these things slip through the cracks, so no worries at all.\n\nWould you be able to pick a day this week to get it settled? Happy to take it by check or ACH — whichever's easier on your end. As always, we really appreciate having you.\n\nBest,\n[you]\n\n(Offline sample — live, this is built from your answers.)",
+  "Tightened it up per your note:\n\nSubject: Your account\n\nHi [name] — quick one: about [amount] is outstanding from the last reconciliation, ~2 weeks past due. What day this week works to close it out? Check or ACH both fine. Thanks so much!\n\n(Offline sample of a push-back rep.)",
+  "One more pass — warmer open, the ask up top:\n\nHi [name], always a pleasure working with you. One small housekeeping item: about [amount] is still open from the last reconciliation. Could you pick a day this week to settle it? I'll send whichever's easiest — check or ACH. Appreciate you!\n\n(Offline sample — two reps in, you can feel it converge.)",
 ];
 
 const BUILD_STEPS = ["Describe", "Answer", "Push back ×2"];

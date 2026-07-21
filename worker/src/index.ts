@@ -96,7 +96,7 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
     },
     body: JSON.stringify({
       model: body.model || env.MODEL || "claude-sonnet-5",
-      max_tokens: body.maxTokens || 1500,
+      max_tokens: body.maxTokens || 1000,
       stream: true,
       system: body.system,
       messages,
