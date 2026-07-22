@@ -470,18 +470,43 @@ function withCompanyContext(companyCtx: string | null | undefined, system?: stri
   return `Use this company context file as background for everything you produce:\n\n${c}${system ? "\n\n" + system : ""}`;
 }
 
-/** A visible "📎 company context attached" strip for the post-build exercises. */
-function ContextBadge({ loaded, checking, onRefresh }: { loaded: boolean; checking: boolean; onRefresh: () => void }) {
+/** A visible "📎 company context attached" strip for the post-build exercises,
+ *  with a peek that reveals the actual published file. */
+function ContextBadge({
+  content,
+  checking,
+  onRefresh,
+}: {
+  content: string | null | undefined;
+  checking: boolean;
+  onRefresh: () => void;
+}) {
+  const [peek, setPeek] = useState(false);
+  const loaded = !!content?.trim();
   return (
-    <div className={`flex items-center gap-2 flex-wrap rounded-xl border px-3 py-2 ${loaded ? "border-olive/40 bg-olive/5" : "border-dust bg-dust/30"}`}>
-      <span className="text-sm">📎</span>
-      <span className={`font-inter text-xs ${loaded ? "text-olive font-medium" : "text-steel"}`}>
-        {loaded ? "Company context file attached — every prompt here uses it, just like in your own Claude Project" : "No company file published yet — Gabe publishes it after the group builds it"}
-      </span>
-      <span className="flex-1" />
-      <button onClick={onRefresh} className="font-inter text-xs text-amber hover:underline">
-        {checking ? "checking…" : "↻ refresh"}
-      </button>
+    <div className={`rounded-xl border px-3 py-2 ${loaded ? "border-olive/40 bg-olive/5" : "border-dust bg-dust/30"}`}>
+      <div className="flex items-center gap-2 flex-wrap">
+        <span className="text-sm">📎</span>
+        <span className={`font-inter text-xs ${loaded ? "text-olive font-medium" : "text-steel"}`}>
+          {loaded
+            ? "Company context file attached — every prompt here uses it, just like in your own Claude Project"
+            : "No company file published yet — Gabe publishes it after the group builds it"}
+        </span>
+        <span className="flex-1" />
+        {loaded && (
+          <button onClick={() => setPeek((p) => !p)} className="font-inter text-xs text-steel hover:text-slate">
+            {peek ? "hide" : "peek"}
+          </button>
+        )}
+        <button onClick={onRefresh} className="font-inter text-xs text-amber hover:underline">
+          {checking ? "checking…" : "↻ refresh"}
+        </button>
+      </div>
+      {peek && loaded && (
+        <pre className="whitespace-pre-wrap font-inter text-xs text-slate/70 bg-white border border-dust rounded-lg px-3 py-2 mt-2 max-h-52 overflow-auto">
+          {content}
+        </pre>
+      )}
     </div>
   );
 }
@@ -769,7 +794,7 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
         })}
       </div>
 
-      <ContextBadge loaded={!!cf.context?.trim()} checking={cf.checking} onRefresh={cf.reload} />
+      <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
 
       {phase === "build" && (
         <>
@@ -934,7 +959,7 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
   return (
     <div className="space-y-4">
       {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
-      <ContextBadge loaded={!!cf.context?.trim()} checking={cf.checking} onRefresh={cf.reload} />
+      <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
 
       <div>
         <p className="section-label text-steel mb-2">1 · Your task</p>
