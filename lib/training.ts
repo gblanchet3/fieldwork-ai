@@ -49,6 +49,7 @@ export type Block =
       barePrompt: string; // the weak, context-free ask
       contextBlock: string; // the context to layer on
       system?: string; // optional system prompt for the live call
+      closer?: string; // per-track takeaway line under the exercise
     }
   // #4a — Company context file: everyone contributes sections; captured live.
   | {

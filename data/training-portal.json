@@ -1,13 +1,11 @@
 {
   "_README": "MOCK DATA for the /training course player. Structure: company/sessions/tracks/roster + modules + lessons. Each lesson has a `blocks` array (heading | text | list | callout | prompt | video | context-compare | context-file | context-file-test | prompt-builder). trackId 'all' = shown to everyone; otherwise the lesson only shows for that track (used for role-tailored exercises). Interactive blocks call the Fieldwork Worker (lib/fw-live.ts); they fall back to canned output when NEXT_PUBLIC_FW_WORKER is unset. Facilitator-led exercises (icebreaker, word cloud, policy co-creation) live in /training/facilitator, not here. To go live on a Google Sheet: store sessions/tracks/roster/modules as tabs, and lesson blocks as a markdown column converted on read. See lib/training.ts.",
-
   "company": {
     "slug": "rafanelli-nahas",
     "name": "Rafanelli & Nahas",
     "tagline": "AI Literacy Training · built with Fieldwork AI",
     "contact": "Gabe Blanchet · gabe@getfieldworkai.com"
   },
-
   "sessions": [
     {
       "id": "s1",
@@ -28,39 +26,110 @@
       "date": "TBD"
     }
   ],
-
   "tracks": [
-    { "id": "pm", "label": "Property Management", "audience": "Property managers, portfolio & partners" },
-    { "id": "facilities", "label": "Facilities Management", "audience": "Maintenance & engineering" }
+    {
+      "id": "pm",
+      "label": "Property Management",
+      "audience": "Property managers, portfolio & partners"
+    },
+    {
+      "id": "facilities",
+      "label": "Facilities Management",
+      "audience": "Maintenance & engineering"
+    }
   ],
-
   "roster": [
-    { "name": "Justin Vogel", "trackId": "pm" },
-    { "name": "Scott Schoenherr", "trackId": "pm" },
-    { "name": "Ron Nahas", "trackId": "pm" },
-    { "name": "Pete Schoenherr", "trackId": "pm" },
-    { "name": "Sarah Bobst", "trackId": "pm" },
-    { "name": "Chelsea Gorringe", "trackId": "pm" },
-    { "name": "Rosanna Gamache", "trackId": "pm" },
-    { "name": "Mark Kennedy", "trackId": "facilities" },
-    { "name": "Mark Cosgrove", "trackId": "facilities" },
-    { "name": "Justin Covert", "trackId": "facilities" },
-    { "name": "Gabe Blanchet", "trackId": "pm" },
-    { "name": "Chris Testa", "trackId": "facilities" }
+    {
+      "name": "Justin Vogel",
+      "trackId": "pm"
+    },
+    {
+      "name": "Scott Schoenherr",
+      "trackId": "pm"
+    },
+    {
+      "name": "Ron Nahas",
+      "trackId": "pm"
+    },
+    {
+      "name": "Pete Schoenherr",
+      "trackId": "pm"
+    },
+    {
+      "name": "Sarah Bobst",
+      "trackId": "pm"
+    },
+    {
+      "name": "Chelsea Gorringe",
+      "trackId": "pm"
+    },
+    {
+      "name": "Rosanna Gamache",
+      "trackId": "pm"
+    },
+    {
+      "name": "Mark Kennedy",
+      "trackId": "facilities"
+    },
+    {
+      "name": "Mark Cosgrove",
+      "trackId": "facilities"
+    },
+    {
+      "name": "Justin Covert",
+      "trackId": "facilities"
+    },
+    {
+      "name": "Gabe Blanchet",
+      "trackId": "pm"
+    },
+    {
+      "name": "Chris Testa",
+      "trackId": "facilities"
+    }
   ],
-
   "modules": [
-    { "id": "m2", "sessionId": "s1", "title": "Context" },
-    { "id": "m3", "sessionId": "s1", "title": "Prompting — More is More" },
-    { "id": "m4", "sessionId": "s1", "title": "Responsible use & your new assistant" },
-
-    { "id": "m5", "sessionId": "s2", "title": "Warm-up" },
-    { "id": "m6", "sessionId": "s2", "title": "Find the work" },
-    { "id": "m7", "sessionId": "s2", "title": "Build it" },
-    { "id": "m8", "sessionId": "s2", "title": "Make it safe" },
-    { "id": "m9", "sessionId": "s2", "title": "Putting it all together" }
+    {
+      "id": "m2",
+      "sessionId": "s1",
+      "title": "Context"
+    },
+    {
+      "id": "m3",
+      "sessionId": "s1",
+      "title": "Prompting — More is More"
+    },
+    {
+      "id": "m4",
+      "sessionId": "s1",
+      "title": "Responsible use & your new assistant"
+    },
+    {
+      "id": "m5",
+      "sessionId": "s2",
+      "title": "Warm-up"
+    },
+    {
+      "id": "m6",
+      "sessionId": "s2",
+      "title": "Find the work"
+    },
+    {
+      "id": "m7",
+      "sessionId": "s2",
+      "title": "Build it"
+    },
+    {
+      "id": "m8",
+      "sessionId": "s2",
+      "title": "Make it safe"
+    },
+    {
+      "id": "m9",
+      "sessionId": "s2",
+      "title": "Putting it all together"
+    }
   ],
-
   "lessons": [
     {
       "id": "l-d1-context-compare-pm",
@@ -74,7 +143,8 @@
           "scenario": "A valued tenant emailed, frustrated that visitor parking keeps filling up and her clients can't find spots. You need a reply that takes it seriously and keeps her happy.",
           "barePrompt": "Write a reply to a tenant who is upset about parking at their building.",
           "contextBlock": "Context: I'm a property manager at Rafanelli & Nahas, a Boise CRE owner/operator whose north star is tenant service. Our voice is warm but firm — never defensive. The tenant is Dana at Suite 210, Boise Plaza, with us 4 years and normally very happy. She emailed frustrated that visitor parking has been full lately and her clients can't find spots. I can't add spaces, but I can look into reserved visitor stalls, a validation arrangement with the garage next door, and clearer signage. I want a reply that takes it seriously, owns it, offers concrete next steps and a timeline, and reassures her we value her — without over-promising.",
-          "system": "You are assisting a commercial real estate property manager. Be concise and match a warm-but-firm professional tone."
+          "system": "You are assisting a commercial real estate property manager. Be concise and match a warm-but-firm professional tone.",
+          "closer": "Same model, same ask — the only thing that changed is what it knew. (And yes, Dana's invented — real tenant details never go into practice prompts. More on that this afternoon.)"
         }
       ]
     },
@@ -87,10 +157,11 @@
       "blocks": [
         {
           "type": "context-compare",
-          "scenario": "Summer's coming. You want a smart, prioritized maintenance plan for your rooftop units before the heat starts breaking things — not a generic checklist.",
-          "barePrompt": "Give me a summer preventive maintenance checklist for commercial rooftop HVAC.",
-          "contextBlock": "Context: I'm a building engineer at Rafanelli & Nahas, a Boise commercial property owner/operator. We run a portfolio of office buildings on mostly Carrier rooftop package units, most of them 10+ years old. Boise summers are hot and dry with hard water, and a couple of our older units short-cycled during last year's heat wave. Budget is tight, so I need to prioritize. Give me a preventive-maintenance walk-through for these rooftop units heading into summer — ranked by what's most likely to fail here, the checks I can safely do myself vs. what needs a licensed tech, and what to catch before it turns into an emergency.",
-          "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
+          "scenario": "A tenant's been complaining about a rattle from the ceiling. You found it — a VAV box above their suite, actuator on its way out. The fix is in motion. Now comes the part nobody loves: writing it up.",
+          "barePrompt": "Write up a work order for an HVAC problem in an office building.",
+          "contextBlock": "Context: I'm a building engineer at Rafanelli & Nahas, a Boise Class-A office owner/operator — tenant service is the north star here. Here's my field note, exactly how I'd say it out loud: VAV box above suite 410 is rattling, tenant's complained twice this week, popped the ceiling tile — actuator's worn and there's play in the damper linkage, I snugged the linkage so it's quiet for now, but that actuator needs replacing, want our mechanical vendor out this week, tenant's an accounting firm on calls all day so noise is a big deal, and it's the second noise complaint on that floor this month. I need the work order to cover location, symptom, cause, temp fix, parts needed, and priority — plus a two-line update the property manager can send the tenant today.",
+          "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first.",
+          "closer": "Same model, same ask. It didn't tell you what's wrong with the unit — you knew that. It did the write-up."
         }
       ]
     },
@@ -104,12 +175,42 @@
           "type": "context-file",
           "intro": "Build R&N's shared context file. Fill in what you know — don't worry about polish, and use the mic to talk instead of type.",
           "sections": [
-            { "id": "who", "label": "Who we are", "hint": "Company, history, size, that we're a Boise CRE owner/operator.", "placeholder": "Rafanelli & Nahas is…" },
-            { "id": "what", "label": "What we do", "hint": "Property types, our buildings, the kind of work we do day to day.", "placeholder": "We own and operate…" },
-            { "id": "market", "label": "What makes us different", "hint": "How we go to market, what we're known for. (Scott's tenant-service ethos goes here.)", "placeholder": "What sets us apart is…" },
-            { "id": "culture", "label": "Our culture & voice", "hint": "Values, how we treat tenants and each other, how we write.", "placeholder": "We communicate like…" },
-            { "id": "operate", "label": "What we run day to day", "hint": "Our buildings, the systems and equipment we maintain, the vendors and suppliers we rely on. (Facilities, this one's for you.)", "placeholder": "We operate…" },
-            { "id": "always", "label": "What AI should always know", "hint": "Terminology, tone guardrails, things it should never assume.", "placeholder": "Always remember that…" }
+            {
+              "id": "who",
+              "label": "Who we are",
+              "hint": "Company, history, size — a Boise CRE owner/operator with ~1M sq ft of mostly Class-A office, downtown and at Parkcenter.",
+              "placeholder": "Rafanelli & Nahas is…"
+            },
+            {
+              "id": "what",
+              "label": "What we do",
+              "hint": "Property types, our buildings, the kind of work we do day to day.",
+              "placeholder": "We own and operate…"
+            },
+            {
+              "id": "market",
+              "label": "What makes us different",
+              "hint": "How we go to market, what we're known for. (Scott's tenant-service ethos goes here.)",
+              "placeholder": "What sets us apart is…"
+            },
+            {
+              "id": "culture",
+              "label": "Our culture & voice",
+              "hint": "Values, how we treat tenants and each other, how we write.",
+              "placeholder": "We communicate like…"
+            },
+            {
+              "id": "operate",
+              "label": "What we run day to day",
+              "hint": "The buildings (Boise Plaza, Capitol & Idaho, River Quarry…), the systems and equipment you maintain, the vendors you count on. (Facilities — this one's yours.)",
+              "placeholder": "We operate…"
+            },
+            {
+              "id": "always",
+              "label": "What AI should always know",
+              "hint": "Terminology, tone guardrails, things it should never assume.",
+              "placeholder": "Always remember that…"
+            }
           ]
         }
       ]
@@ -129,7 +230,6 @@
         }
       ]
     },
-
     {
       "id": "l-d1-builder-pm",
       "moduleId": "m3",
@@ -137,18 +237,72 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "More is more. Set it up in three moves — the third is telling Claude to interview you — then answer its questions and push back until it's right." },
+        {
+          "type": "text",
+          "text": "More is more. Set it up in three moves — the third is telling Claude to interview you — then answer its questions and push back until it's right."
+        },
         {
           "type": "prompt-builder",
           "challenges": [
-            { "id": "cam", "label": "The late-CAM nudge", "text": "Boise Dental Group is 15 days past due on their $4,200 CAM reconciliation balance. Nudge them to commit to a payment date this week — without straining a 6-year relationship.", "hints": { "c1": "e.g. a warm-but-firm email that gets a specific payment date this week", "c2": "e.g. Act as a seasoned property manager; Boise Dental's been with us 6 years and the relationship matters more than the $4,200" } },
-            { "id": "rent-talk", "label": "Rent-increase talking points", "text": "A good tenant's renewal is coming up and you need to raise their rent about 8%. Get talking points that frame it around the value they get, plus a one-line opener for the conversation.", "hints": { "c1": "e.g. 3–4 talking points that make the increase feel fair, plus a warm one-line opener", "c2": "e.g. Act as a seasoned property manager; this is a great long-term tenant I really want to keep" } },
-            { "id": "lease-language", "label": "Draft custom lease language", "text": "A growing startup tenant wants a 3-year lease but the right to terminate at year 2 if they outgrow the space and we can't relocate them to something bigger. Draft the clause (for your attorney to review).", "hints": { "c1": "e.g. clean, plain-English clause language my attorney can review and drop into the lease", "c2": "e.g. Act as a careful commercial real estate attorney; flag anything that exposes us" } }
+            {
+              "id": "cam",
+              "label": "The late-CAM nudge",
+              "text": "Boise Dental Group is 15 days past due on their $4,200 CAM reconciliation balance. Nudge them to commit to a payment date this week — without straining a 6-year relationship.",
+              "hints": {
+                "c1": "e.g. a warm-but-firm email that gets a specific payment date this week",
+                "c2": "e.g. Act as a seasoned property manager; Boise Dental's been with us 6 years and the relationship matters more than the $4,200"
+              }
+            },
+            {
+              "id": "rent-talk",
+              "label": "Rent-increase talking points",
+              "text": "A good tenant's renewal is coming up and you need to raise their rent about 8%. Get talking points that frame it around the value they get, plus a one-line opener for the conversation.",
+              "hints": {
+                "c1": "e.g. 3–4 talking points that make the increase feel fair, plus a warm one-line opener",
+                "c2": "e.g. Act as a seasoned property manager; this is a great long-term tenant I really want to keep"
+              }
+            },
+            {
+              "id": "lease-language",
+              "label": "Draft custom lease language",
+              "text": "A growing startup tenant wants a 3-year lease but the right to terminate at year 2 if they outgrow the space and we can't relocate them to something bigger. Draft the clause (for your attorney to review).",
+              "hints": {
+                "c1": "e.g. clean, plain-English clause language my attorney can review and drop into the lease",
+                "c2": "e.g. Act as a careful commercial real estate attorney; flag anything that exposes us"
+              }
+            },
+            {
+              "id": "voicemail",
+              "label": "The 7:40 a.m. voicemail",
+              "text": "A tenant left this overnight: 'Hi, it's Denise on 4 — the women's restroom sink won't stop dripping and it's getting worse. Also the stairwell light by the parking side is out again. Oh, and can someone call me back about two more key fobs?' Turn one rambling message into what you actually need.",
+              "hints": {
+                "c1": "e.g. three clean tickets — priority, location, who handles each — plus a friendly callback text so Denise knows we're on it",
+                "c2": "e.g. Act as a CRE property coordinator; tenant service is our north star — nothing falls through the cracks"
+              }
+            }
           ],
           "chunks": [
-            { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a warm-but-firm email that gets a payment date this week", "prefix": "My goal: " },
-            { "id": "c2", "label": "Add the backstory + who Claude should be", "instruction": "What's the situation, and who should Claude act as — a seasoned PM? a careful attorney?", "placeholder": "e.g. Act as a seasoned property manager; tenant service is our north star", "prefix": "Context & reasoning: " },
-            { "id": "c3", "label": "Have Claude interview you first", "instruction": "The move most people skip — we've pre-filled it so you see it. Keep it or make it your own.", "default": "Before you draft, interview me: ask me 2–3 quick questions to fill in anything you're missing.", "prefix": "" }
+            {
+              "id": "c1",
+              "label": "Describe the end state",
+              "instruction": "What are you trying to accomplish? What does a great result look like?",
+              "placeholder": "e.g. a warm-but-firm email that gets a payment date this week",
+              "prefix": "My goal: "
+            },
+            {
+              "id": "c2",
+              "label": "Add the backstory + who Claude should be",
+              "instruction": "What's the situation, and who should Claude act as — a seasoned PM? a careful attorney?",
+              "placeholder": "e.g. Act as a seasoned property manager; tenant service is our north star",
+              "prefix": "Context & reasoning: "
+            },
+            {
+              "id": "c3",
+              "label": "Have Claude interview you first",
+              "instruction": "The move most people skip — we've pre-filled it so you see it. Keep it or make it your own.",
+              "default": "Before you draft, interview me: ask me 2–3 quick questions to fill in anything you're missing.",
+              "prefix": ""
+            }
           ],
           "interviewInstruction": "This is a hands-on practice exercise — never ask me to paste a document or wait on one. If you need details I haven't given you, make a reasonable assumption, note it, and keep going.",
           "genericPrompt": "Write me an email to a tenant.",
@@ -164,19 +318,68 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "More is more. Set it up in three moves — the third is telling Claude to interview you — then answer its questions and push back until it's right." },
-        { "type": "callout", "variant": "tip", "text": "🎤 Not a fast typer? Tap the mic in any box and just talk — Claude fills it in for you. Out in the field, this is how you'll use it most." },
+        {
+          "type": "text",
+          "text": "You know these buildings better than anyone — this is about making Claude prove it can keep up. Three moves; the third makes Claude interview YOU. Answer its questions, then push back until it's right."
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "text": "🎤 Not a fast typer? Tap the mic in any box and just talk — Claude fills it in for you. Out in the field, this is how you'll use it most."
+        },
         {
           "type": "prompt-builder",
           "challenges": [
-            { "id": "diag", "label": "First-pass diagnostic", "text": "A 10-ton Carrier rooftop unit at Boise Plaza is short-cycling on a 90° day — it cools for a few minutes, shuts off, then restarts. Get likely causes and safe checks before you call a vendor.", "hints": { "c1": "e.g. a ranked list of likely causes + the safe checks I can do myself before calling a vendor", "c2": "e.g. Act as a senior building engineer; safety first, and I don't do refrigerant work" } },
-            { "id": "workorder", "label": "Describe it → work order", "text": "You just walked a unit and found a problem. Describe what you saw and have Claude turn it into a clean, vendor-ready work order.", "hints": { "c1": "e.g. a clean, vendor-ready work order with location, priority, and next steps", "c2": "e.g. Act as a senior building engineer; here's what I saw on the walk-through…" } },
-            { "id": "vendor-quote", "label": "Vendor quote request", "text": "You need a quote to replace a failing condenser fan motor. Draft the request to the vendor with the specs and details they'll need to price it.", "hints": { "c1": "e.g. a clear quote request with the specs and details the vendor needs to price it accurately", "c2": "e.g. Act as a facilities manager getting competitive quotes; be specific, no back-and-forth" } }
+            {
+              "id": "pressure",
+              "label": "Upper-floor pressure mystery",
+              "text": "Tenants on the top floors say the water pressure comes and goes. You suspect the booster system. Get a ranked list of likely causes and what to check yourself before you call the plumber.",
+              "hints": {
+                "c1": "e.g. ranked likely causes + the checks I can do myself first — I want to walk in knowing more than the plumber expects",
+                "c2": "e.g. Act as a master plumber who's seen every booster setup; I know this building cold — I'll fill in what you need"
+              }
+            },
+            {
+              "id": "workorder",
+              "label": "Describe it → work order",
+              "text": "You just walked a unit and found a problem. Describe what you saw and have Claude turn it into a clean, vendor-ready work order.",
+              "hints": {
+                "c1": "e.g. a clean, vendor-ready work order with location, priority, and next steps",
+                "c2": "e.g. Act as a senior building engineer; here's what I saw on the walk-through…"
+              }
+            },
+            {
+              "id": "vendor-quote",
+              "label": "Vendor quote request",
+              "text": "You need a quote to replace a failing condenser fan motor. Draft the request to the vendor with the specs and details they'll need to price it.",
+              "hints": {
+                "c1": "e.g. a clear quote request with the specs and details the vendor needs to price it accurately",
+                "c2": "e.g. Act as a facilities manager getting competitive quotes; be specific, no back-and-forth"
+              }
+            }
           ],
           "chunks": [
-            { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a clean work-order entry with priority and next steps", "prefix": "My goal: " },
-            { "id": "c2", "label": "Add the backstory + who Claude should be", "instruction": "What's the situation, what have you tried, and who should Claude act as — a senior building engineer?", "placeholder": "e.g. Act as a senior building engineer; filter's clean, I don't do refrigerant work", "prefix": "Context & reasoning: " },
-            { "id": "c3", "label": "Have Claude interview you first", "instruction": "The move most people skip — we've pre-filled it so you see it. Keep it or make it your own.", "default": "Before you answer, interview me: ask me 2–3 quick questions about the unit and what I've tried.", "prefix": "" }
+            {
+              "id": "c1",
+              "label": "Describe the end state",
+              "instruction": "What are you trying to accomplish? What does a great result look like?",
+              "placeholder": "e.g. a clean work-order entry with priority and next steps",
+              "prefix": "My goal: "
+            },
+            {
+              "id": "c2",
+              "label": "Add the backstory + who Claude should be",
+              "instruction": "What's the situation, what have you tried, and who should Claude act as — a senior building engineer?",
+              "placeholder": "e.g. Act as a senior building engineer; filter's clean, I don't do refrigerant work",
+              "prefix": "Context & reasoning: "
+            },
+            {
+              "id": "c3",
+              "label": "Have Claude interview you first",
+              "instruction": "The move most people skip — we've pre-filled it so you see it. Keep it or make it your own.",
+              "default": "Before you answer, interview me: ask me 2–3 quick questions about the unit and what I've tried.",
+              "prefix": ""
+            }
           ],
           "interviewInstruction": "This is a hands-on practice exercise — never ask me to paste a document or wait on one. If you need details I haven't given you, make a reasonable assumption, note it, and keep going.",
           "genericPrompt": "How do I fix an AC unit?",
@@ -198,21 +401,25 @@
         }
       ]
     },
-
     {
       "id": "l-d1-responsible",
       "moduleId": "m4",
       "trackId": "all",
       "title": "Your data, your guardrails",
       "blocks": [
-        { "type": "callout", "variant": "note", "title": "The essentials", "items": [
-          "Your data stays yours — on our plan, what you enter isn't used to train models and doesn't leave our environment.",
-          "One sanctioned tool — we standardize on Claude. Never paste company or client info into random consumer tools.",
-          "Humans own the output — AI drafts; you decide. Your name, your judgment. \"The AI did it\" isn't a thing.",
-          "Verify what matters — dollar amounts, dates, clause language, legal terms. Trust it on low-stakes drafting.",
-          "Know the access boundary — AI can read and draft, but never sends or edits our system of record on its own.",
-          "Be transparent — if a client asks \"do you use AI?\", you should like your honest answer."
-        ]}
+        {
+          "type": "callout",
+          "variant": "note",
+          "title": "The essentials",
+          "items": [
+            "Your data stays yours — on our plan, what you enter isn't used to train models and doesn't leave our environment.",
+            "One sanctioned tool — we standardize on Claude. Never paste company or client info into random consumer tools.",
+            "Humans own the output — AI drafts; you decide. Your name, your judgment. \"The AI did it\" isn't a thing.",
+            "Verify what matters — dollar amounts, dates, clause language, legal terms. Trust it on low-stakes drafting.",
+            "Know the access boundary — AI can read and draft, but never sends or edits our system of record on its own.",
+            "Be transparent — if a client asks \"do you use AI?\", you should like your honest answer."
+          ]
+        }
       ]
     },
     {
@@ -232,7 +439,19 @@
               "kind": "statement",
               "title": "Why we use AI",
               "fills": [
-                { "id": "why", "before": "We use AI to", "after": " — with a human always accountable for the result.", "multi": false, "options": ["serve our tenants faster", "free our team for higher-value work", "cut the busywork so we focus on judgment and relationships", "do more without adding headcount"], "placeholder": "in our own words" }
+                {
+                  "id": "why",
+                  "before": "We use AI to",
+                  "after": " — with a human always accountable for the result.",
+                  "multi": false,
+                  "options": [
+                    "serve our tenants faster",
+                    "free our team for higher-value work",
+                    "cut the busywork so we focus on judgment and relationships",
+                    "do more without adding headcount"
+                  ],
+                  "placeholder": "in our own words"
+                }
               ]
             },
             {
@@ -271,7 +490,19 @@
               "kind": "statement",
               "title": "What we put in",
               "fills": [
-                { "id": "ok", "before": "It's fine to give AI", "after": ".", "multi": true, "options": ["general business context", "draft text we're working on", "public information", "redacted or de-identified documents"], "placeholder": "anything else that's OK" }
+                {
+                  "id": "ok",
+                  "before": "It's fine to give AI",
+                  "after": ".",
+                  "multi": true,
+                  "options": [
+                    "general business context",
+                    "draft text we're working on",
+                    "public information",
+                    "redacted or de-identified documents"
+                  ],
+                  "placeholder": "anything else that's OK"
+                }
               ]
             },
             {
@@ -279,7 +510,21 @@
               "kind": "statement",
               "title": "How we double-check it",
               "fills": [
-                { "id": "verify", "before": "Before anything leaves the building, we verify the", "after": ".", "multi": true, "options": ["dollar amounts", "dates & deadlines", "lease & legal language", "names & addresses", "measurements & square footage", "anything a client will see"], "placeholder": "add another" }
+                {
+                  "id": "verify",
+                  "before": "Before anything leaves the building, we verify the",
+                  "after": ".",
+                  "multi": true,
+                  "options": [
+                    "dollar amounts",
+                    "dates & deadlines",
+                    "lease & legal language",
+                    "names & addresses",
+                    "measurements & square footage",
+                    "anything a client will see"
+                  ],
+                  "placeholder": "add another"
+                }
               ]
             },
             {
@@ -288,8 +533,29 @@
               "title": "How we stay accountable",
               "lead": "Humans own every output — our name, our judgment. \"The AI did it\" isn't a thing here.",
               "fills": [
-                { "id": "point", "before": "Our AI point person is", "after": ".", "multi": false, "options": ["Justin", "Scott"], "placeholder": "name" },
-                { "id": "whenwrong", "before": "When something's unsure or goes sideways, we", "after": ".", "multi": true, "options": ["flag it to our point person", "stop and check with a human", "treat it as a learning, not a blame"], "placeholder": "add another" }
+                {
+                  "id": "point",
+                  "before": "Our AI point person is",
+                  "after": ".",
+                  "multi": false,
+                  "options": [
+                    "Justin",
+                    "Scott"
+                  ],
+                  "placeholder": "name"
+                },
+                {
+                  "id": "whenwrong",
+                  "before": "When something's unsure or goes sideways, we",
+                  "after": ".",
+                  "multi": true,
+                  "options": [
+                    "flag it to our point person",
+                    "stop and check with a human",
+                    "treat it as a learning, not a blame"
+                  ],
+                  "placeholder": "add another"
+                }
               ]
             },
             {
@@ -297,7 +563,18 @@
               "kind": "statement",
               "title": "Being transparent",
               "fills": [
-                { "id": "transparency", "before": "When AI has materially shaped client-facing work, we", "after": ".", "multi": false, "options": ["are transparent about it if asked", "note it internally", "proactively disclose when it's relevant"], "placeholder": "our stance" }
+                {
+                  "id": "transparency",
+                  "before": "When AI has materially shaped client-facing work, we",
+                  "after": ".",
+                  "multi": false,
+                  "options": [
+                    "are transparent about it if asked",
+                    "note it internally",
+                    "proactively disclose when it's relevant"
+                  ],
+                  "placeholder": "our stance"
+                }
               ]
             },
             {
@@ -332,110 +609,301 @@
       "blocks": [
         {
           "type": "setup-tour",
-          "intro": "Get Claude set up the way you'll actually use it. We'll start together; finish the rest as homework before Day 2. Your progress shows up on the big screen — and picks up wherever you left off, on any device.",
+          "intro": "Get Claude set up the way you'll actually use it — and get your first real win before Day 2. We'll do the first tier together in the room; the rest is your homework quest. Your progress shows on the big screen so we can come help (green = going, open circles = wave us over) — and it picks up wherever you left off, on any device.",
           "steps": [
-            { "id": "install-desktop", "label": "Install Claude on your desktop" },
-            { "id": "install-mobile", "label": "Install the Claude app on your phone" },
-            { "id": "sign-in", "label": "Sign in on both with your R&N account" }
+            {
+              "id": "install-desktop",
+              "label": "Install Claude on your desktop"
+            },
+            {
+              "id": "install-mobile",
+              "label": "Install the Claude app on your phone"
+            },
+            {
+              "id": "sign-in",
+              "label": "Sign in on both with your R&N account"
+            }
           ],
           "missions": [
-            { "id": "m-profile", "tier": "1 · Set it up right", "icon": "👤", "label": "Set your profile", "do": "Open Settings → Profile. Add your name and a line about your role and how you like responses (e.g. “short, lead with the answer, plain language”).", "worked": "Your next answers come back in that style." },
-            { "id": "m-model", "tier": "1 · Set it up right", "icon": "🧠", "label": "Set your default model", "do": "In Settings (or the model menu), set Sonnet as your everyday default — and note where to switch it.", "worked": "New chats open on Sonnet." },
-            { "id": "m-data", "tier": "1 · Set it up right", "icon": "🔒", "label": "Check your data settings", "do": "In Settings, find the privacy / data controls and read the line about your inputs not being used to train models.", "worked": "You've seen, in writing, that your data stays yours." },
-            { "id": "m-voice", "tier": "1 · Set it up right", "icon": "🎙️", "label": "Turn on voice", "do": "On your phone, open a chat, tap the mic, allow access, and just say a sentence.", "worked": "Your words show up as text.", "stuck": "No mic prompt? Check the app's permissions in your phone settings." },
-
-            { "id": "m-orient", "tier": "2 · Know your way around", "icon": "🧭", "label": "Take the tour", "do": "Just locate these four: New chat, Projects, Artifacts, Settings. No need to use them yet — find them.", "worked": "You could point to all four." },
-            { "id": "m-chatcowork", "tier": "2 · Know your way around", "icon": "🔀", "label": "Chat vs. Cowork", "do": "Run the same ask once in Chat, once in Cowork. Chat = quick Q&A. Cowork = it works alongside your files and projects.", "worked": "You can say, in a sentence, when you'd reach for each." },
-            { "id": "m-switch", "tier": "2 · Know your way around", "icon": "⚡", "label": "Switch models", "do": "In a chat, change the model and ask the same question again.", "worked": "You've now tried two models on the same task." },
-            { "id": "m-continue", "tier": "2 · Know your way around", "icon": "🧵", "label": "One chat remembers", "do": "Ask a follow-up in the same chat without repeating yourself — it keeps context. Then open a New chat and notice it's forgotten.", "worked": "You feel the difference between continuing and starting fresh." },
-            { "id": "m-prompt", "tier": "2 · Know your way around", "icon": "✍️", "label": "Practice a great prompt", "do": "Pick a real task and use the moves from today: describe the end state → give your reasoning → ask it to interview you first → don't settle on the first draft.", "worked": "The draft comes back close to usable." },
-
-            { "id": "m-connect-outlook", "tier": "3 · Connect & make it yours", "icon": "📧", "label": "Connect Outlook", "connector": true, "do": "Settings → Connectors → Outlook → sign in with your R&N account → Allow. Then ask: “what are my 3 most recent emails?”", "worked": "It lists your actual recent emails.", "stuck": "Don't see Outlook to connect? It isn't switched on yet — flag Justin and skip for now. (Reminder: Claude drafts, it never sends for you.)" },
-            { "id": "m-connect-sharepoint", "tier": "3 · Connect & make it yours", "icon": "📂", "label": "Connect SharePoint", "connector": true, "do": "Settings → Connectors → SharePoint / OneDrive → sign in → Allow (read-only). Then ask it to find a document by name.", "worked": "It finds a real file from your drive.", "stuck": "Not enabled yet? Flag Justin — meanwhile you can just attach files by hand." },
-            { "id": "m-project", "tier": "3 · Connect & make it yours", "icon": "📁", "label": "Create your R&N Project", "do": "New Project → name it “R&N” → paste the company context file into its instructions.", "worked": "Chats inside that project already know who R&N is." },
-            { "id": "m-work-pm", "tier": "3 · Connect & make it yours", "track": "pm", "icon": "🏢", "label": "Put it to work", "do": "In your R&N project, draft a tenant renewal notice — or attach a lease and ask it to pull the key dates and options.", "worked": "It sounds like us and gets the specifics right." },
-            { "id": "m-work-fac", "tier": "3 · Connect & make it yours", "track": "facilities", "icon": "🔧", "label": "Put it to work", "do": "In your R&N project, dictate a messy field note and ask for a clean work order — or describe a symptom and ask for a first-pass diagnostic.", "worked": "You get a structured, usable result." },
-            { "id": "m-photo-fac", "tier": "3 · Connect & make it yours", "track": "facilities", "icon": "📷", "label": "Send Claude a photo", "do": "Attach a photo of an equipment tag and ask it to identify the unit and where to buy a replacement part. At your desk with nothing to shoot? Download the sample tag below and use that.", "worked": "It reads the model/serial off the plate and returns the part plus suppliers.", "stuck": "Snap anything with a label — a water heater, a thermostat, even the copier.", "sample": { "href": "/sample-nameplate.png", "label": "Download a sample data plate" } }
+            {
+              "id": "m-profile",
+              "tier": "1 · Before you leave the room (5 min)",
+              "icon": "👤",
+              "label": "Set your profile",
+              "do": "Open Settings → Profile. Add your name and a line about your role and how you like responses (e.g. “short, lead with the answer, plain language”).",
+              "worked": "Your next answers come back in that style."
+            },
+            {
+              "id": "m-model",
+              "tier": "1 · Before you leave the room (5 min)",
+              "icon": "🧠",
+              "label": "Set your default model",
+              "do": "In Settings (or the model menu), set Sonnet as your everyday default — and note where to switch it.",
+              "worked": "New chats open on Sonnet."
+            },
+            {
+              "id": "m-data",
+              "tier": "1 · Before you leave the room (5 min)",
+              "icon": "🔒",
+              "label": "Check your data settings",
+              "do": "In Settings, find the privacy / data controls and read the line about your inputs not being used to train models.",
+              "worked": "You've seen, in writing, that your data stays yours."
+            },
+            {
+              "id": "m-voice",
+              "tier": "1 · Before you leave the room (5 min)",
+              "icon": "🎙️",
+              "label": "Turn on voice",
+              "do": "On your phone, open a chat, tap the mic, allow access, and just say a sentence.",
+              "worked": "Your words show up as text.",
+              "stuck": "No mic prompt? Check the app's permissions in your phone settings."
+            },
+            {
+              "id": "m-orient",
+              "tier": "2 · Tonight — find your way around (15 min)",
+              "icon": "🧭",
+              "label": "Take the tour",
+              "do": "Just locate these four: New chat, Projects, Artifacts, Settings. No need to use them yet — find them.",
+              "worked": "You could point to all four."
+            },
+            {
+              "id": "m-chatcowork",
+              "tier": "2 · Tonight — find your way around (15 min)",
+              "icon": "🔀",
+              "label": "Chat vs. Cowork",
+              "do": "Run the same ask once in Chat, once in Cowork. Chat = quick Q&A. Cowork = it works alongside your files and projects.",
+              "worked": "You can say, in a sentence, when you'd reach for each."
+            },
+            {
+              "id": "m-switch",
+              "tier": "2 · Tonight — find your way around (15 min)",
+              "icon": "⚡",
+              "label": "Switch models",
+              "do": "In a chat, change the model and ask the same question again.",
+              "worked": "You've now tried two models on the same task."
+            },
+            {
+              "id": "m-continue",
+              "tier": "2 · Tonight — find your way around (15 min)",
+              "icon": "🧵",
+              "label": "One chat remembers",
+              "do": "Ask a follow-up in the same chat without repeating yourself — it keeps context. Then open a New chat and notice it's forgotten.",
+              "worked": "You feel the difference between continuing and starting fresh."
+            },
+            {
+              "id": "m-prompt",
+              "tier": "2 · Tonight — find your way around (15 min)",
+              "icon": "✍️",
+              "label": "Practice a great prompt",
+              "do": "Pick a real task and use the moves from today: describe the end state → give your reasoning → ask it to interview you first → don't settle on the first draft.",
+              "worked": "The draft comes back close to usable."
+            },
+            {
+              "id": "m-project",
+              "tier": "3 · This week — your first real win",
+              "icon": "📁",
+              "label": "Create your R&N Project",
+              "do": "Open the shared R&N Project Justin set up (leasing, tenant relationships, facilities…) — or create your own Project named “R&N” — and paste today's company context file into its instructions.",
+              "worked": "Chats there already know who R&N is."
+            },
+            {
+              "id": "m-work-pm",
+              "tier": "3 · This week — your first real win",
+              "track": "pm",
+              "icon": "🏢",
+              "label": "Put it to work",
+              "do": "In the R&N project: draft a short tenant-newsletter blurb about something real happening at your building — in our voice. Or attach a lease and ask for the key dates, options, and anything unusual.",
+              "worked": "It sounds like us and gets the specifics right."
+            },
+            {
+              "id": "m-work-fac",
+              "tier": "3 · This week — your first real win",
+              "track": "facilities",
+              "icon": "🔧",
+              "label": "Put it to work",
+              "do": "In your R&N project, dictate a messy field note and ask for a clean work order — or describe a symptom and ask for a first-pass diagnostic.",
+              "worked": "You get a structured, usable result."
+            },
+            {
+              "id": "m-photo-fac",
+              "tier": "3 · This week — your first real win",
+              "track": "facilities",
+              "icon": "📷",
+              "label": "Send Claude a photo",
+              "do": "You saw it in the room — now on your building: snap an equipment tag or nameplate in your mechanical room and ask Claude to ID the unit and where to buy a replacement part. Nothing to shoot right now? Use the sample tag below.",
+              "worked": "It reads the model/serial off the plate and returns the part plus suppliers.",
+              "stuck": "Snap anything with a label — a water heater, a thermostat, even the copier.",
+              "sample": {
+                "href": "/sample-nameplate.png",
+                "label": "Download a sample data plate"
+              }
+            },
+            {
+              "id": "m-connect-outlook",
+              "tier": "3 · This week — your first real win",
+              "icon": "📧",
+              "label": "Connect Outlook",
+              "connector": true,
+              "do": "Settings → Connectors → Outlook → sign in with your R&N account → Allow. Then ask: “what are my 3 most recent emails?”",
+              "worked": "It lists your actual recent emails.",
+              "stuck": "Don't see Outlook to connect? IT is still switching this on — flag Justin and skip for now. (Reminder: Claude drafts, it never sends for you.)"
+            },
+            {
+              "id": "m-connect-sharepoint",
+              "tier": "3 · This week — your first real win",
+              "icon": "📂",
+              "label": "Connect SharePoint",
+              "connector": true,
+              "do": "Settings → Connectors → SharePoint / OneDrive → sign in → Allow (read-only). Then ask it to find a document by name.",
+              "worked": "It finds a real file from your drive.",
+              "stuck": "Not enabled yet? IT's still on it — flag Justin; meanwhile you can just attach files by hand."
+            }
           ],
           "cheatsheet": [
-            { "q": "Chat vs. Cowork?", "a": "Chat = quick questions. Cowork = real work with your files and projects. It's a toggle near the top." },
-            { "q": "Where's voice dictation?", "a": "The mic icon in the message box — tap and talk. Best on mobile out in the field." },
-            { "q": "How do I switch models?", "a": "Tap the model name near the message box. Sonnet is the fast, everyday default." },
-            { "q": "How do I give it context?", "a": "Create a Project and paste your company context file into its instructions once — it's reused in every chat there." },
-            { "q": "What's a connector?", "a": "It lets Claude securely see one of your real systems — your Outlook email/calendar, your SharePoint files — so it works with your actual stuff." },
-            { "q": "Is my data safe?", "a": "On our plan, what you enter isn't used to train models. Connectors are read-only where it matters, and Claude drafts — it never sends for you." }
+            {
+              "q": "Chat vs. Cowork?",
+              "a": "Chat = quick questions. Cowork = real work with your files and projects. It's a toggle near the top."
+            },
+            {
+              "q": "Where's voice dictation?",
+              "a": "The mic icon in the message box — tap and talk. Best on mobile out in the field."
+            },
+            {
+              "q": "How do I switch models?",
+              "a": "Tap the model name near the message box. Sonnet is the fast, everyday default."
+            },
+            {
+              "q": "How do I give it context?",
+              "a": "Create a Project and paste your company context file into its instructions once — it's reused in every chat there."
+            },
+            {
+              "q": "What's a connector?",
+              "a": "It lets Claude securely see one of your real systems — your Outlook email/calendar, your SharePoint files — so it works with your actual stuff."
+            },
+            {
+              "q": "Is my data safe?",
+              "a": "On our plan, what you enter isn't used to train models. Connectors are read-only where it matters, and Claude drafts — it never sends for you."
+            }
           ]
         }
       ]
     },
-
     {
       "id": "l-recap",
       "moduleId": "m5",
       "trackId": "all",
       "title": "Recap & your cheat sheet in action",
       "blocks": [
-        { "type": "text", "text": "Welcome back. Quick recap of Session 1, then we get to work building real R&N workflows." },
-        { "type": "list", "items": [
-          "Your company cheat sheet gives AI context — keep it handy and paste it at the start of serious work.",
-          "AI is strong on language and structure, weaker on facts you haven't given it — verify those.",
-          "The 4D loop: Delegate the right task, Describe it clearly, Discern what comes back, take Diligence for the result."
-        ]},
-        { "type": "callout", "variant": "exercise", "title": "Warm-up (5 min)", "text": "Pull up your cheat sheet from Session 1 and read it with fresh eyes. Update anything that's changed or that you'd now add. We'll use it throughout today." }
+        {
+          "type": "text",
+          "text": "Welcome back. Quick recap of Session 1, then we get to work building real R&N workflows."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Your company cheat sheet gives AI context — keep it handy and paste it at the start of serious work.",
+            "AI is strong on language and structure, weaker on facts you haven't given it — verify those.",
+            "The 4D loop: Delegate the right task, Describe it clearly, Discern what comes back, take Diligence for the result."
+          ]
+        },
+        {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Warm-up (5 min)",
+          "text": "Pull up your cheat sheet from Session 1 and read it with fresh eyes. Update anything that's changed or that you'd now add. We'll use it throughout today."
+        }
       ]
     },
-
     {
       "id": "l-map-automation",
       "moduleId": "m6",
       "trackId": "all",
       "title": "Map your automation opportunities",
       "blocks": [
-        { "type": "text", "text": "Before building anything, find the right thing to build. The best first workflow is repetitive, frequent, fairly standardized, and low-stakes if it's slightly off." },
-        { "type": "callout", "variant": "exercise", "title": "Exercise 1 — audit, categorize, prioritize (20 min)", "items": [
-          "Audit: list 5–10 tasks from your past week that felt repetitive or time-consuming. For each, note how often it happens, how long it takes, how standardized it is, and the cost if done imperfectly.",
-          "Categorize: sort them into AI can handle / AI assists, human decides / Human should handle.",
-          "Prioritize: pick the one task from the first two buckets that would save you the most time, and write one sentence on why it's your top pick."
-        ]},
-        { "type": "callout", "variant": "tip", "text": "Examples by role — Ops: drafting tenant notices, abstracting leases, prepping critical-date lists. Leadership: recurring partner/IC updates, first-pass market scans. Maintenance: work-order write-ups, vendor request emails, bid comparisons." }
+        {
+          "type": "text",
+          "text": "Before building anything, find the right thing to build. The best first workflow is repetitive, frequent, fairly standardized, and low-stakes if it's slightly off."
+        },
+        {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Exercise 1 — audit, categorize, prioritize (20 min)",
+          "items": [
+            "Audit: list 5–10 tasks from your past week that felt repetitive or time-consuming. For each, note how often it happens, how long it takes, how standardized it is, and the cost if done imperfectly.",
+            "Categorize: sort them into AI can handle / AI assists, human decides / Human should handle.",
+            "Prioritize: pick the one task from the first two buckets that would save you the most time, and write one sentence on why it's your top pick."
+          ]
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "text": "Examples by role — Ops: drafting tenant notices, abstracting leases, prepping critical-date lists. Leadership: recurring partner/IC updates, first-pass market scans. Maintenance: work-order write-ups, vendor request emails, bid comparisons."
+        }
       ]
     },
-
     {
       "id": "l-describe-automation",
       "moduleId": "m7",
       "trackId": "all",
       "title": "Describe your automation",
       "blocks": [
-        { "type": "text", "text": "Take the task you prioritized and describe it precisely using the three parts of Description — Product, Process, Performance. This is the blueprint AI executes against." },
-        { "type": "list", "ordered": true, "items": [
-          "Product: the end result, the inputs it receives, and the outputs it should produce.",
-          "Process: the step-by-step logic, the decision points, when to escalate to a human, and what documents it needs (FAQ, price list, cheat sheet).",
-          "Performance: the tone, how to handle uncertainty (\"if unsure, flag — never guess\"), and the hard nevers."
-        ]},
-        { "type": "callout", "variant": "exercise", "title": "Exercise 2 — write it, then test it (25 min)", "items": [
-          "Write your Product / Process / Performance descriptions (2–3 sentences each).",
-          "Share them with AI along with 3–5 real R&N examples from your work.",
-          "Evaluate: did it categorize right? Accurate and on-tone? Did it fabricate anything?",
-          "Refine. Plan on 2–3 rounds before it feels reliable — that's normal."
-        ]},
-        { "type": "prompt", "title": "Test-run scaffold", "text": "[paste cheat sheet]\nHere is an automation I want to build.\nPRODUCT: [what you want back, inputs, outputs]\nPROCESS: [steps, decision points, when to escalate]\nPERFORMANCE: [tone, how to handle uncertainty, the nevers]\n\nHere are 3–5 real examples to run it on:\n[paste examples]\n\nRun each example, then tell me where my description needs to be sharper." }
+        {
+          "type": "text",
+          "text": "Take the task you prioritized and describe it precisely using the three parts of Description — Product, Process, Performance. This is the blueprint AI executes against."
+        },
+        {
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Product: the end result, the inputs it receives, and the outputs it should produce.",
+            "Process: the step-by-step logic, the decision points, when to escalate to a human, and what documents it needs (FAQ, price list, cheat sheet).",
+            "Performance: the tone, how to handle uncertainty (\"if unsure, flag — never guess\"), and the hard nevers."
+          ]
+        },
+        {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Exercise 2 — write it, then test it (25 min)",
+          "items": [
+            "Write your Product / Process / Performance descriptions (2–3 sentences each).",
+            "Share them with AI along with 3–5 real R&N examples from your work.",
+            "Evaluate: did it categorize right? Accurate and on-tone? Did it fabricate anything?",
+            "Refine. Plan on 2–3 rounds before it feels reliable — that's normal."
+          ]
+        },
+        {
+          "type": "prompt",
+          "title": "Test-run scaffold",
+          "text": "[paste cheat sheet]\nHere is an automation I want to build.\nPRODUCT: [what you want back, inputs, outputs]\nPROCESS: [steps, decision points, when to escalate]\nPERFORMANCE: [tone, how to handle uncertainty, the nevers]\n\nHere are 3–5 real examples to run it on:\n[paste examples]\n\nRun each example, then tell me where my description needs to be sharper."
+        }
       ]
     },
-
     {
       "id": "l-diligence-plan",
       "moduleId": "m8",
       "trackId": "all",
       "title": "Plan for diligence",
       "blocks": [
-        { "type": "text", "text": "Before you rely on a workflow, think through what could go wrong and how you'll catch it. Diligence is what makes automation safe to trust." },
-        { "type": "callout", "variant": "exercise", "title": "Exercise 3 — three kinds of diligence (20 min)", "items": [
-          "Creation: why is this task a good fit? List 3 failure modes (e.g. wrong pricing, templated reply to a complaint, mixing up tenants) and a safeguard for each.",
-          "Deployment: will you review every output or sample? When would you reduce oversight, and what evidence would you need? What would make you pause it entirely?",
-          "Transparency: who needs to know AI is involved, and how will you tell them?"
-        ]},
-        { "type": "callout", "variant": "note", "title": "Automation Readiness Statement", "text": "Wrap it up in 3–5 sentences: what you're automating, why it's appropriate, the safeguards in place, and how you'll be transparent. Keep it as a reference for you and your team." }
+        {
+          "type": "text",
+          "text": "Before you rely on a workflow, think through what could go wrong and how you'll catch it. Diligence is what makes automation safe to trust."
+        },
+        {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Exercise 3 — three kinds of diligence (20 min)",
+          "items": [
+            "Creation: why is this task a good fit? List 3 failure modes (e.g. wrong pricing, templated reply to a complaint, mixing up tenants) and a safeguard for each.",
+            "Deployment: will you review every output or sample? When would you reduce oversight, and what evidence would you need? What would make you pause it entirely?",
+            "Transparency: who needs to know AI is involved, and how will you tell them?"
+          ]
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "title": "Automation Readiness Statement",
+          "text": "Wrap it up in 3–5 sentences: what you're automating, why it's appropriate, the safeguards in place, and how you'll be transparent. Keep it as a reference for you and your team."
+        }
       ]
     },
     {
@@ -444,30 +912,49 @@
       "trackId": "all",
       "title": "Draft your AI use policy",
       "blocks": [
-        { "type": "text", "text": "A short, honest AI policy scales your judgment — so the whole team works from the same understanding instead of making it up case by case." },
-        { "type": "callout", "variant": "exercise", "title": "Exercise — write a one-page policy (20 min)", "items": [
-          "Reflect: What tasks are you now confident handing to AI? What will you always keep human? What do tenants and your team need to know?",
-          "Build it with AI: share your cheat sheet and those answers, and ask for a one-page policy with three sections — What we use AI for / What stays human / How we stay accountable.",
-          "Stress-test: if a tenant asked \"do you use AI in your business?\", does this give you a clear, honest answer? Fix anything you softened."
-        ]},
-        { "type": "prompt", "title": "Draft the policy", "text": "[paste cheat sheet]\nHere's how I think about AI in our work:\n- Confident to hand off: [list]\n- Always human: [list]\n- What people should know: [list]\n\nDraft a one-page AI use policy for R&N with three sections: \"What we use AI for\" (approved tasks/tools), \"What stays human\" (and why), and \"How we stay accountable\" (oversight, transparency, what happens when something goes wrong). Plain language that sounds like us." }
+        {
+          "type": "text",
+          "text": "A short, honest AI policy scales your judgment — so the whole team works from the same understanding instead of making it up case by case."
+        },
+        {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Exercise — write a one-page policy (20 min)",
+          "items": [
+            "Reflect: What tasks are you now confident handing to AI? What will you always keep human? What do tenants and your team need to know?",
+            "Build it with AI: share your cheat sheet and those answers, and ask for a one-page policy with three sections — What we use AI for / What stays human / How we stay accountable.",
+            "Stress-test: if a tenant asked \"do you use AI in your business?\", does this give you a clear, honest answer? Fix anything you softened."
+          ]
+        },
+        {
+          "type": "prompt",
+          "title": "Draft the policy",
+          "text": "[paste cheat sheet]\nHere's how I think about AI in our work:\n- Confident to hand off: [list]\n- Always human: [list]\n- What people should know: [list]\n\nDraft a one-page AI use policy for R&N with three sections: \"What we use AI for\" (approved tasks/tools), \"What stays human\" (and why), and \"How we stay accountable\" (oversight, transparency, what happens when something goes wrong). Plain language that sounds like us."
+        }
       ]
     },
-
     {
       "id": "l-human-in-loop",
       "moduleId": "m9",
       "trackId": "all",
       "title": "Staying the human in the loop",
       "blocks": [
-        { "type": "text", "text": "The point of all this isn't to remove people — it's to free you for the work only people can do." },
-        { "type": "callout", "variant": "note", "title": "Key takeaways", "items": [
-          "Being the human in the loop is more than oversight — you decide what problems AI should even solve.",
-          "Avoid dependency through understanding, not avoidance: if you can explain what the AI is doing, that's a good sign.",
-          "AI should free you for more human work, not less — the personal outreach, the relationship, the judgment call.",
-          "Decide as a team what happens with the time AI saves. Set that norm early.",
-          "Your AI policy is how this understanding scales as R&N grows."
-        ]}
+        {
+          "type": "text",
+          "text": "The point of all this isn't to remove people — it's to free you for the work only people can do."
+        },
+        {
+          "type": "callout",
+          "variant": "note",
+          "title": "Key takeaways",
+          "items": [
+            "Being the human in the loop is more than oversight — you decide what problems AI should even solve.",
+            "Avoid dependency through understanding, not avoidance: if you can explain what the AI is doing, that's a good sign.",
+            "AI should free you for more human work, not less — the personal outreach, the relationship, the judgment call.",
+            "Decide as a team what happens with the time AI saves. Set that norm early.",
+            "Your AI policy is how this understanding scales as R&N grows."
+          ]
+        }
       ]
     },
     {
@@ -476,20 +963,39 @@
       "trackId": "all",
       "title": "Your task this week & what's next",
       "blocks": [
-        { "type": "text", "text": "Fluency comes from reps. Before you leave, commit to one real task you'll tackle with AI this week — your practice ground." },
-        { "type": "callout", "variant": "exercise", "title": "Final assignment", "items": [
-          "Pick one concrete task waiting for you (a draft, a market scan, a data summary, an onboarding doc, a plan).",
-          "Run the full 4D loop on it: Delegation → Description → Discernment → Diligence.",
-          "Afterward, jot down what worked, what needed correction, and which competency needs more practice."
-        ]},
-        { "type": "heading", "text": "Keep going" },
-        { "type": "list", "items": [
-          "Keep a running doc of the prompts and workflows that work for you — so you're not starting from scratch, and teammates can pick them up.",
-          "Blueprints: step-by-step guides for common tasks at claude.com/resources/use-cases.",
-          "Stay current: rules around AI in business are evolving (FTC guidance, state privacy laws). Revisit these principles as things change.",
-          "Questions between sessions? gabe@getfieldworkai.com — that's what office hours are for."
-        ]},
-        { "type": "callout", "variant": "tip", "title": "You're done.", "text": "You've built a cheat sheet, learned the 4D Framework, mapped your opportunities, built and stress-tested a workflow, and written your AI policy. That's AI fluency. Now go get the reps." }
+        {
+          "type": "text",
+          "text": "Fluency comes from reps. Before you leave, commit to one real task you'll tackle with AI this week — your practice ground."
+        },
+        {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Final assignment",
+          "items": [
+            "Pick one concrete task waiting for you (a draft, a market scan, a data summary, an onboarding doc, a plan).",
+            "Run the full 4D loop on it: Delegation → Description → Discernment → Diligence.",
+            "Afterward, jot down what worked, what needed correction, and which competency needs more practice."
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Keep going"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Keep a running doc of the prompts and workflows that work for you — so you're not starting from scratch, and teammates can pick them up.",
+            "Blueprints: step-by-step guides for common tasks at claude.com/resources/use-cases.",
+            "Stay current: rules around AI in business are evolving (FTC guidance, state privacy laws). Revisit these principles as things change.",
+            "Questions between sessions? gabe@getfieldworkai.com — that's what office hours are for."
+          ]
+        },
+        {
+          "type": "callout",
+          "variant": "tip",
+          "title": "You're done.",
+          "text": "You've built a cheat sheet, learned the 4D Framework, mapped your opportunities, built and stress-tested a workflow, and written your AI policy. That's AI fluency. Now go get the reps."
+        }
       ]
     }
   ]
