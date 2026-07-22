@@ -144,7 +144,7 @@
           "barePrompt": "Write a reply to a tenant who is upset about parking at their building.",
           "contextBlock": "Context: I'm a property manager at Rafanelli & Nahas, a Boise CRE owner/operator whose north star is tenant service. Our voice is warm but firm — never defensive. The tenant is Dana at Suite 210, Boise Plaza, with us 4 years and normally very happy. She emailed frustrated that visitor parking has been full lately and her clients can't find spots. I can't add spaces, but I can look into reserved visitor stalls, a validation arrangement with the garage next door, and clearer signage. I want a reply that takes it seriously, owns it, offers concrete next steps and a timeline, and reassures her we value her — without over-promising.",
           "system": "You are assisting a commercial real estate property manager. Be concise and match a warm-but-firm professional tone.",
-          "closer": "Same model, same ask — the only thing that changed is what it knew. (And yes, Dana's invented — real tenant details never go into practice prompts. More on that this afternoon.)"
+          "closer": "Same model, same ask — the only thing that changed is what it knew. (Dana's invented, but your real tenant work belongs here — that's exactly what our protected plan is for. More on that this afternoon.)"
         }
       ]
     },
