@@ -1533,7 +1533,7 @@ function PolicyMadlib({ block, ctx }: { block: Extract<Block, { type: "policy-ma
         <div className="font-inter text-xs text-steel leading-relaxed">
           <p>
             <span className="text-slate font-medium">How this works:</span> tap what fits above — that&apos;s your
-            take. Chris is assembling the room&apos;s copy up front.
+            take. The room&apos;s copy is being assembled up front.
           </p>
           <p>
             <span className="text-amber font-medium">Raise it →</span> puts your question or pushback on the big
