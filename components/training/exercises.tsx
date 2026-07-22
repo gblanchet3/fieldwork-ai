@@ -470,8 +470,8 @@ function withCompanyContext(companyCtx: string | null | undefined, system?: stri
   return `Use this company context file as background for everything you produce:\n\n${c}${system ? "\n\n" + system : ""}`;
 }
 
-/** A visible "📎 company context attached" strip for the post-build exercises,
- *  with a peek that reveals the actual published file. */
+/** A small "📎 context attached" cue meant to sit right next to a Run/Send/Start
+ *  button — a reminder the file rides along, with a peek at the actual file. */
 function ContextBadge({
   content,
   checking,
@@ -484,26 +484,22 @@ function ContextBadge({
   const [peek, setPeek] = useState(false);
   const loaded = !!content?.trim();
   return (
-    <div className={`rounded-xl border px-3 py-2 ${loaded ? "border-olive/40 bg-olive/5" : "border-dust bg-dust/30"}`}>
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-sm">📎</span>
-        <span className={`font-inter text-xs ${loaded ? "text-olive font-medium" : "text-steel"}`}>
-          {loaded
-            ? "Company context file attached — every prompt here uses it, just like in your own Claude Project"
-            : "No company file published yet — Gabe publishes it after the group builds it"}
+    <div className="space-y-1.5">
+      <div className="flex items-center gap-1.5 flex-wrap font-inter text-[11px] leading-none">
+        <span className={loaded ? "text-olive" : "text-steel/60"}>
+          📎 {loaded ? "Company context attached" : "No company file yet"}
         </span>
-        <span className="flex-1" />
         {loaded && (
-          <button onClick={() => setPeek((p) => !p)} className="font-inter text-xs text-steel hover:text-slate">
+          <button onClick={() => setPeek((p) => !p)} className="text-steel/70 hover:text-slate underline decoration-dotted underline-offset-2">
             {peek ? "hide" : "peek"}
           </button>
         )}
-        <button onClick={onRefresh} className="font-inter text-xs text-amber hover:underline">
-          {checking ? "checking…" : "↻ refresh"}
+        <button onClick={onRefresh} className="text-steel/70 hover:text-amber underline decoration-dotted underline-offset-2">
+          {checking ? "…" : "refresh"}
         </button>
       </div>
       {peek && loaded && (
-        <pre className="whitespace-pre-wrap font-inter text-xs text-slate/70 bg-white border border-dust rounded-lg px-3 py-2 mt-2 max-h-52 overflow-auto">
+        <pre className="whitespace-pre-wrap font-inter text-xs text-slate/70 bg-white border border-dust rounded-lg px-3 py-2 max-h-52 overflow-auto">
           {content}
         </pre>
       )}
@@ -794,8 +790,6 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
         })}
       </div>
 
-      <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
-
       {phase === "build" && (
         <>
           <div>
@@ -842,6 +836,7 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
             </RunButton>
             <ModelBadge />
           </div>
+          <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
           <p className="font-inter text-xs text-steel">Claude will interview you first, then draft — you take it from there.</p>
         </>
       )}
@@ -883,9 +878,12 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
                 </div>
               )}
               <Composer value={reply} onValueChange={setReply} placeholder={composer.placeholder} rows={2} showModel />
-              <RunButton onClick={() => send(reply)} disabled={!reply.trim()}>
-                Send →
-              </RunButton>
+              <div className="flex items-center gap-3 flex-wrap">
+                <RunButton onClick={() => send(reply)} disabled={!reply.trim()}>
+                  Send →
+                </RunButton>
+                <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
+              </div>
             </div>
           )}
 
@@ -959,7 +957,6 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
   return (
     <div className="space-y-4">
       {block.intro && <p className="font-inter text-slate/80 leading-body">{block.intro}</p>}
-      <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
 
       <div>
         <p className="section-label text-steel mb-2">1 · Your task</p>
@@ -970,10 +967,11 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
           placeholder="Describe a real task from your week and what a good result looks like…"
           showModel
         />
-        <div className="mt-2">
+        <div className="mt-2 flex items-center gap-3 flex-wrap">
           <RunButton onClick={runFirst} disabled={!task.trim()} busy={first.status === "streaming"}>
             Get a first draft →
           </RunButton>
+          <ContextBadge content={cf.context} checking={cf.checking} onRefresh={cf.reload} />
         </div>
         {first.status !== "idle" && (
           <div className="mt-3">
