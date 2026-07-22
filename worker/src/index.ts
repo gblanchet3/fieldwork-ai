@@ -29,7 +29,7 @@ const RATE_WINDOW_S = 60;
 const RECORD_TTL_S = 60 * 60 * 24 * 30; // 30 days
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(req.url);
     const origin = req.headers.get("Origin") ?? "";
     const cors = corsHeaders(origin, env);
@@ -37,7 +37,7 @@ export default {
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
 
     try {
-      if (url.pathname === "/generate" && req.method === "POST") return handleGenerate(req, env, cors);
+      if (url.pathname === "/generate" && req.method === "POST") return handleGenerate(req, env, cors, ctx);
       if (url.pathname === "/capture" && req.method === "POST") return handleCapture(req, env, cors);
       if (url.pathname === "/session-data" && req.method === "GET") return handleSessionData(url, env, cors);
       if (url.pathname === "/publish" && req.method === "POST") return handlePublish(req, env, cors);
@@ -52,7 +52,7 @@ export default {
 
 // ── /generate ────────────────────────────────────────────────────────────────
 
-async function handleGenerate(req: Request, env: Env, cors: Record<string, string>): Promise<Response> {
+async function handleGenerate(req: Request, env: Env, cors: Record<string, string>, ctx: ExecutionContext): Promise<Response> {
   const body = (await req.json().catch(() => ({}))) as {
     token?: string;
     sessionId?: string;
@@ -109,54 +109,64 @@ async function handleGenerate(req: Request, env: Env, cors: Record<string, strin
   }
 
   // Translate Anthropic's SSE into simple `data: {"text":"…"}` lines.
+  // Eager pump kept alive via ctx.waitUntil: the previous lazy pull() pattern
+  // tripped the Workers runtime's hang detection whenever Anthropic was slow
+  // to first byte (degraded-service days), canceling the request mid-stream
+  // and handing the client an empty 200.
   const reader = upstream.body.getReader();
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
   let buffer = "";
 
-  const stream = new ReadableStream({
-    async pull(controller) {
-      let value: Uint8Array | undefined, done: boolean;
-      try {
-        ({ value, done } = await reader.read());
-      } catch {
-        // Upstream connection dropped mid-stream — surface it so the client retries.
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: "stream read failed" })}\n\n`));
-        controller.close();
-        return;
-      }
-      if (done) {
-        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-        controller.close();
-        return;
-      }
-      buffer += decoder.decode(value, { stream: true });
-      const events = buffer.split("\n\n");
-      buffer = events.pop() ?? "";
-      for (const evt of events) {
-        const dataLine = evt.split("\n").find((l) => l.startsWith("data:"));
-        if (!dataLine) continue;
-        try {
-          const parsed = JSON.parse(dataLine.slice(5).trim());
-          if (parsed.type === "content_block_delta" && parsed.delta?.type === "text_delta") {
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: parsed.delta.text })}\n\n`));
-          } else if (parsed.type === "error") {
-            // Anthropic can return 200 then an error event mid-stream (overload,
-            // rate limit). Surface it so the client retries instead of hanging.
-            const msg = parsed.error?.message || "upstream stream error";
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: msg })}\n\n`));
+  const { readable, writable } = new TransformStream();
+  const writer = writable.getWriter();
+  const send = (obj: unknown) => writer.write(encoder.encode(`data: ${JSON.stringify(obj)}\n\n`));
+
+  const pump = async () => {
+    try {
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const events = buffer.split("\n\n");
+        buffer = events.pop() ?? "";
+        for (const evt of events) {
+          const dataLine = evt.split("\n").find((l) => l.startsWith("data:"));
+          if (!dataLine) continue;
+          try {
+            const parsed = JSON.parse(dataLine.slice(5).trim());
+            if (parsed.type === "content_block_delta" && parsed.delta?.type === "text_delta") {
+              await send({ text: parsed.delta.text });
+            } else if (parsed.type === "error") {
+              // Anthropic can return 200 then an error event mid-stream (overload,
+              // rate limit). Surface it so the client retries instead of hanging.
+              await send({ error: parsed.error?.message || "upstream stream error" });
+            }
+          } catch {
+            /* skip non-JSON keep-alives */
           }
-        } catch {
-          /* skip non-JSON keep-alives */
         }
       }
-    },
-    cancel() {
+      await writer.write(encoder.encode("data: [DONE]\n\n"));
+    } catch {
+      // Upstream dropped or the client went away — try to surface it, then fold.
+      try {
+        await send({ error: "stream read failed" });
+      } catch {
+        /* client already gone */
+      }
+    } finally {
+      try {
+        await writer.close();
+      } catch {
+        /* already closed */
+      }
       reader.cancel().catch(() => {});
-    },
-  });
+    }
+  };
+  ctx.waitUntil(pump());
 
-  return new Response(stream, {
+  return new Response(readable, {
     headers: {
       ...cors,
       "Content-Type": "text/event-stream; charset=utf-8",
