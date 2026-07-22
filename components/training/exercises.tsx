@@ -1530,8 +1530,18 @@ function PolicyMadlib({ block, ctx }: { block: Extract<Block, { type: "policy-ma
 
       {/* agree · push back · copy */}
       <div className="space-y-3">
-        <p className="font-inter text-xs text-steel">We&apos;re writing this together, out loud. Shape it above — and if you&apos;d change something, say it here.</p>
-        <Composer value={question} onValueChange={setQuestion} placeholder="A question or something you'd push back on…" rows={2} />
+        <div className="font-inter text-xs text-steel leading-relaxed">
+          <p>
+            <span className="text-slate font-medium">How this works:</span> tap what fits above — that&apos;s your
+            take. Chris is assembling the room&apos;s copy up front.
+          </p>
+          <p>
+            <span className="text-amber font-medium">Raise it →</span> puts your question or pushback on the big
+            screen. <span className="text-olive font-medium">I&apos;m on board ✓</span> means you&apos;d sign the
+            draft as it stands.
+          </p>
+        </div>
+        <Composer value={question} onValueChange={setQuestion} placeholder="e.g. Can we use it on tenant financials? Who approves adding a new tool?" rows={2} />
         <div className="flex items-center gap-3 flex-wrap">
           <RunButton onClick={() => push("agree")}>I&apos;m on board ✓</RunButton>
           <button

@@ -430,7 +430,7 @@
       "blocks": [
         {
           "type": "policy-madlib",
-          "intro": "This is our shared agreement — not a rulebook handed down. Chris will walk it section by section; read along on your laptop, tap the choices that fit us, untick anything you'd drop, and speak up where you'd change it. What we land on is the draft we adopt in Session 2.",
+          "intro": "This is our shared agreement — written together, out loud. Chris walks it section by section; you tap the choices that fit on your own screen (that's your take — Chris is assembling the room's copy up front). Anything you'd change or can't settle: Raise it and it lands on the big screen.",
           "docTitle": "Rafanelli & Nahas — AI Usage Policy",
           "docSubtitle": "Working draft — written together, adopted in Session 2",
           "sections": [
@@ -594,10 +594,13 @@
             },
             {
               "id": "open",
-              "kind": "notes",
+              "kind": "fixed",
               "title": "Open questions to settle",
-              "lead": "Anything we're not sure about yet — we'll resolve these with leadership before we adopt it.",
-              "placeholder": "e.g. Can we use it on tenant financials? Who approves adding a new tool?"
+              "lead": "Anything we can't settle in the room gets parked here — out loud.",
+              "lines": [
+                "Say it, or use Raise it → below — every open question goes up on the big screen.",
+                "Fieldwork, Scott, and Justin resolve them before Session 2 — where the team ratifies the final policy."
+              ]
             }
           ],
           "ratify": "We'll settle the open questions with leadership and formally adopt this in Session 2."
