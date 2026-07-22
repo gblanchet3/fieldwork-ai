@@ -71,9 +71,9 @@
       "blocks": [
         {
           "type": "context-compare",
-          "scenario": "A long-time tenant is 15 days past due on their CAM reconciliation balance and you need to nudge them without straining the relationship.",
-          "barePrompt": "Write an email to a tenant about a late payment.",
-          "contextBlock": "Context: I'm a property manager at Rafanelli & Nahas, a Boise CRE owner/operator whose north star is tenant service. Our voice is warm but firm — never adversarial. The tenant is James at Suite 400, Boise Plaza, with us 6 years, generally reliable. The March CAM reconciliation balance of $2,140 is 15 days past due. I want a short email that preserves the relationship, states the specifics, and asks for a payment date this week.",
+          "scenario": "A valued tenant emailed, frustrated that visitor parking keeps filling up and her clients can't find spots. You need a reply that takes it seriously and keeps her happy.",
+          "barePrompt": "Write a reply to a tenant who is upset about parking at their building.",
+          "contextBlock": "Context: I'm a property manager at Rafanelli & Nahas, a Boise CRE owner/operator whose north star is tenant service. Our voice is warm but firm — never defensive. The tenant is Dana at Suite 210, Boise Plaza, with us 4 years and normally very happy. She emailed frustrated that visitor parking has been full lately and her clients can't find spots. I can't add spaces, but I can look into reserved visitor stalls, a validation arrangement with the garage next door, and clearer signage. I want a reply that takes it seriously, owns it, offers concrete next steps and a timeline, and reassures her we value her — without over-promising.",
           "system": "You are assisting a commercial real estate property manager. Be concise and match a warm-but-firm professional tone."
         }
       ]
@@ -87,9 +87,9 @@
       "blocks": [
         {
           "type": "context-compare",
-          "scenario": "A rooftop HVAC unit is short-cycling and you want a fast, safe first-pass diagnostic before calling a vendor.",
-          "barePrompt": "How do I fix an air conditioner that keeps turning on and off?",
-          "contextBlock": "Context: I'm a building engineer at Rafanelli & Nahas in Boise. The unit is a ~10-ton Carrier rooftop package unit serving the 3rd floor of Boise Plaza. It's short-cycling — running about 2 minutes, shutting off, restarting a few minutes later. Outdoor temp is ~95°F. I've already checked that the filter is clean and the thermostat batteries are good. I'm comfortable with basic checks but not refrigerant work. Give me the most likely causes ranked, the safe checks I can do myself, and the point where I should stop and call a licensed HVAC tech.",
+          "scenario": "Summer's coming. You want a smart, prioritized maintenance plan for your rooftop units before the heat starts breaking things — not a generic checklist.",
+          "barePrompt": "Give me a summer preventive maintenance checklist for commercial rooftop HVAC.",
+          "contextBlock": "Context: I'm a building engineer at Rafanelli & Nahas, a Boise commercial property owner/operator. We run a portfolio of office buildings on mostly Carrier rooftop package units, most of them 10+ years old. Boise summers are hot and dry with hard water, and a couple of our older units short-cycled during last year's heat wave. Budget is tight, so I need to prioritize. Give me a preventive-maintenance walk-through for these rooftop units heading into summer — ranked by what's most likely to fail here, the checks I can safely do myself vs. what needs a licensed tech, and what to catch before it turns into an emergency.",
           "system": "You are assisting a commercial building maintenance engineer. Be practical and safety-first."
         }
       ]
