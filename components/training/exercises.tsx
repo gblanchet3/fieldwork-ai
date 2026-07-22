@@ -80,6 +80,9 @@ function useStream(sessionId: string) {
       const ac = new AbortController();
       abortRef.current = ac;
       setText("");
+      // A stream that stalls without dropping would otherwise show "generating…"
+      // forever — abort it so the retry/fallback path takes over.
+      const stallTimer = setTimeout(() => ac.abort(), 45_000);
       try {
         await streamGenerate({
           sessionId,
@@ -91,9 +94,11 @@ function useStream(sessionId: string) {
             if (alive()) setText((p) => p + t);
           },
         });
+        clearTimeout(stallTimer);
         if (alive()) setStatus("done");
         return;
       } catch {
+        clearTimeout(stallTimer);
         if (!alive()) return;
         if (attempt < MAX_ATTEMPTS - 1) {
           // Growing backoff (0.6s → 1.2s → 2.4s) rides out brief rate-limit windows.
@@ -199,9 +204,15 @@ function OutputPanel({
         <span className="section-label text-steel">{label}</span>
         {status === "streaming" && <span className="font-inter text-xs text-amber animate-pulse">generating…</span>}
         {canned && status === "done" && (
-          <span className="font-inter text-[10px] uppercase tracking-wide text-steel/60">sample</span>
+          <span className="font-inter text-[10px] uppercase tracking-wide text-amber/80">example</span>
         )}
       </div>
+      {canned && status === "done" && (
+        <p className="font-inter text-xs text-amber/90 bg-amber/5 border-b border-amber/20 px-4 py-2">
+          Live generation was busy just now, so this is a built-in example — hit Run again in a minute for the
+          real thing.
+        </p>
+      )}
       <div className="font-inter text-sm text-slate/80 leading-body px-4 py-3 flex-1">
         {text ? <Rich text={text} /> : <span className="text-steel/40">Run it to see the output.</span>}
       </div>
@@ -234,7 +245,6 @@ function RunButton({
 // ── Claude-style composer + model badge + dictation ─────────────────────────────
 
 const MODEL_LABEL = process.env.NEXT_PUBLIC_FW_MODEL_LABEL || "Claude Sonnet 5";
-const EFFORT_LABEL = process.env.NEXT_PUBLIC_FW_EFFORT_LABEL || "High";
 
 function ModelBadge() {
   return (
@@ -243,8 +253,6 @@ function ModelBadge() {
         <path d="M12 2l2.4 6.8L21 11l-6.6 2.2L12 20l-2.4-6.8L3 11l6.6-2.2z" fill="#D97B2A" />
       </svg>
       <span className="font-medium text-slate/70">{MODEL_LABEL}</span>
-      <span className="text-steel/40">·</span>
-      <span>{EFFORT_LABEL} effort</span>
     </span>
   );
 }
@@ -283,7 +291,10 @@ function Composer({
       return;
     }
     const rec = new SR();
-    rec.continuous = true;
+    // iOS Safari duplicates final results in continuous mode — one utterance per
+    // tap there; desktop keeps the hands-free continuous behavior.
+    const isIOS = typeof navigator !== "undefined" && /iP(hone|ad|od)/.test(navigator.userAgent);
+    rec.continuous = !isIOS;
     rec.interimResults = false;
     rec.lang = "en-US";
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -337,6 +348,7 @@ function Composer({
 function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context-compare" }>; ctx: ExerciseCtx }) {
   const bare = useStream(ctx.sessionId);
   const rich = useStream(ctx.sessionId);
+  const canned = cannedFor(ctx.trackId);
   const [extra, setExtra] = useState("");
   const richPrompt = useMemo(
     () => `${block.contextBlock}${extra.trim() ? "\n" + extra.trim() : ""}\n\n${block.barePrompt}`,
@@ -360,7 +372,7 @@ function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context
           <pre className="whitespace-pre-wrap font-inter text-xs bg-dust/40 text-slate/70 px-3 py-2 border border-dust">
             {block.barePrompt}
           </pre>
-          <RunButton onClick={() => bare.run(block.barePrompt, block.system, CANNED.contextBare)} busy={bare.status === "streaming"}>
+          <RunButton onClick={() => bare.run(block.barePrompt, block.system, canned.contextBare)} busy={bare.status === "streaming"}>
             Run it
           </RunButton>
           <OutputPanel label="Output" text={bare.text} status={bare.status} canned={bare.canned} tone="steel" />
@@ -378,7 +390,7 @@ function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context
           <pre className="whitespace-pre-wrap font-inter text-xs bg-amber/5 text-slate/70 px-3 py-2 border border-amber/30 max-h-32 overflow-y-auto">
             {richPrompt}
           </pre>
-          <RunButton onClick={() => rich.run(richPrompt, block.system, CANNED.contextRich)} busy={rich.status === "streaming"}>
+          <RunButton onClick={() => rich.run(richPrompt, block.system, canned.contextRich)} busy={rich.status === "streaming"}>
             Run it
           </RunButton>
           <OutputPanel label="Output" text={rich.text} status={rich.status} canned={rich.canned} />
@@ -512,6 +524,7 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
   const [peek, setPeek] = useState(false);
   const without = useStream(ctx.sessionId);
   const withCtx = useStream(ctx.sessionId);
+  const canned = cannedFor(ctx.trackId);
 
   const myContext = useMemo(() => {
     if (typeof window === "undefined") return "";
@@ -609,7 +622,7 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
         <div className="space-y-2">
           <p className="font-inter text-xs text-steel">Without your context</p>
           <RunButton
-            onClick={() => without.run(prompt, block.system, CANNED.testWithout)}
+            onClick={() => without.run(prompt, block.system, canned.testWithout)}
             disabled={!prompt.trim()}
             busy={without.status === "streaming"}
           >
@@ -625,7 +638,7 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
             </span>
           </p>
           <RunButton
-            onClick={() => withCtx.run(`${effectiveContext}\n\n${prompt}`, block.system, CANNED.testWith)}
+            onClick={() => withCtx.run(`${effectiveContext}\n\n${prompt}`, block.system, canned.testWith)}
             disabled={!prompt.trim()}
             busy={withCtx.status === "streaming"}
           >
@@ -643,6 +656,14 @@ function ContextFileTest({ block, ctx }: { block: Extract<Block, { type: "contex
 const PUSH_CHIPS = ["Make it shorter", "Warmer tone", "Lead with the ask", "More formal", "More specific"];
 
 // Offline samples, indexed by how many assistant turns have already landed.
+// Track-flavored: facilities gets a diagnostic/work-order arc, not a tenant email.
+const CANNED_CONVO_FACILITIES = [
+  "Happy to help — a couple of quick questions first:\n\n1. Which unit is it (location, make/model if you know it), and what exactly is it doing?\n2. What have you already checked or tried?\n3. Is it affecting tenants right now, or can it wait for a scheduled visit?\n\nAnswer in a few words each and I'll get you a plan. (Offline sample — live, Claude asks about your actual situation.)",
+  "Here's a first pass:\n\n**Likely causes, most to least likely:**\n1. Dirty condenser coil or clogged filter — unit overheats and trips on high head pressure\n2. Failing run capacitor — the classic short-cycle in summer heat\n3. Low refrigerant charge — that one's a licensed-tech call\n\n**Safe checks before you call a vendor:**\n- Kill power, pull and check the filter\n- Inspect the condenser coil; rinse gently if it's caked\n- Look (don't touch) for a bulged or leaking capacitor\n- Time how long it runs before cutting out\n\nIf it points to the capacitor or charge, hand the vendor these notes — you'll save the diagnostic hour. (Offline sample — live, this is built from your answers.)",
+  "Tightened into a vendor-ready ticket:\n\n**Work order — RTU, roof, short-cycling**\nSymptom: Cools 4–5 minutes on 90°+ afternoons, trips, restarts.\nAlready done: Filter checked, coil rinsed, capacitor visually OK.\nRequest: Diagnose capacitor / refrigerant charge; quote before repair.\nPriority: High — tenant comfort at risk this week.\n\n(Offline sample of a push-back rep.)",
+  "One more pass — shorter and firmer:\n\n**RTU short-cycles above 90°.** Filter and coil already done, capacitor visual OK. Need diagnostic + quote this week; tenant-facing space. Please confirm an arrival window today.\n\n(Offline sample — two reps in, you can feel it converge.)",
+];
+
 const CANNED_CONVO = [
   "Happy to help — a couple of quick questions first:\n\n1. Who's the recipient, and what tone should I strike?\n2. What's the one outcome that matters most here?\n3. Any specifics I should include — a name, amount, or date?\n\nAnswer in a few words each and I'll draft it. (Offline sample — live, Claude asks about your actual task.)",
   "Here's a first draft:\n\nSubject: Quick follow-up on your account\n\nHi [name],\n\nHope you're doing well! I wanted to reach out about the balance on your account — our records show about [amount] outstanding, now a couple of weeks past due. I know these things slip through the cracks, so no worries at all.\n\nWould you be able to pick a day this week to get it settled? Happy to take it by check or ACH — whichever's easier on your end. As always, we really appreciate having you.\n\nBest,\n[you]\n\n(Offline sample — live, this is built from your answers.)",
@@ -689,7 +710,8 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
   async function send(userText: string) {
     if (streaming || !userText.trim()) return;
     const history: ChatTurn[] = [...turns, { role: "user", content: userText.trim() }];
-    const cannedText = CANNED_CONVO[Math.min(assistantTurns, CANNED_CONVO.length - 1)];
+    const convo = ctx.trackId === "facilities" ? CANNED_CONVO_FACILITIES : CANNED_CONVO;
+    const cannedText = convo[Math.min(assistantTurns, convo.length - 1)];
     setTurns(history);
     setReply("");
     setStreaming(true);
@@ -700,18 +722,23 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
       for (let attempt = 0; attempt < MAX; attempt++) {
         full = "";
         setLive("");
+        const ac = new AbortController();
+        const stallTimer = setTimeout(() => ac.abort(), 45_000);
         try {
           await streamGenerate({
             sessionId: ctx.sessionId,
             messages: history,
             system: withCompanyContext(cf.context, block.system),
+            signal: ac.signal,
             onToken: (t) => {
               full += t;
               setLive((p) => p + t);
             },
           });
+          clearTimeout(stallTimer);
           break;
         } catch {
+          clearTimeout(stallTimer);
           full = "";
           if (attempt < MAX - 1) {
             await new Promise((r) => setTimeout(r, 600 * Math.pow(2, attempt)));
@@ -731,6 +758,16 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
     setTurns([...history, { role: "assistant", content: full }]);
     setLive("");
     setStreaming(false);
+  }
+
+  function startOver() {
+    setPhase("build");
+    setTurns([]);
+    setLive("");
+    setStreaming(false);
+    setCanned(false);
+    setReply("");
+    setShowLazy(false);
   }
 
   function start() {
@@ -847,7 +884,18 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
 
       {phase === "chat" && (
         <>
-          {challenge && <p className="font-inter text-xs text-steel">Working on: <span className="text-slate/70">{challenge.label}</span></p>}
+          {challenge && (
+            <p className="font-inter text-xs text-steel flex items-center gap-3">
+              <span>
+                Working on: <span className="text-slate/70">{challenge.label}</span>
+              </span>
+              {!streaming && (
+                <button onClick={startOver} className="text-steel/60 hover:text-amber transition-colors">
+                  ↺ Start over
+                </button>
+              )}
+            </p>
+          )}
 
           <div className="space-y-3">
             {turns.map((t, i) => (
@@ -943,7 +991,7 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
       trackId: ctx.trackId,
       payload: { stage: "first", task },
     });
-    first.run(task, withCompanyContext(cf.context, block.system), CANNED.iterateFirst);
+    first.run(task, withCompanyContext(cf.context, block.system), cannedFor(ctx.trackId).iterateFirst);
   }
 
   function runRefine() {
@@ -955,7 +1003,7 @@ function IterateExercise({ block, ctx }: { block: Extract<Block, { type: "iterat
       trackId: ctx.trackId,
       payload: { stage: "refine", task, refine },
     });
-    refined.run(combined, withCompanyContext(cf.context, block.system), CANNED.iterateRefined);
+    refined.run(combined, withCompanyContext(cf.context, block.system), cannedFor(ctx.trackId).iterateRefined);
   }
 
   return (
@@ -1156,13 +1204,18 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
         {m.worked && <p className="font-inter text-xs text-olive">✓ {m.worked}</p>}
         {m.stuck && <p className="font-inter text-xs text-steel/70 italic">Stuck? {m.stuck}</p>}
         {m.sample && (
-          <a
-            href={m.sample.href}
-            download
-            className="inline-block font-inter text-xs font-medium text-amber hover:underline"
-          >
-            ↓ {m.sample.label}
-          </a>
+          <>
+            <a
+              href={m.sample.href}
+              download
+              className="inline-block font-inter text-xs font-medium text-amber hover:underline"
+            >
+              ↓ {m.sample.label}
+            </a>
+            <p className="font-inter text-[11px] text-steel/60">
+              On iPhone it opens in a tab — press and hold the image, then &ldquo;Add to Photos.&rdquo;
+            </p>
+          </>
         )}
       </div>
     </div>
@@ -1521,8 +1574,26 @@ export function ExerciseBlock({ block, ctx }: { block: Block; ctx: ExerciseCtx }
 }
 
 // ── canned fallbacks (used offline / if the Worker is down) ──────────────────────
+// Track-flavored: a facilities engineer under a rate-limit hiccup should see a
+// maintenance example, never a tenant collections email.
 
-const CANNED = {
+type CannedSet = {
+  contextBare: string;
+  contextRich: string;
+  testWithout: string;
+  testWith: string;
+  iterateFirst: string;
+  iterateRefined: string;
+};
+
+const ITERATE_CANNED = {
+  iterateFirst:
+    "Here's a first draft based on your task. It covers the basics and is a reasonable starting point — but it's a little generic, and there are a couple of spots you'll probably want to sharpen. Read it with a critical eye, then tell it what to fix.",
+  iterateRefined:
+    "Here's the revised version — retoned and tightened around exactly what you flagged. [Notice how one round of specific feedback moved it from \"fine\" to \"send-ready.\" That back-and-forth is where the real quality comes from.]",
+};
+
+const CANNED_PM: CannedSet = {
   contextBare:
     "Here's a general draft you could adapt:\n\nDear Tenant,\n\nWe wanted to reach out regarding your account. Please let us know if you have any questions.\n\nBest regards,\nManagement",
   contextRich:
@@ -1531,10 +1602,20 @@ const CANNED = {
     "Subject: Notice of Planned Maintenance\n\nDear Tenant,\n\nPlease be advised that maintenance will be performed in your building next week. We apologize for any inconvenience this may cause. Should you have any questions, please contact our office.\n\nSincerely,\nProperty Management",
   testWith:
     "Subject: Quick heads-up — planned maintenance at Boise Plaza next week\n\nHi James,\n\nWanted to give you plenty of notice: our maintenance team will be doing some planned upkeep in the building next week (likely Tuesday–Wednesday). You shouldn't see any disruption to your suite — you may just notice our crew in the common areas.\n\nIf there's a window that works better or worse for your team, let me know and we'll coordinate around you. As always, thanks for being a great part of Boise Plaza.\n\nWarmly,\n[You]",
-  builderRich:
-    "Here's a first draft built to your spec:\n\n• Opens with the relationship, not the ask\n• States the specific issue (amount, days past due, property)\n• Firm but warm — preserves the tenant relationship\n• Ends with one clear call to action and a date\n\n[Because you described the end state, gave your reasoning, and let it ask clarifying questions, this landed far closer to send-ready than a one-line prompt ever would.]",
-  iterateFirst:
-    "Here's a first draft based on your task. It covers the basics and is a reasonable starting point — but it's a little generic, and there are a couple of spots you'll probably want to sharpen. Read it with a critical eye, then tell it what to fix.",
-  iterateRefined:
-    "Here's the revised version — retoned and tightened around exactly what you flagged. [Notice how one round of specific feedback moved it from \"fine\" to \"send-ready.\" That back-and-forth is where the real quality comes from.]",
+  ...ITERATE_CANNED,
 };
+
+const CANNED_FACILITIES: CannedSet = {
+  contextBare:
+    "Here's a general summer checklist for commercial rooftop HVAC:\n\n1. Replace or clean air filters\n2. Inspect and clean condenser and evaporator coils\n3. Check refrigerant charge\n4. Test thermostat operation\n5. Inspect belts and pulleys\n6. Clear debris from around the unit\n7. Check electrical connections\n\nA licensed HVAC technician should perform a full inspection annually.",
+  contextRich:
+    "Here's a prioritized pre-summer walk-through for your older Carrier rooftop units:\n\n**Do first — highest failure risk for 10+ year units in Boise heat:**\n1. **Condenser coils — clean thoroughly.** Dusty, dry summers cake them, and dirty coils are the most likely cause of the short-cycling you saw last year. (Safe to do yourself.)\n2. **Capacitors & contactors** — heat kills aging capacitors; a $20 part fails as a $2,000 emergency call. Look for bulging, have your tech meter them.\n3. **Refrigerant charge + a short-cycle diagnosis** on the units that acted up — licensed tech only.\n\n**Safe to do yourself:**\n- Filters, belt tension and cracking, clear debris 3 ft around each unit, low-pressure coil rinse\n- Condensate drains — Boise's hard water plugs them; flush now, not in July\n\n**Book the tech for:**\n- Refrigerant work, electrical checks under load, compressor amp draw on the oldest units\n\nBudget tip: put the two units that short-cycled last summer at the front of the line — a repeat during a heat wave is your most likely emergency.",
+  testWithout:
+    "Work Order\n\nIssue: HVAC unit not functioning properly.\nAction: Technician to inspect unit and perform necessary repairs.\nPriority: Standard.\n\nPlease contact the office to schedule service.",
+  testWith:
+    "**Work order — Boise Plaza, RTU-3 (Carrier, ~10-ton)**\n\nSymptom: Short-cycling on hot afternoons — runs 4–5 minutes, trips, restarts.\nAlready done: Filter replaced, condenser coil rinsed, capacitor visually OK.\nRequested: Diagnostic on capacitor/refrigerant charge; quote before repair.\nPriority: High — tenant comfort at risk this week.\nAccess: Roof hatch by the east stairwell; on-site contact is the building engineer.\n\n(Notice the difference: the context version reads like it was written by someone who knows your buildings.)",
+  ...ITERATE_CANNED,
+};
+
+const cannedFor = (trackId: string): CannedSet =>
+  trackId === "facilities" ? CANNED_FACILITIES : CANNED_PM;

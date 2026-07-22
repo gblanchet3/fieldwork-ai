@@ -25,6 +25,34 @@ const signonKey = (sessionId: string) => `fw_training_signons_${sessionId}`;
 const progressKey = (sessionId: string, name: string) =>
   `fw_training_progress_${sessionId}_${name.trim().toLowerCase()}`;
 
+// Who's signed in on this device — lets an accidental refresh / back-button land
+// back in the course instead of on the access-code screen.
+const SIGNIN_KEY = "fw_training_signin_v1";
+type SavedSignin = { sessionId: string; name: string; trackId: string };
+
+function persistSignin(s: SavedSignin) {
+  try {
+    localStorage.setItem(SIGNIN_KEY, JSON.stringify(s));
+  } catch {
+    /* private mode etc. — resume just won't work */
+  }
+}
+function readSignin(): SavedSignin | null {
+  if (typeof window === "undefined") return null;
+  try {
+    return JSON.parse(localStorage.getItem(SIGNIN_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+function clearSignin() {
+  try {
+    localStorage.removeItem(SIGNIN_KEY);
+  } catch {
+    /* noop */
+  }
+}
+
 function readSignOns(sessionId: string): SignOn[] {
   if (typeof window === "undefined") return [];
   try {
@@ -91,6 +119,22 @@ export default function TrainingPortal() {
     window.history.replaceState({}, "", window.location.pathname);
   }, [data]);
 
+  // Resume a previous sign-in on this device: refresh / back-button lands back in
+  // the course, not on the access-code screen. QR deep-links (?code=) win above.
+  useEffect(() => {
+    if (!data || typeof window === "undefined") return;
+    if (new URLSearchParams(window.location.search).get("code")) return;
+    const saved = readSignin();
+    if (!saved?.name || !saved.trackId) return;
+    const s = data.sessions.find((x) => x.id === saved.sessionId);
+    if (!s) return;
+    setSession(s);
+    setName(saved.name);
+    setTrackId(saved.trackId);
+    setStep("course");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const knownPeople: SignOn[] = useMemo(() => {
     if (!data || !session) return [];
     const rosterByName = new Map(data.roster.map((r) => [r.name.toLowerCase(), r]));
@@ -124,6 +168,7 @@ export default function TrainingPortal() {
     setName(p.name);
     setTrackId(p.trackId);
     writeSignOn(session.id, p);
+    persistSignin({ sessionId: session.id, name: p.name, trackId: p.trackId });
     setStep("course");
   }
 
@@ -137,10 +182,12 @@ export default function TrainingPortal() {
     setName(n);
     setTrackId(finalTrack);
     writeSignOn(session.id, { name: n, trackId: finalTrack });
+    persistSignin({ sessionId: session.id, name: n, trackId: finalTrack });
     setStep("course");
   }
 
   function signOut() {
+    clearSignin();
     setStep("code");
     setSession(null);
     setCodeInput("");

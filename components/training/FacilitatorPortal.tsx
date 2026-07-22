@@ -40,6 +40,36 @@ function download(filename: string, content: string, type = "text/markdown;chars
   URL.revokeObjectURL(url);
 }
 
+// ── persisted state — an accidental reload of the projector tab must not eat
+//    the icebreaker lists, word cloud, or the policy draft mid-session ─────────
+
+function usePersisted<T>(key: string, initial: T): [T, (next: T | ((p: T) => T)) => void] {
+  const [v, setV] = useState<T>(() => {
+    if (typeof window === "undefined") return initial;
+    try {
+      const s = localStorage.getItem(key);
+      return s ? (JSON.parse(s) as T) : initial;
+    } catch {
+      return initial;
+    }
+  });
+  const set = useCallback(
+    (next: T | ((p: T) => T)) => {
+      setV((p) => {
+        const n = typeof next === "function" ? (next as (p: T) => T)(p) : next;
+        try {
+          localStorage.setItem(key, JSON.stringify(n));
+        } catch {
+          /* storage full / private mode — keep working unpersisted */
+        }
+        return n;
+      });
+    },
+    [key]
+  );
+  return [v, set];
+}
+
 // ── root ─────────────────────────────────────────────────────────────────────
 
 export default function FacilitatorPortal() {
@@ -232,7 +262,7 @@ export default function FacilitatorPortal() {
         {tab === "context" && <ContextAggregate records={records} sessionId={session.id} sessionName={session.title} />}
         {tab === "prompts" && <PromptGallery records={records} />}
         {tab === "setup" && <SetupBoard records={records} config={setupCfg} />}
-        {tab === "policy" && <Policy sessionName={session.title} />}
+        {tab === "policy" && <Policy sessionName={session.title} records={records} />}
       </div>
     </Shell>
   );
@@ -264,8 +294,8 @@ function Btn({ onClick, children, ghost }: { onClick: () => void; children: Reac
 // ── #1 Icebreaker (manual capture) ─────────────────────────────────────────────
 
 function Icebreaker() {
-  const [home, setHome] = useState<string[]>([]);
-  const [work, setWork] = useState<string[]>([]);
+  const [home, setHome] = usePersisted<string[]>("fw_fac_icebreaker_home", []);
+  const [work, setWork] = usePersisted<string[]>("fw_fac_icebreaker_work", []);
   const [hv, setHv] = useState("");
   const [wv, setWv] = useState("");
 
@@ -319,7 +349,7 @@ function Icebreaker() {
 // ── #2 Word cloud (manual capture + PNG export) ─────────────────────────────────
 
 function WordCloud() {
-  const [words, setWords] = useState<string[]>([]);
+  const [words, setWords] = usePersisted<string[]>("fw_fac_wordcloud_words", []);
   const [v, setV] = useState("");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -404,8 +434,18 @@ function WordCloud() {
         ))}
       </div>
       <canvas ref={canvasRef} className="hidden" />
-      <Btn onClick={exportPng} ghost>Export word-cloud.png</Btn>
-      <p className="font-inter text-xs text-steel/70 mt-3">Re-run this at the end of Day 2 to show the before/after shift.</p>
+      <div className="flex items-center gap-3">
+        <Btn onClick={exportPng} ghost>Export word-cloud.png</Btn>
+        {words.length > 0 && (
+          <button
+            onClick={() => setWords([])}
+            className="font-inter text-xs text-steel/60 hover:text-red-500 transition-colors"
+          >
+            Clear all
+          </button>
+        )}
+      </div>
+      <p className="font-inter text-xs text-steel/70 mt-3">Re-run this at the end of Day 2 to show the before/after shift — export the Day-1 PNG first, then Clear all.</p>
     </div>
   );
 }
@@ -417,6 +457,7 @@ const CTX_SECTIONS: { id: string; label: string }[] = [
   { id: "what", label: "What we do" },
   { id: "market", label: "What makes us different" },
   { id: "culture", label: "Our culture & voice" },
+  { id: "operate", label: "What we run day to day" },
   { id: "always", label: "What AI should always know" },
 ];
 
@@ -429,7 +470,20 @@ function ContextAggregate({
   sessionId: string;
   sessionName: string;
 }) {
-  const contribs = records.filter((r) => r.kind === "context-file");
+  // Newest submission per person — re-submitting replaces you, not duplicates you.
+  // (fetchSessionData returns newest first.)
+  const contribs = useMemo(() => {
+    const seen = new Set<string>();
+    const out: CaptureRecord[] = [];
+    for (const r of records) {
+      if (r.kind !== "context-file") continue;
+      const k = (r.name || "Someone").trim().toLowerCase();
+      if (seen.has(k)) continue;
+      seen.add(k);
+      out.push(r);
+    }
+    return out;
+  }, [records]);
 
   const bySection = useMemo(() => {
     const out: Record<string, { name: string; text: string }[]> = {};
@@ -446,6 +500,7 @@ function ContextAggregate({
 
   const [draft, setDraft] = useState("");
   const [gen, setGen] = useState<"idle" | "running" | "done">("idle");
+  const [genError, setGenError] = useState(false);
   const [pub, setPub] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [hasPublished, setHasPublished] = useState(false);
 
@@ -472,18 +527,28 @@ function ContextAggregate({
     setGen("running");
     setDraft("");
     setPub("idle");
+    setGenError(false);
     const prompt = `You are assembling the company "context file" for ${sessionName} from raw notes the team contributed during an AI training. Synthesize the notes below into ONE clear, well-organized markdown company context file — the background you'd paste at the top of every AI conversation so it understands the company. Keep it concrete and faithful to the inputs; de-duplicate, resolve overlaps sensibly, and write in a confident, useful voice. Cover: who we are, what we do, what makes us different, our culture & voice, what we run day to day, and what AI should always know. Output only the markdown file.\n\nRAW CONTRIBUTIONS:\n\n${rawContributions}`;
-    try {
-      await streamGenerate({
+    const attempt = (model?: string) =>
+      streamGenerate({
         sessionId,
         prompt,
         system: "You write crisp, well-structured company context documents that make an AI assistant instantly useful. Output clean markdown only — no preamble.",
-        model: "claude-opus-4-8",
+        model,
         maxTokens: 3000,
         onToken: (t) => setDraft((p) => p + t),
       });
+    try {
+      await attempt("claude-opus-4-8");
     } catch {
-      /* leave whatever streamed */
+      // Opus hiccuped — quietly retry once on the worker's default model rather
+      // than leaving an empty box in front of the room.
+      setDraft("");
+      try {
+        await attempt(undefined);
+      } catch {
+        setGenError(true);
+      }
     }
     setGen("done");
   }
@@ -529,6 +594,11 @@ function ContextAggregate({
           <span className="font-inter text-xs text-steel">
             Builds one company file from everything above (plus anything you type). Edit it, then publish.
           </span>
+          {genError && !draft.trim() && (
+            <span className="font-inter text-sm text-amber">
+              Synthesis didn&apos;t come back — hit it again, or paste/type the file directly.
+            </span>
+          )}
         </div>
         <textarea
           value={draft}
@@ -702,12 +772,19 @@ const POLICY_FIELDS: { id: string; label: string; help: string }[] = [
   { id: "accountable", label: "How we stay accountable", help: "Humans own output. We verify ______. Transparent when AI shaped client work. Point person: ______. When something's wrong, we ______." },
 ];
 
-function Policy({ sessionName }: { sessionName: string }) {
-  const [fields, setFields] = useState<Record<string, string>>({});
-  const [risks, setRisks] = useState<string[]>([]);
-  const [openQs, setOpenQs] = useState<string[]>([]);
+function Policy({ sessionName, records }: { sessionName: string; records: CaptureRecord[] }) {
+  const [fields, setFields] = usePersisted<Record<string, string>>("fw_fac_policy_fields", {});
+  const [risks, setRisks] = usePersisted<string[]>("fw_fac_policy_risks", []);
+  const [openQs, setOpenQs] = usePersisted<string[]>("fw_fac_policy_openqs", []);
   const [rv, setRv] = useState("");
   const [ov, setOv] = useState("");
+
+  // What participants pushed from their own screens ("Raise it →" / "I'm on board ✓").
+  const policyRecs = records.filter((r) => r.kind === "policy");
+  const roomQs = policyRecs.filter((r) => ((r.payload?.question as string) || "").trim());
+  const onBoard = new Set(
+    policyRecs.filter((r) => r.payload?.agreed).map((r) => (r.name || "").trim().toLowerCase())
+  ).size;
 
   function exportMd() {
     let md = `# ${sessionName} — AI Usage Policy (DRAFT)\n\n> Drafted with the team on Day 1. Fieldwork to resolve open questions with Scott & Justin. Full team ratifies Day 2.\n\n`;
@@ -715,7 +792,12 @@ function Policy({ sessionName }: { sessionName: string }) {
     for (const f of POLICY_FIELDS) {
       md += `## ${f.label}\n${(fields[f.id] ?? "").trim() || "_(to complete)_"}\n\n`;
     }
-    md += `## Open questions (to ratify Day 2)\n${openQs.length ? openQs.map((q) => `- ${q}`).join("\n") : "_(none captured)_"}\n\n`;
+    const allQs = [
+      ...openQs,
+      ...roomQs.map((r) => `${(r.payload?.question as string).trim()} — ${r.name || "someone"}`),
+    ];
+    md += `## Open questions (to ratify Day 2)\n${allQs.length ? allQs.map((q) => `- ${q}`).join("\n") : "_(none captured)_"}\n\n`;
+    if (onBoard > 0) md += `**On board in the room:** ${onBoard}\n\n`;
     md += `## Ratification\nSigned by ______ on ______.\n`;
     download("ai-usage-policy-draft.md", md);
   }
@@ -729,6 +811,30 @@ function Policy({ sessionName }: { sessionName: string }) {
       <div className="border-l-2 border-olive/30 bg-olive/5 pl-4 pr-4 py-3">
         <p className="section-label text-olive mb-1">Group exercise — out loud</p>
         <p className="font-inter text-sm text-slate/80">Capture the discussion here as the team talks it through. Park the hard debates as open questions — don&apos;t resolve them in the room.</p>
+      </div>
+
+      {/* what participants sent from their screens */}
+      <div className="bg-white border border-amber/40 rounded-xl px-4 py-3">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <p className="section-label text-amber">From the room — live</p>
+          <p className="font-inter text-xs text-steel">
+            {onBoard} on board ✓ · {roomQs.length} question(s) raised · hit Refresh to update
+          </p>
+        </div>
+        {roomQs.length === 0 ? (
+          <p className="font-inter text-sm text-steel/50 mt-2">
+            Questions people submit with &ldquo;Raise it →&rdquo; land here — pull them up as you go.
+          </p>
+        ) : (
+          <ul className="mt-2 space-y-1.5">
+            {roomQs.map((r) => (
+              <li key={r.id} className="font-inter text-sm text-slate/80 leading-body">
+                &ldquo;{(r.payload?.question as string).trim()}&rdquo;{" "}
+                <span className="text-steel/60 text-xs">— {r.name || "someone"}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* risk brainstorm */}
