@@ -119,10 +119,11 @@ export type Block =
       steps: { id: string; label: string }[]; // install / sign-in checklist
       missions: {
         id: string;
-        tier: string; // group heading (e.g. "1 · Set it up right")
+        tier: string; // group heading (e.g. "1 · Before you leave the room (5 min)")
         icon?: string;
         label: string; // the goal
         do?: string; // the steps
+        why?: string; // the teaching point — why this play matters
         worked?: string; // success signal ("you'll know it worked when…")
         stuck?: string; // fallback if they get stuck
         track?: "pm" | "facilities"; // shown only to that track (tracked per applicable)

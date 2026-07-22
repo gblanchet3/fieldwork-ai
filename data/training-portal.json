@@ -413,7 +413,7 @@
           "title": "The essentials",
           "items": [
             "Your data stays yours — on our plan, what you enter isn't used to train models and doesn't leave our environment.",
-            "One sanctioned tool — we standardize on Claude. Never paste company or client info into random consumer tools.",
+            "Two tools, two lanes — Claude for company work (context, drafts, analysis); Copilot for what's built into Microsoft 365. Nothing company or client goes anywhere else.",
             "Humans own the output — AI drafts; you decide. Your name, your judgment. \"The AI did it\" isn't a thing.",
             "Verify what matters — dollar amounts, dates, clause language, legal terms. Trust it on low-stakes drafting.",
             "Know the access boundary — AI can read and draft, but never sends or edits our system of record on its own.",
@@ -497,6 +497,7 @@
                   "multi": true,
                   "options": [
                     "general business context",
+                    "lease terms and property financials",
                     "draft text we're working on",
                     "public information",
                     "redacted or de-identified documents"
@@ -580,13 +581,15 @@
             {
               "id": "nonneg",
               "kind": "fixed",
-              "title": "The non-negotiables",
-              "lead": "These don't change.",
+              "title": "Our data rules",
+              "lead": "Where work happens, and the hard lines.",
               "lines": [
-                "Our one sanctioned AI tool is Claude — no company or client info goes into any other AI tool.",
-                "Never put in SSNs, bank or payment details, unredacted tenant PII, or passwords.",
-                "AI reads and drafts; it never sends, signs, or edits our system of record on its own.",
-                "On our plan, what we enter is not used to train models."
+                "Claude is where company work happens — our context file, drafts, analysis, and company memory live there.",
+                "Copilot stays for what it's built into — email polish, meeting recaps, Excel help inside Microsoft 365.",
+                "Outside those two lanes: nothing. No company or client info in free ChatGPT, Gemini, or whatever launches next month.",
+                "The everyday work belongs here. Leases, rent schedules, tenant names, budgets, vendor quotes — that's exactly what our protected plan is for. Nothing we enter trains the model or leaves our environment.",
+                "Be thoughtful with the truly personal. SSNs, bank and routing numbers, passwords, personal medical or HR details — leave them out unless a task genuinely needs them (a draft almost never does). Rule of thumb: give it what the job needs, nothing more.",
+                "AI reads and drafts; it never sends, signs, or edits our system of record on its own."
               ]
             },
             {
@@ -608,8 +611,14 @@
       "title": "Set up Claude — your walk-through",
       "blocks": [
         {
+          "type": "callout",
+          "variant": "note",
+          "title": "Two apps, one brain",
+          "text": "Claude on your phone = quick answers anywhere (and a camera). Cowork on your desktop = real work over your files. Same brain, same memory of R&N — different doors."
+        },
+        {
           "type": "setup-tour",
-          "intro": "Get Claude set up the way you'll actually use it — and get your first real win before Day 2. We'll do the first tier together in the room; the rest is your homework quest. Your progress shows on the big screen so we can come help (green = going, open circles = wave us over) — and it picks up wherever you left off, on any device.",
+          "intro": "Not a feature tour — a set of plays. Each one takes minutes, teaches you something real, and ends with proof it worked. We do Tier 1 together in the room; the rest is your quest before Day 2. Your progress shows on the big screen so we can come help — and it picks up on any device.",
           "steps": [
             {
               "id": "install-desktop",
@@ -631,7 +640,8 @@
               "icon": "👤",
               "label": "Set your profile",
               "do": "Open Settings → Profile. Add your name and a line about your role and how you like responses (e.g. “short, lead with the answer, plain language”).",
-              "worked": "Your next answers come back in that style."
+              "worked": "Your next answers come back in that style.",
+              "why": "Every answer from now on is shaped to your role — 30 seconds that pays forever."
             },
             {
               "id": "m-model",
@@ -639,7 +649,8 @@
               "icon": "🧠",
               "label": "Set your default model",
               "do": "In Settings (or the model menu), set Sonnet as your everyday default — and note where to switch it.",
-              "worked": "New chats open on Sonnet."
+              "worked": "New chats open on Sonnet.",
+              "why": "Sonnet is the fast daily driver; knowing where the switch lives means you're never stuck."
             },
             {
               "id": "m-data",
@@ -647,7 +658,8 @@
               "icon": "🔒",
               "label": "Check your data settings",
               "do": "In Settings, find the privacy / data controls and read the line about your inputs not being used to train models.",
-              "worked": "You've seen, in writing, that your data stays yours."
+              "worked": "You've seen, in writing, that your data stays yours.",
+              "why": "You've now seen the answer to “is our stuff safe?” with your own eyes — that's the line to quote when someone asks."
             },
             {
               "id": "m-voice",
@@ -656,47 +668,53 @@
               "label": "Turn on voice",
               "do": "On your phone, open a chat, tap the mic, allow access, and just say a sentence.",
               "worked": "Your words show up as text.",
-              "stuck": "No mic prompt? Check the app's permissions in your phone settings."
-            },
-            {
-              "id": "m-orient",
-              "tier": "2 · Tonight — find your way around (15 min)",
-              "icon": "🧭",
-              "label": "Take the tour",
-              "do": "Just locate these four: New chat, Projects, Artifacts, Settings. No need to use them yet — find them.",
-              "worked": "You could point to all four."
+              "stuck": "No mic prompt? Check the app's permissions in your phone settings.",
+              "why": "In the field or between meetings, talking beats typing every time."
             },
             {
               "id": "m-chatcowork",
-              "tier": "2 · Tonight — find your way around (15 min)",
+              "tier": "2 · Tonight — five plays (15 min)",
               "icon": "🔀",
               "label": "Chat vs. Cowork",
               "do": "Run the same ask once in Chat, once in Cowork. Chat = quick Q&A. Cowork = it works alongside your files and projects.",
-              "worked": "You can say, in a sentence, when you'd reach for each."
+              "worked": "You can say, in a sentence, when you'd reach for each.",
+              "why": "Chat answers questions; Cowork does work over your files. Knowing which door to walk through is half the skill."
             },
             {
               "id": "m-switch",
-              "tier": "2 · Tonight — find your way around (15 min)",
+              "tier": "2 · Tonight — five plays (15 min)",
               "icon": "⚡",
               "label": "Switch models",
               "do": "In a chat, change the model and ask the same question again.",
-              "worked": "You've now tried two models on the same task."
+              "worked": "You've now tried two models on the same task.",
+              "why": "You'll feel the trade — speed vs. depth — and know when each is worth it."
             },
             {
               "id": "m-continue",
-              "tier": "2 · Tonight — find your way around (15 min)",
+              "tier": "2 · Tonight — five plays (15 min)",
               "icon": "🧵",
               "label": "One chat remembers",
               "do": "Ask a follow-up in the same chat without repeating yourself — it keeps context. Then open a New chat and notice it's forgotten.",
-              "worked": "You feel the difference between continuing and starting fresh."
+              "worked": "You feel the difference between continuing and starting fresh.",
+              "why": "That's the context window from today, felt: one thread remembers, a new chat starts blank."
+            },
+            {
+              "id": "m-hallucinate",
+              "tier": "2 · Tonight — five plays (15 min)",
+              "icon": "🕵️",
+              "label": "Catch it making something up",
+              "do": "Ask Claude something about your building it can't possibly know — “what year was our roof last recoated?” or “which suite did our biggest tenant start in?” Watch what it does.",
+              "why": "Either it admits it doesn't know — or it guesses confidently. Seeing that once is why we verify dollar amounts, dates, and clause language.",
+              "worked": "You caught it (or caught it being honest) — you'll recognize the difference forever."
             },
             {
               "id": "m-prompt",
-              "tier": "2 · Tonight — find your way around (15 min)",
+              "tier": "2 · Tonight — five plays (15 min)",
               "icon": "✍️",
-              "label": "Practice a great prompt",
-              "do": "Pick a real task and use the moves from today: describe the end state → give your reasoning → ask it to interview you first → don't settle on the first draft.",
-              "worked": "The draft comes back close to usable."
+              "label": "Run the 3 moves on something real",
+              "do": "Pick a real task from your week and run today's moves in a fresh chat: describe the end state → give the backstory + who Claude should be → tell it to interview you first. Answer its questions, then push back twice.",
+              "worked": "The draft comes back close to usable — before you even edited.",
+              "why": "The interview move is the one almost nobody uses — it's also the one that makes the first draft land close."
             },
             {
               "id": "m-project",
@@ -704,7 +722,8 @@
               "icon": "📁",
               "label": "Create your R&N Project",
               "do": "Open the shared R&N Project Justin set up (leasing, tenant relationships, facilities…) — or create your own Project named “R&N” — and paste today's company context file into its instructions.",
-              "worked": "Chats there already know who R&N is."
+              "worked": "Chats there already know who R&N is.",
+              "why": "Paste the context file once, and every chat in that project starts already knowing R&N."
             },
             {
               "id": "m-work-pm",
@@ -713,7 +732,8 @@
               "icon": "🏢",
               "label": "Put it to work",
               "do": "In the R&N project: draft a short tenant-newsletter blurb about something real happening at your building — in our voice. Or attach a lease and ask for the key dates, options, and anything unusual.",
-              "worked": "It sounds like us and gets the specifics right."
+              "worked": "It sounds like us and gets the specifics right.",
+              "why": "This is the moment it stops being a demo and starts being your Tuesday."
             },
             {
               "id": "m-work-fac",
@@ -722,7 +742,17 @@
               "icon": "🔧",
               "label": "Put it to work",
               "do": "In your R&N project, dictate a messy field note and ask for a clean work order — or describe a symptom and ask for a first-pass diagnostic.",
-              "worked": "You get a structured, usable result."
+              "worked": "You get a structured, usable result.",
+              "why": "Messy in, clean out — that's the daily win."
+            },
+            {
+              "id": "m-voicematch",
+              "tier": "3 · This week — your first real win",
+              "icon": "🪞",
+              "label": "Teach it your voice",
+              "do": "Paste one email you actually sent that sounds like you. Then: “Write a new draft to [someone] about [topic] — match the voice and tone of my example.”",
+              "why": "The difference between generic-AI writing and YOUR writing is one example. (This is Justin's daily email habit, generalized.)",
+              "worked": "It sounds like you, not a robot."
             },
             {
               "id": "m-photo-fac",
@@ -736,7 +766,17 @@
               "sample": {
                 "href": "/sample-nameplate.png",
                 "label": "Download a sample data plate"
-              }
+              },
+              "why": "The manual that talks back — and it finds the suppliers you didn't know you had."
+            },
+            {
+              "id": "m-habit",
+              "tier": "3 · This week — your first real win",
+              "icon": "📬",
+              "label": "The everyday habit",
+              "do": "Your next real email longer than three sentences: draft it in Claude first, tweak, send. Time yourself.",
+              "why": "Fluency comes from reps on real work, not exercises. This is the rep that becomes automatic.",
+              "worked": "It's faster by Friday — and automatic by Day 2."
             },
             {
               "id": "m-connect-outlook",
@@ -746,7 +786,8 @@
               "connector": true,
               "do": "Settings → Connectors → Outlook → sign in with your R&N account → Allow. Then ask: “what are my 3 most recent emails?”",
               "worked": "It lists your actual recent emails.",
-              "stuck": "Don't see Outlook to connect? IT is still switching this on — flag Justin and skip for now. (Reminder: Claude drafts, it never sends for you.)"
+              "stuck": "Don't see Outlook to connect? IT is still switching this on — flag Justin and skip for now. (Reminder: Claude drafts, it never sends for you.)",
+              "why": "Once IT flips it on, Claude works over your real inbox — this is where it gets personal."
             },
             {
               "id": "m-connect-sharepoint",
@@ -756,10 +797,15 @@
               "connector": true,
               "do": "Settings → Connectors → SharePoint / OneDrive → sign in → Allow (read-only). Then ask it to find a document by name.",
               "worked": "It finds a real file from your drive.",
-              "stuck": "Not enabled yet? IT's still on it — flag Justin; meanwhile you can just attach files by hand."
+              "stuck": "Not enabled yet? IT's still on it — flag Justin; meanwhile you can just attach files by hand.",
+              "why": "Your documents become something Claude can find and read — the foundation for the lease skills."
             }
           ],
           "cheatsheet": [
+            {
+              "q": "The 3 moves?",
+              "a": "Describe the end state → give backstory + who Claude should be → make it interview you first. Then push back — twice."
+            },
             {
               "q": "Chat vs. Cowork?",
               "a": "Chat = quick questions. Cowork = real work with your files and projects. It's a toggle near the top."
@@ -783,6 +829,10 @@
             {
               "q": "Is my data safe?",
               "a": "On our plan, what you enter isn't used to train models. Connectors are read-only where it matters, and Claude drafts — it never sends for you."
+            },
+            {
+              "q": "Where is everything?",
+              "a": "Find four things: New chat, Projects, Artifacts, Settings. Point at those and you know the app."
             }
           ]
         }

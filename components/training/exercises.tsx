@@ -1201,6 +1201,7 @@ function SetupTour({ block, ctx }: { block: Extract<Block, { type: "setup-tour" 
       </button>
       <div className="pl-8 mt-1.5 space-y-1">
         {m.do && <p className="font-inter text-xs text-slate/70 leading-body">{m.do}</p>}
+        {m.why && <p className="font-inter text-xs text-amber/90 leading-body">💡 {m.why}</p>}
         {m.worked && <p className="font-inter text-xs text-olive">✓ {m.worked}</p>}
         {m.stuck && <p className="font-inter text-xs text-steel/70 italic">Stuck? {m.stuck}</p>}
         {m.sample && (
