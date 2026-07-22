@@ -141,9 +141,9 @@
         {
           "type": "prompt-builder",
           "challenges": [
-            { "id": "cam", "label": "The late-CAM nudge", "text": "Boise Dental Group is 15 days past due on their $4,200 CAM reconciliation balance. Nudge them to commit to a payment date this week — without straining a 6-year relationship." },
-            { "id": "rent-talk", "label": "Rent-increase talking points", "text": "A good tenant's renewal is coming up and you need to raise their rent about 8%. Get talking points that frame it around the value they get, plus a one-line opener for the conversation." },
-            { "id": "lease-language", "label": "Draft custom lease language", "text": "A growing startup tenant wants a 3-year lease but the right to terminate at year 2 if they outgrow the space and we can't relocate them to something bigger. Draft the clause (for your attorney to review)." }
+            { "id": "cam", "label": "The late-CAM nudge", "text": "Boise Dental Group is 15 days past due on their $4,200 CAM reconciliation balance. Nudge them to commit to a payment date this week — without straining a 6-year relationship.", "hints": { "c1": "e.g. a warm-but-firm email that gets a specific payment date this week", "c2": "e.g. Act as a seasoned property manager; Boise Dental's been with us 6 years and the relationship matters more than the $4,200" } },
+            { "id": "rent-talk", "label": "Rent-increase talking points", "text": "A good tenant's renewal is coming up and you need to raise their rent about 8%. Get talking points that frame it around the value they get, plus a one-line opener for the conversation.", "hints": { "c1": "e.g. 3–4 talking points that make the increase feel fair, plus a warm one-line opener", "c2": "e.g. Act as a seasoned property manager; this is a great long-term tenant I really want to keep" } },
+            { "id": "lease-language", "label": "Draft custom lease language", "text": "A growing startup tenant wants a 3-year lease but the right to terminate at year 2 if they outgrow the space and we can't relocate them to something bigger. Draft the clause (for your attorney to review).", "hints": { "c1": "e.g. clean, plain-English clause language my attorney can review and drop into the lease", "c2": "e.g. Act as a careful commercial real estate attorney; flag anything that exposes us" } }
           ],
           "chunks": [
             { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a warm-but-firm email that gets a payment date this week", "prefix": "My goal: " },
@@ -168,9 +168,9 @@
         {
           "type": "prompt-builder",
           "challenges": [
-            { "id": "diag", "label": "First-pass diagnostic", "text": "A 10-ton Carrier rooftop unit at Boise Plaza is short-cycling on a 90° day — it cools for a few minutes, shuts off, then restarts. Get likely causes and safe checks before you call a vendor." },
-            { "id": "workorder", "label": "Describe it → work order", "text": "You just walked a unit and found a problem. Describe what you saw and have Claude turn it into a clean, vendor-ready work order." },
-            { "id": "vendor-quote", "label": "Vendor quote request", "text": "You need a quote to replace a failing condenser fan motor. Draft the request to the vendor with the specs and details they'll need to price it." }
+            { "id": "diag", "label": "First-pass diagnostic", "text": "A 10-ton Carrier rooftop unit at Boise Plaza is short-cycling on a 90° day — it cools for a few minutes, shuts off, then restarts. Get likely causes and safe checks before you call a vendor.", "hints": { "c1": "e.g. a ranked list of likely causes + the safe checks I can do myself before calling a vendor", "c2": "e.g. Act as a senior building engineer; safety first, and I don't do refrigerant work" } },
+            { "id": "workorder", "label": "Describe it → work order", "text": "You just walked a unit and found a problem. Describe what you saw and have Claude turn it into a clean, vendor-ready work order.", "hints": { "c1": "e.g. a clean, vendor-ready work order with location, priority, and next steps", "c2": "e.g. Act as a senior building engineer; here's what I saw on the walk-through…" } },
+            { "id": "vendor-quote", "label": "Vendor quote request", "text": "You need a quote to replace a failing condenser fan motor. Draft the request to the vendor with the specs and details they'll need to price it.", "hints": { "c1": "e.g. a clear quote request with the specs and details the vendor needs to price it accurately", "c2": "e.g. Act as a facilities manager getting competitive quotes; be specific, no back-and-forth" } }
           ],
           "chunks": [
             { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a clean work-order entry with priority and next steps", "prefix": "My goal: " },

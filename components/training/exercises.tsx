@@ -829,7 +829,7 @@ function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-b
                 <Composer
                   value={chunks[c.id] ?? ""}
                   onValueChange={(val) => setChunks((v) => ({ ...v, [c.id]: val }))}
-                  placeholder={c.placeholder}
+                  placeholder={challenge?.hints?.[c.id] ?? c.placeholder}
                   rows={2}
                 />
               </div>

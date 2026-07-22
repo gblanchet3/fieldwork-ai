@@ -67,7 +67,8 @@ export type Block =
   // #5 ⭐ — "More is More" chunked prompt-builder. The output that matters is the prompt.
   | {
       type: "prompt-builder";
-      challenges: { id: string; label: string; text: string }[]; // predefined, pick one
+      // predefined, pick one; `hints` gives per-challenge placeholder text keyed by chunk id
+      challenges: { id: string; label: string; text: string; hints?: Record<string, string> }[];
       chunks: {
         id: string;
         label: string; // e.g. "Describe the end state"
