@@ -350,6 +350,7 @@ function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context
   const rich = useStream(ctx.sessionId);
   const canned = cannedFor(ctx.trackId);
   const [extra, setExtra] = useState("");
+  const [showExtra, setShowExtra] = useState(false);
   const richPrompt = useMemo(
     () => `${block.contextBlock}${extra.trim() ? "\n" + extra.trim() : ""}\n\n${block.barePrompt}`,
     [block.contextBlock, block.barePrompt, extra]
@@ -380,16 +381,24 @@ function ContextCompare({ block, ctx }: { block: Extract<Block, { type: "context
 
         <div className="space-y-2">
           <p className="font-inter text-xs text-steel">2 · Same ask — with context</p>
-          <Composer
-            value={extra}
-            onValueChange={setExtra}
-            rows={2}
-            placeholder="Optional: add a line of your own context…"
-          />
-          <p className="font-inter text-[11px] text-steel/60">This is what gets sent:</p>
-          <pre className="whitespace-pre-wrap font-inter text-xs bg-amber/5 text-slate/70 px-3 py-2 border border-amber/30 max-h-32 overflow-y-auto">
+          <pre className="whitespace-pre-wrap font-inter text-xs bg-amber/5 text-slate/70 px-3 py-2 border border-amber/30 max-h-40 overflow-y-auto">
             {richPrompt}
           </pre>
+          {!showExtra ? (
+            <button
+              onClick={() => setShowExtra(true)}
+              className="font-inter text-xs text-amber hover:underline"
+            >
+              + Add custom context?
+            </button>
+          ) : (
+            <Composer
+              value={extra}
+              onValueChange={setExtra}
+              rows={2}
+              placeholder="One line of your own — it's added to what gets sent above…"
+            />
+          )}
           <RunButton onClick={() => rich.run(richPrompt, block.system, canned.contextRich)} busy={rich.status === "streaming"}>
             Run it
           </RunButton>
