@@ -75,6 +75,7 @@ export type Block =
         instruction: string;
         placeholder?: string;
         prefix?: string; // prepended when assembling the paragraph
+        default?: string; // pre-filled value (e.g. the "interview me" move they should see)
       }[];
       interviewInstruction?: string; // auto-appended so Claude interviews the user first
       genericPrompt: string; // the weak prompt shown on the "before" side

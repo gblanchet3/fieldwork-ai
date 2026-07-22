@@ -654,7 +654,11 @@ const BUILD_STEPS = ["Describe", "Answer", "Push back ×2"];
 
 function PromptBuilder({ block, ctx }: { block: Extract<Block, { type: "prompt-builder" }>; ctx: ExerciseCtx }) {
   const [challengeId, setChallengeId] = useState<string>(block.challenges[0]?.id ?? "");
-  const [chunks, setChunks] = useState<Record<string, string>>({});
+  const [chunks, setChunks] = useState<Record<string, string>>(() => {
+    const init: Record<string, string> = {};
+    for (const c of block.chunks) if (c.default) init[c.id] = c.default;
+    return init;
+  });
   const [phase, setPhase] = useState<"build" | "chat">("build");
   const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [live, setLive] = useState("");

@@ -137,7 +137,7 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "More is more. Set it up in two moves, then Claude interviews you, drafts it, and you push back until it's right — a real back-and-forth." },
+        { "type": "text", "text": "More is more. Set it up in three moves — the third is telling Claude to interview you — then answer its questions and push back until it's right." },
         {
           "type": "prompt-builder",
           "challenges": [
@@ -147,9 +147,10 @@
           ],
           "chunks": [
             { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a warm-but-firm email that gets a payment date this week", "prefix": "My goal: " },
-            { "id": "c2", "label": "Add the backstory + who Claude should be", "instruction": "What's the situation, and who should Claude act as — a seasoned PM? a careful attorney?", "placeholder": "e.g. Act as a seasoned property manager; tenant service is our north star", "prefix": "Context & reasoning: " }
+            { "id": "c2", "label": "Add the backstory + who Claude should be", "instruction": "What's the situation, and who should Claude act as — a seasoned PM? a careful attorney?", "placeholder": "e.g. Act as a seasoned property manager; tenant service is our north star", "prefix": "Context & reasoning: " },
+            { "id": "c3", "label": "Have Claude interview you first", "instruction": "The move most people skip — we've pre-filled it so you see it. Keep it or make it your own.", "default": "Before you draft, interview me: ask me 2–3 quick questions to fill in anything you're missing.", "prefix": "" }
           ],
-          "interviewInstruction": "Ask me 2–3 short, essential questions, then draft. This is a hands-on practice exercise — never ask me to paste a document or wait on one; if you need details I haven't given you, make a reasonable assumption, note it, and keep going. Assume sensible defaults for anything minor.",
+          "interviewInstruction": "This is a hands-on practice exercise — never ask me to paste a document or wait on one. If you need details I haven't given you, make a reasonable assumption, note it, and keep going.",
           "genericPrompt": "Write me an email to a tenant.",
           "genericOutput": "Dear Tenant,\n\nWe are writing to inform you regarding your account. Please contact our office at your earliest convenience to discuss. Thank you for your attention to this matter.\n\nSincerely,\nManagement",
           "system": "You are assisting a commercial real estate property manager, matching a warm-but-firm professional tone. When the user asks you to interview them first, ask a few concise clarifying questions and wait for answers before drafting. When they push back, revise directly and show the improved version."
@@ -163,7 +164,7 @@
       "variantGroup": "d1-prompt-builder",
       "title": "Build your prompt",
       "blocks": [
-        { "type": "text", "text": "More is more. Set it up in two moves, then Claude interviews you, drafts it, and you push back until it's right — a real back-and-forth." },
+        { "type": "text", "text": "More is more. Set it up in three moves — the third is telling Claude to interview you — then answer its questions and push back until it's right." },
         { "type": "callout", "variant": "tip", "text": "🎤 Not a fast typer? Tap the mic in any box and just talk — Claude fills it in for you. Out in the field, this is how you'll use it most." },
         {
           "type": "prompt-builder",
@@ -174,9 +175,10 @@
           ],
           "chunks": [
             { "id": "c1", "label": "Describe the end state", "instruction": "What are you trying to accomplish? What does a great result look like?", "placeholder": "e.g. a clean work-order entry with priority and next steps", "prefix": "My goal: " },
-            { "id": "c2", "label": "Add the backstory + who Claude should be", "instruction": "What's the situation, what have you tried, and who should Claude act as — a senior building engineer?", "placeholder": "e.g. Act as a senior building engineer; filter's clean, I don't do refrigerant work", "prefix": "Context & reasoning: " }
+            { "id": "c2", "label": "Add the backstory + who Claude should be", "instruction": "What's the situation, what have you tried, and who should Claude act as — a senior building engineer?", "placeholder": "e.g. Act as a senior building engineer; filter's clean, I don't do refrigerant work", "prefix": "Context & reasoning: " },
+            { "id": "c3", "label": "Have Claude interview you first", "instruction": "The move most people skip — we've pre-filled it so you see it. Keep it or make it your own.", "default": "Before you answer, interview me: ask me 2–3 quick questions about the unit and what I've tried.", "prefix": "" }
           ],
-          "interviewInstruction": "Ask me 2–3 short, essential questions about the unit and what I've tried, then answer. This is a hands-on practice exercise — never ask me to paste a document or wait on one; if you need details I haven't given you, make a reasonable assumption, note it, and keep going.",
+          "interviewInstruction": "This is a hands-on practice exercise — never ask me to paste a document or wait on one. If you need details I haven't given you, make a reasonable assumption, note it, and keep going.",
           "genericPrompt": "How do I fix an AC unit?",
           "genericOutput": "There are many possible reasons an AC unit may not work. Check the power, the thermostat, the filter, and the circuit breaker. If it still doesn't work, you may need to call a professional HVAC technician to inspect it.",
           "system": "You are assisting a commercial building maintenance engineer — practical and safety-first. When the user asks you to interview them first, ask a few concise clarifying questions and wait for answers before answering. When they push back, revise directly and show the improved version."
