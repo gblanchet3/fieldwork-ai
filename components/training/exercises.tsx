@@ -36,8 +36,11 @@ function typeOut(
     let i = 0;
     const tick = () => {
       if (!alive() || i >= parts.length) return resolve();
-      set((p) => p + parts.slice(i, i + 3).join(""));
       i += 3;
+      // Set the absolute prefix rather than appending — idempotent, so a
+      // re-applied updater or an overlapping run can never duplicate words.
+      const snapshot = parts.slice(0, i).join("");
+      set(() => snapshot);
       setTimeout(tick, 35);
     };
     tick();
@@ -1615,9 +1618,9 @@ const ITERATE_CANNED = {
 
 const CANNED_PM: CannedSet = {
   contextBare:
-    "Here's a general draft you could adapt:\n\nDear Tenant,\n\nWe wanted to reach out regarding your account. Please let us know if you have any questions.\n\nBest regards,\nManagement",
+    "Dear Tenant,\n\nThank you for reaching out about the parking situation. We apologize for any inconvenience. Parking availability can vary throughout the day, and we encourage visitors to arrive early when possible. Please let us know if you have any further questions.\n\nSincerely,\nManagement",
   contextRich:
-    "Hi James,\n\nHope the team at Suite 400 is settling in well after the HVAC upgrade last month. I'm following up on the March CAM reconciliation — the $2,140 balance is now 15 days past due.\n\nI know invoicing can slip through the cracks this time of year, so no worries at all. Could you confirm a payment date this week? Happy to resend the itemized statement if useful.\n\nAppreciate you — and as always, let me know if there's anything Boise Plaza can do on our end.\n\nWarmly,\n[You]",
+    "Hi Dana,\n\nThank you for flagging this — and I'm sorry your clients have been circling for spots. That's not the experience we want anyone at Boise Plaza to have, least of all a four-year tenant we value as much as you.\n\nHere's what I'm doing about it this week:\n- Reviewing whether we can designate reserved visitor stalls near the main entrance\n- Talking to the garage next door about a validation arrangement for tenant guests\n- Adding clearer visitor-parking signage so the spots we do have get used correctly\n\nI'll have answers on all three by Friday and will follow up personally. In the meantime, if a client is headed your way, call our office and we'll make sure they're taken care of.\n\nThank you for your patience — and for telling us.\n\nWarmly,\n[You]",
   testWithout:
     "Subject: Notice of Planned Maintenance\n\nDear Tenant,\n\nPlease be advised that maintenance will be performed in your building next week. We apologize for any inconvenience this may cause. Should you have any questions, please contact our office.\n\nSincerely,\nProperty Management",
   testWith:

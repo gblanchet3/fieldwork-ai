@@ -172,42 +172,54 @@
       "title": "Train your new employee",
       "blocks": [
         {
+          "type": "callout",
+          "variant": "exercise",
+          "title": "Your groups — own your section, add anywhere",
+          "items": [
+            "Group 1 — Justin V. & Pete: “Who we are” + “What we do”",
+            "Group 2 — Scott (+ Ron): “What makes us different” — this is where the 10 Commandments get dictated for posterity",
+            "Group 3 — Sarah, Chelsea & Rosanna: “Our culture & voice”",
+            "Group 4 — Mark K., Mark C. & Justin C.: “What we run day to day”",
+            "Everyone: before you submit, add one line to “What AI should always know” — the thing it should never get wrong."
+          ]
+        },
+        {
           "type": "context-file",
-          "intro": "Build R&N's shared context file. Fill in what you know — don't worry about polish, and use the mic to talk instead of type.",
+          "intro": "Build R&N's shared context file — in your groups. Own your section hard (mic beats typing), then add a line anywhere else you know something. It all lands on the big screen.",
           "sections": [
             {
               "id": "who",
-              "label": "Who we are",
+              "label": "Group 1 · Who we are",
               "hint": "Company, history, size — a Boise CRE owner/operator with ~1M sq ft of mostly Class-A office, downtown and at Parkcenter.",
               "placeholder": "Rafanelli & Nahas is…"
             },
             {
               "id": "what",
-              "label": "What we do",
+              "label": "Group 1 · What we do",
               "hint": "Property types, our buildings, the kind of work we do day to day.",
               "placeholder": "We own and operate…"
             },
             {
               "id": "market",
-              "label": "What makes us different",
+              "label": "Group 2 · What makes us different",
               "hint": "How we go to market, what we're known for. (Scott's tenant-service ethos goes here.)",
               "placeholder": "What sets us apart is…"
             },
             {
               "id": "culture",
-              "label": "Our culture & voice",
+              "label": "Group 3 · Our culture & voice",
               "hint": "Values, how we treat tenants and each other, how we write.",
               "placeholder": "We communicate like…"
             },
             {
               "id": "operate",
-              "label": "What we run day to day",
+              "label": "Group 4 · What we run day to day",
               "hint": "The buildings (Boise Plaza, Capitol & Idaho, River Quarry…), the systems and equipment you maintain, the vendors you count on. (Facilities — this one's yours.)",
               "placeholder": "We operate…"
             },
             {
               "id": "always",
-              "label": "What AI should always know",
+              "label": "Everyone · What AI should always know",
               "hint": "Terminology, tone guardrails, things it should never assume.",
               "placeholder": "Always remember that…"
             }
